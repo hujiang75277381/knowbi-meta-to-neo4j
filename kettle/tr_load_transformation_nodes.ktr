@@ -797,7 +797,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>StepType</value>
+        <value>steptype</value>
       </labels>
       <properties>
         <property>
@@ -888,7 +888,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Step</value>
+        <value>step</value>
       </labels>
       <properties>
         <property>
@@ -950,7 +950,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Table</value>
+        <value>table</value>
       </labels>
       <properties>
         <property>
@@ -1018,7 +1018,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Transformation</value>
+        <value>transformation</value>
       </labels>
       <properties>
         <property>

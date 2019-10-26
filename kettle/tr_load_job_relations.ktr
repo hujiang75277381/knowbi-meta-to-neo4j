@@ -600,7 +600,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Job</value>
+        <value>job</value>
       </labels>
       <properties>
         <property>
@@ -615,7 +615,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Entry</value>
+        <value>entry</value>
       </labels>
       <properties>
         <property>
@@ -672,7 +672,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Entry</value>
+        <value>entry</value>
       </labels>
       <properties>
         <property>
@@ -693,7 +693,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Entry</value>
+        <value>entry</value>
       </labels>
       <properties>
         <property>
@@ -756,7 +756,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Entry</value>
+        <value>entry</value>
       </labels>
       <properties>
         <property>
@@ -777,7 +777,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>EntryType</value>
+        <value>entrytype</value>
       </labels>
       <properties>
         <property>
@@ -1898,7 +1898,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Entry</value>
+        <value>entry</value>
       </labels>
       <properties>
         <property>
@@ -1919,7 +1919,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Job</value>
+        <value>job</value>
       </labels>
       <properties>
         <property>
@@ -1970,7 +1970,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Entry</value>
+        <value>entry</value>
       </labels>
       <properties>
         <property>
@@ -1991,7 +1991,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Transformation</value>
+        <value>transformation</value>
       </labels>
       <properties>
         <property>

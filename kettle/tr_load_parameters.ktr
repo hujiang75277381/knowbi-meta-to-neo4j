@@ -486,7 +486,7 @@
       <read_only_from_node>Y</read_only_from_node>
       <labels>
         <label />
-        <value>Job</value>
+        <value>job</value>
       </labels>
       <properties>
         <property>
@@ -501,7 +501,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Parameter</value>
+        <value>parameter</value>
       </labels>
       <properties>
         <property>
@@ -860,7 +860,7 @@
       <read_only_from_node>Y</read_only_from_node>
       <labels>
         <label />
-        <value>Transformation</value>
+        <value>transformation</value>
       </labels>
       <properties>
         <property>
@@ -875,7 +875,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Parameter</value>
+        <value>parameter</value>
       </labels>
       <properties>
         <property>

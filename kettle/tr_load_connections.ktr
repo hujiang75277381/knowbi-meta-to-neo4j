@@ -538,7 +538,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Connection</value>
+        <value>connection</value>
       </labels>
       <properties>
         <property>
