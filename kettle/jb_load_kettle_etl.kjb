@@ -13,7 +13,7 @@
   <parameters>
     <parameter>
       <name>PRM_ETL_DIR</name>
-      <default_value>/home/bart/git-customers/lumileds-pim-etl</default_value>
+      <default_value />
       <description />
     </parameter>
   </parameters>
@@ -348,7 +348,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>592</xloc>
+      <xloc>848</xloc>
       <yloc>80</yloc>
       <attributes_kjc />
     </entry>
@@ -386,7 +386,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>400</xloc>
+      <xloc>528</xloc>
       <yloc>80</yloc>
       <attributes_kjc />
     </entry>
@@ -424,7 +424,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1120</xloc>
+      <xloc>1936</xloc>
       <yloc>80</yloc>
       <attributes_kjc />
     </entry>
@@ -462,7 +462,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>912</xloc>
+      <xloc>1552</xloc>
       <yloc>80</yloc>
       <attributes_kjc />
     </entry>
@@ -474,7 +474,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1312</xloc>
+      <xloc>2256</xloc>
       <yloc>80</yloc>
       <attributes_kjc />
     </entry>
@@ -489,7 +489,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>592</xloc>
+      <xloc>1216</xloc>
       <yloc>256</yloc>
       <attributes_kjc />
     </entry>
@@ -527,7 +527,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>768</xloc>
+      <xloc>1216</xloc>
       <yloc>80</yloc>
       <attributes_kjc />
     </entry>
