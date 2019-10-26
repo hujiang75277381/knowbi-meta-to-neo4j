@@ -467,6 +467,16 @@
       <to>has_connection</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>has_connection</from>
+      <to>port </to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>port </from>
+      <to>host</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
     <name>Filter rows</name>
@@ -548,18 +558,6 @@
           <primary>Y</primary>
         </property>
         <property>
-          <name>server</name>
-          <value>server</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>type</name>
-          <value>type</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
           <name>database</name>
           <value>database</value>
           <type>String</type>
@@ -602,7 +600,187 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>688</xloc>
+      <xloc>800</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>host</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>database</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>port</name>
+          <value>port</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>username</name>
+          <value>username</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>password</name>
+          <value>password</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label />
+        <value>server</value>
+      </labels>
+      <properties>
+        <property>
+          <name>host</name>
+          <value>server</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship />
+    <relationship_value>runs_on_host</relationship_value>
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1264</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>port </name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>database</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>port</name>
+          <value>port</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>username</name>
+          <value>username</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>password</name>
+          <value>password</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label />
+        <value>port</value>
+      </labels>
+      <properties>
+        <property>
+          <name>number</name>
+          <value>port</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship />
+    <relationship_value>runs_on_port</relationship_value>
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1040</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
