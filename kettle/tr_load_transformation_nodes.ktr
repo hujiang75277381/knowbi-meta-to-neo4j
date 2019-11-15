@@ -11,7 +11,7 @@
     <parameters>
       <parameter>
         <name>PRM_ETL_DIR</name>
-        <default_value />
+        <default_value>/home/bart/git-customers/drivolution-dcn-auto</default_value>
         <description />
       </parameter>
     </parameters>
@@ -616,8 +616,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>fields</name>
-        <xpath>fields</xpath>
+        <name>sql</name>
+        <xpath>sql</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -631,10 +631,10 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>sql</name>
-        <xpath>sql</xpath>
+        <name>xml</name>
+        <xpath>.[1]</xpath>
         <element_type>node</element_type>
-        <result_type>valueof</result_type>
+        <result_type>singlenode</result_type>
         <type>String</type>
         <format />
         <currency />
@@ -669,8 +669,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>80</xloc>
-      <yloc>64</yloc>
+      <xloc>144</xloc>
+      <yloc>277</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -708,8 +708,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
-      <yloc>64</yloc>
+      <xloc>416</xloc>
+      <yloc>277</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -747,9 +747,6 @@
         <name>schema</name>
       </field>
       <field>
-        <name>fields</name>
-      </field>
-      <field>
         <name>sql</name>
       </field>
       <field>
@@ -757,6 +754,9 @@
       </field>
       <field>
         <name>transformation</name>
+      </field>
+      <field>
+        <name>xml</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -769,8 +769,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>432</xloc>
-      <yloc>64</yloc>
+      <xloc>688</xloc>
+      <yloc>277</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -797,7 +797,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>steptype</value>
+        <value>StepType</value>
       </labels>
       <properties>
         <property>
@@ -825,8 +825,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>896</xloc>
-      <yloc>336</yloc>
+      <xloc>1232</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -860,8 +860,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
-      <yloc>288</yloc>
+      <xloc>960</xloc>
+      <yloc>277</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -888,7 +888,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -922,8 +922,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>896</xloc>
-      <yloc>192</yloc>
+      <xloc>1232</xloc>
+      <yloc>394</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -950,7 +950,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>table</value>
+        <value>Table</value>
       </labels>
       <properties>
         <property>
@@ -990,8 +990,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>896</xloc>
-      <yloc>512</yloc>
+      <xloc>1232</xloc>
+      <yloc>277</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1018,7 +1018,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>transformation</value>
+        <value>Transformation</value>
       </labels>
       <properties>
         <property>
@@ -1046,8 +1046,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>896</xloc>
-      <yloc>64</yloc>
+      <xloc>1232</xloc>
+      <yloc>511</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

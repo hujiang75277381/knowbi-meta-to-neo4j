@@ -680,7 +680,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>transformation</value>
+        <value>Transformation</value>
       </labels>
       <properties>
         <property>
@@ -695,7 +695,7 @@ function splitQuery(value, index, array) {
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>connection</value>
+        <value>Connection</value>
       </labels>
       <properties>
         <property>
@@ -707,7 +707,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>has_connection</relationship_value>
+    <relationship_value>HAS_CONNECTION</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -746,7 +746,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>transformation</value>
+        <value>Transformation</value>
       </labels>
       <properties>
         <property>
@@ -761,7 +761,7 @@ function splitQuery(value, index, array) {
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -779,7 +779,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>has_step</relationship_value>
+    <relationship_value>HAS_STEP</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -818,7 +818,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>connection</value>
+        <value>Connection</value>
       </labels>
       <properties>
         <property>
@@ -833,7 +833,7 @@ function splitQuery(value, index, array) {
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>table</value>
+        <value>Table</value>
       </labels>
       <properties>
         <property>
@@ -845,7 +845,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>has_table</relationship_value>
+    <relationship_value>HAS_TABLE</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -884,7 +884,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -905,7 +905,7 @@ function splitQuery(value, index, array) {
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -923,7 +923,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>step_hop</relationship_value>
+    <relationship_value>STEP_HOP</relationship_value>
     <relprops>
       <relprop>
         <name />
@@ -968,7 +968,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -989,7 +989,7 @@ function splitQuery(value, index, array) {
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>steptype</value>
+        <value>StepType</value>
       </labels>
       <properties>
         <property>
@@ -1001,7 +1001,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>of_step_type</relationship_value>
+    <relationship_value>STEP_IS_OF_TYPE</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1726,7 +1726,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -1759,7 +1759,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>uses_connection</relationship_value>
+    <relationship_value>USES_CONNECTION</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1798,7 +1798,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -1831,7 +1831,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>uses_table</relationship_value>
+    <relationship_value>USES_TABLE</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1870,7 +1870,7 @@ function splitQuery(value, index, array) {
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>step</value>
+        <value>Step</value>
       </labels>
       <properties>
         <property>
@@ -1891,7 +1891,7 @@ function splitQuery(value, index, array) {
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>table</value>
+        <value>Table</value>
       </labels>
       <properties>
         <property>
@@ -1903,7 +1903,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>uses_table</relationship_value>
+    <relationship_value>USES_TABLE</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1914,7 +1914,7 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
+      <xloc>592</xloc>
       <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>

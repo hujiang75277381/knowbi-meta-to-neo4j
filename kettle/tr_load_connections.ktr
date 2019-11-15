@@ -548,7 +548,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>connection</value>
+        <value>Connection</value>
       </labels>
       <properties>
         <property>
@@ -628,7 +628,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>connection</value>
+        <value>Connection</value>
       </labels>
       <properties>
         <property>
@@ -667,7 +667,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>server</value>
+        <value>Server</value>
       </labels>
       <properties>
         <property>
@@ -679,7 +679,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>runs_on_host</relationship_value>
+    <relationship_value>RUNS_ON_HOST</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -718,7 +718,7 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>connection</value>
+        <value>Connection</value>
       </labels>
       <properties>
         <property>
@@ -757,7 +757,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>port</value>
+        <value>Port</value>
       </labels>
       <properties>
         <property>
@@ -769,7 +769,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>runs_on_port</relationship_value>
+    <relationship_value>RUNS_ON_PORT</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />

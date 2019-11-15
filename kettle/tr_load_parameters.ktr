@@ -486,7 +486,7 @@
       <read_only_from_node>Y</read_only_from_node>
       <labels>
         <label />
-        <value>job</value>
+        <value>Job</value>
       </labels>
       <properties>
         <property>
@@ -501,7 +501,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>parameter</value>
+        <value>Parameter</value>
       </labels>
       <properties>
         <property>
@@ -531,7 +531,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>uses_parameter</relationship_value>
+    <relationship_value>JOB_USES_PARAMETER</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -860,7 +860,7 @@
       <read_only_from_node>Y</read_only_from_node>
       <labels>
         <label />
-        <value>transformation</value>
+        <value>Transformation</value>
       </labels>
       <properties>
         <property>
@@ -875,7 +875,7 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>parameter</value>
+        <value>Parameter</value>
       </labels>
       <properties>
         <property>
@@ -905,7 +905,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>uses_parameter</relationship_value>
+    <relationship_value>TRANS_USES_PARAMETER</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
