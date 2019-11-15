@@ -443,19 +443,19 @@
     <access>Native</access>
     <database />
     <port>1521</port>
-    <username>${gennconn_name}</username>
-    <password>${gennconn_pass}</password>
+    <username>${genconn_name}</username>
+    <password>${genconn_pass}</password>
     <servername />
     <data_tablespace />
     <index_tablespace />
     <attributes>
       <attribute>
         <code>CUSTOM_DRIVER_CLASS</code>
-        <attribute>${gennconn_driver}</attribute>
+        <attribute>${genconn_driver}</attribute>
       </attribute>
       <attribute>
         <code>CUSTOM_URL</code>
-        <attribute>${gennconn_url}</attribute>
+        <attribute>${genconn_url}</attribute>
       </attribute>
       <attribute>
         <code>DATABASE_DIALECT_ID</code>
@@ -551,48 +551,6 @@
     </GUI>
   </step>
   <step>
-    <name>Read columns</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>gennconn</connection>
-    <sql>select distinct
-	  current_database()
-	, isc.table_schema
-	, schema_owner
-	, isc.table_name
-	, isc.column_name
-	, isc.data_type
-	, isc.is_nullable 
-from information_schema.columns isc
-	left outer join information_schema.schemata iss on isc.table_schema = iss.schema_name
-</sql>
-    <limit>0</limit>
-    <lookup />
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>80</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Neo4j Graph Output</name>
     <type>Neo4jGraphOutput</type>
     <description />
@@ -603,7 +561,7 @@ from information_schema.columns isc
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>lineage-graph</connection>
     <model>rdbms</model>
     <batch_size />
     <create_indexes>Y</create_indexes>
@@ -652,6 +610,12 @@ from information_schema.columns isc
         <target_name>table</target_name>
         <target_property>name</target_property>
       </mapping>
+      <mapping>
+        <source_field>table_name</source_field>
+        <target_type>Node</target_type>
+        <target_name>column</target_name>
+        <target_property>table</target_property>
+      </mapping>
     </mappings>
     <attributes />
     <cluster_schema />
@@ -663,6 +627,48 @@ from information_schema.columns isc
     </remotesteps>
     <GUI>
       <xloc>528</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Read columns</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>gennconn</connection>
+    <sql>select distinct
+	  current_database()
+	, isc.table_schema
+	, schema_owner
+	, isc.table_name
+	, isc.column_name
+	, isc.data_type
+	, isc.is_nullable 
+from information_schema.columns isc
+	left outer join information_schema.schemata iss on isc.table_schema = iss.schema_name
+</sql>
+    <limit>0</limit>
+    <lookup />
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>80</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
