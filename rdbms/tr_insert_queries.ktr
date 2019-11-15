@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_insert_db</name>
+    <name>tr_insert_queries</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -9,6 +9,11 @@
     <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
+      <parameter>
+        <name>genconn_database</name>
+        <default_value/>
+        <description/>
+      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -428,9 +433,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/02/18 21:09:51.923</created_date>
+    <created_date>2019/11/15 15:13:41.978</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/02/18 21:09:51.923</modified_date>
+    <modified_date>2019/11/15 15:13:41.978</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -501,57 +506,18 @@
   </connection>
   <order>
     <hop>
-      <from>Read columns</from>
-      <to>Get Variables</to>
+      <from>Read queries</from>
+      <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Get Variables</from>
-      <to>Neo4j DB</to>
+      <from>Select values</from>
+      <to>Neo4j Queries</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Get Variables</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>PRM_DATABASE_TYPE</name>
-        <variable>${PRM_DATABASE_TYPE}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>300</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Neo4j DB</name>
+    <name>Neo4j Queries</name>
     <type>Neo4jGraphOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -569,52 +535,28 @@
     <return_graph_field/>
     <mappings>
       <mapping>
-        <source_field>current_database</source_field>
+        <source_field>datname</source_field>
         <target_type>Node</target_type>
         <target_name>database</target_name>
         <target_property>database</target_property>
       </mapping>
       <mapping>
-        <source_field>table_schema</source_field>
+        <source_field>usename</source_field>
         <target_type>Node</target_type>
-        <target_name>schema</target_name>
-        <target_property>schema</target_property>
+        <target_name>user</target_name>
+        <target_property>user</target_property>
       </mapping>
       <mapping>
-        <source_field>schema_owner</source_field>
+        <source_field>query</source_field>
         <target_type>Node</target_type>
-        <target_name>schema</target_name>
-        <target_property>owner</target_property>
+        <target_name>query</target_name>
+        <target_property>query</target_property>
       </mapping>
       <mapping>
-        <source_field>data_type</source_field>
+        <source_field>query_start_date</source_field>
         <target_type>Node</target_type>
-        <target_name>datatype</target_name>
-        <target_property>datatype</target_property>
-      </mapping>
-      <mapping>
-        <source_field>is_nullable</source_field>
-        <target_type>Node</target_type>
-        <target_name>nullable</target_name>
-        <target_property>nullable</target_property>
-      </mapping>
-      <mapping>
-        <source_field>column_name</source_field>
-        <target_type>Node</target_type>
-        <target_name>column</target_name>
-        <target_property>name</target_property>
-      </mapping>
-      <mapping>
-        <source_field>table_name</source_field>
-        <target_type>Node</target_type>
-        <target_name>table</target_name>
-        <target_property>name</target_property>
-      </mapping>
-      <mapping>
-        <source_field>table_name</source_field>
-        <target_type>Node</target_type>
-        <target_name>column</target_name>
-        <target_property>table</target_property>
+        <target_name>query</target_name>
+        <target_property>start_date</target_property>
       </mapping>
     </mappings>
     <attributes/>
@@ -627,12 +569,12 @@
     </remotesteps>
     <GUI>
       <xloc>528</xloc>
-      <yloc>64</yloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Read columns</name>
+    <name>Read queries</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -643,17 +585,14 @@
       <schema_name/>
     </partitioning>
     <connection>gennconn</connection>
-    <sql>select distinct
-	  current_database()
-	, isc.table_schema
-	, schema_owner
-	, isc.table_name
-	, isc.column_name
-	, isc.data_type
-	, isc.is_nullable 
-from information_schema.columns isc
-	left outer join information_schema.schemata iss on isc.table_schema = iss.schema_name
-where table_schema not in ('information_schema', 'pg_catalog')</sql>
+    <sql>select 
+	  datname
+	, usename
+	, query
+	, query_start::date as query_start_date
+	, query_start::time as query_start_time
+FROM pg_stat_activity
+where datname = '${genconn_database}' </sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -668,8 +607,70 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>80</xloc>
-      <yloc>64</yloc>
+      <xloc>128</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <meta>
+        <name>query_start_date</name>
+        <rename>query_start_date</rename>
+        <type>Date</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>query_start_time</name>
+        <rename>query_start_time</rename>
+        <type>Timestamp</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>HH:mm:ss.SSS</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -678,9 +679,5 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
-  <attributes>
-    <group>
-      <name>explorerState</name>
-    </group>
-  </attributes>
+  <attributes/>
 </transformation>
