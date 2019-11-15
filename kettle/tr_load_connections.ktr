@@ -11,7 +11,7 @@
     <parameters>
       <parameter>
         <name>PRM_ETL_DIR</name>
-        <default_value>C:\Users\Lokke\Documents\Know.bi\Drivolution\drivolution-dcn-auto\ETL</default_value>
+        <default_value/>
         <description/>
       </parameter>
     </parameters>
@@ -463,18 +463,23 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows</from>
-      <to>has_connection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>has_connection</from>
-      <to>port </to>
+      <to>Uses port </to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>port </from>
-      <to>host</to>
+      <from>Uses port </from>
+      <to>Uses host</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>has_connection</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -489,7 +494,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>has_connection</send_true_to>
+    <send_true_to>Sort rows</send_true_to>
     <send_false_to/>
     <compare>
       <condition>
@@ -520,7 +525,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>528</xloc>
+      <xloc>480</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -548,48 +553,34 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>Connection</value>
+        <value>Database</value>
       </labels>
       <properties>
-        <property>
-          <name>name</name>
-          <value>name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
         <property>
           <name>database</name>
           <value>database</value>
           <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>port</name>
-          <value>port</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>username</name>
-          <value>username</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>password</name>
-          <value>password</value>
-          <type>String</type>
-          <primary>N</primary>
+          <primary>Y</primary>
         </property>
       </properties>
     </from>
     <to>
       <read_only_to_node>N</read_only_to_node>
-      <labels/>
-      <properties/>
+      <labels>
+        <label/>
+        <value>Connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>connection</name>
+          <value>name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
     </to>
     <relationship/>
-    <relationship_value/>
+    <relationship_value>HAS_CONNECTION</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -600,13 +591,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
+      <xloc>880</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>host</name>
+    <name>Uses host</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -628,38 +619,14 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>Connection</value>
+        <value>Database</value>
       </labels>
       <properties>
-        <property>
-          <name>name</name>
-          <value>name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
         <property>
           <name>database</name>
           <value>database</value>
           <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>port</name>
-          <value>port</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>username</name>
-          <value>username</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>password</name>
-          <value>password</value>
-          <type>String</type>
-          <primary>N</primary>
+          <primary>Y</primary>
         </property>
       </properties>
     </from>
@@ -679,7 +646,7 @@
       </properties>
     </to>
     <relationship/>
-    <relationship_value>RUNS_ON_HOST</relationship_value>
+    <relationship_value>USES_HOST</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -690,13 +657,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1264</xloc>
+      <xloc>1280</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>port </name>
+    <name>Uses port </name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -718,38 +685,14 @@
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>Connection</value>
+        <value>Database</value>
       </labels>
       <properties>
-        <property>
-          <name>name</name>
-          <value>name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
         <property>
           <name>database</name>
           <value>database</value>
           <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>port</name>
-          <value>port</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>username</name>
-          <value>username</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>password</name>
-          <value>password</value>
-          <type>String</type>
-          <primary>N</primary>
+          <primary>Y</primary>
         </property>
       </properties>
     </from>
@@ -769,7 +712,7 @@
       </properties>
     </to>
     <relationship/>
-    <relationship_value>RUNS_ON_PORT</relationship_value>
+    <relationship_value>USES_PORT</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -780,7 +723,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1040</xloc>
+      <xloc>1080</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1374,7 +1317,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>336</xloc>
+      <xloc>280</xloc>
       <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1426,7 +1369,105 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>336</xloc>
+      <xloc>280</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>server</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>type</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>access</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>port</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>username</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>password</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>680</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
