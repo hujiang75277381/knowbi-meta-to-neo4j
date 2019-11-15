@@ -575,9 +575,39 @@
         <target_property>database</target_property>
       </mapping>
       <mapping>
+        <source_field>current_database</source_field>
+        <target_type>Node</target_type>
+        <target_name>schema</target_name>
+        <target_property>database</target_property>
+      </mapping>
+      <mapping>
+        <source_field>current_database</source_field>
+        <target_type>Node</target_type>
+        <target_name>table</target_name>
+        <target_property>database</target_property>
+      </mapping>
+      <mapping>
+        <source_field>current_database</source_field>
+        <target_type>Node</target_type>
+        <target_name>column</target_name>
+        <target_property>database</target_property>
+      </mapping>
+      <mapping>
         <source_field>table_schema</source_field>
         <target_type>Node</target_type>
         <target_name>schema</target_name>
+        <target_property>schema</target_property>
+      </mapping>
+      <mapping>
+        <source_field>table_schema</source_field>
+        <target_type>Node</target_type>
+        <target_name>table</target_name>
+        <target_property>schema</target_property>
+      </mapping>
+      <mapping>
+        <source_field>table_schema</source_field>
+        <target_type>Node</target_type>
+        <target_name>column</target_name>
         <target_property>schema</target_property>
       </mapping>
       <mapping>
@@ -585,6 +615,24 @@
         <target_type>Node</target_type>
         <target_name>schema</target_name>
         <target_property>owner</target_property>
+      </mapping>
+      <mapping>
+        <source_field>table_name</source_field>
+        <target_type>Node</target_type>
+        <target_name>table</target_name>
+        <target_property>table</target_property>
+      </mapping>
+      <mapping>
+        <source_field>table_name</source_field>
+        <target_type>Node</target_type>
+        <target_name>column</target_name>
+        <target_property>table</target_property>
+      </mapping>
+      <mapping>
+        <source_field>column_name</source_field>
+        <target_type>Node</target_type>
+        <target_name>column</target_name>
+        <target_property>column</target_property>
       </mapping>
       <mapping>
         <source_field>data_type</source_field>
@@ -597,24 +645,6 @@
         <target_type>Node</target_type>
         <target_name>nullable</target_name>
         <target_property>nullable</target_property>
-      </mapping>
-      <mapping>
-        <source_field>column_name</source_field>
-        <target_type>Node</target_type>
-        <target_name>column</target_name>
-        <target_property>name</target_property>
-      </mapping>
-      <mapping>
-        <source_field>table_name</source_field>
-        <target_type>Node</target_type>
-        <target_name>table</target_name>
-        <target_property>name</target_property>
-      </mapping>
-      <mapping>
-        <source_field>table_name</source_field>
-        <target_type>Node</target_type>
-        <target_name>column</target_name>
-        <target_property>table</target_property>
       </mapping>
     </mappings>
     <attributes/>
