@@ -13,7 +13,7 @@
   <parameters>
     <parameter>
       <name>PRM_ETL_DIR</name>
-      <default_value>/home/bart/git-customers/drivolution-dcn-auto</default_value>
+      <default_value />
       <description />
     </parameter>
   </parameters>
