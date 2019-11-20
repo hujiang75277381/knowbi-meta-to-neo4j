@@ -11,7 +11,7 @@
     <parameters>
       <parameter>
         <name>PRM_RDS_JSON</name>
-        <default_value>C:\Users\Lokke\Documents\Clients\Pentaho\20191119_rds_describe.json</default_value>
+        <default_value/>
         <description/>
       </parameter>
     </parameters>
@@ -504,6 +504,499 @@
     </hop>
   </order>
   <step>
+    <name>Data grid</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>region_code</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>region_name</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <data>
+      <line>
+        <item>us-east-2</item>
+        <item>US East (Ohio)</item>
+      </line>
+      <line>
+        <item>us-east-1</item>
+        <item>US East (N. Virginia)</item>
+      </line>
+      <line>
+        <item>us-west-1</item>
+        <item>US West (N. California)</item>
+      </line>
+      <line>
+        <item>us-west-2</item>
+        <item>US West (Oregon)</item>
+      </line>
+      <line>
+        <item>ap-east-1</item>
+        <item>Asia Pacific (Hong Kong)</item>
+      </line>
+      <line>
+        <item>ap-south-1</item>
+        <item>Asia Pacific (Mumbai)</item>
+      </line>
+      <line>
+        <item>ap-northeast-3</item>
+        <item>Asia Pacific (Osaka-Local)</item>
+      </line>
+      <line>
+        <item>ap-northeast-2</item>
+        <item>Asia Pacific (Seoul)</item>
+      </line>
+      <line>
+        <item>ap-southeast-1</item>
+        <item>Asia Pacific (Singapore)</item>
+      </line>
+      <line>
+        <item>ap-southeast-2</item>
+        <item>Asia Pacific (Sydney)</item>
+      </line>
+      <line>
+        <item>ap-northeast-1</item>
+        <item>Asia Pacific (Tokyo)</item>
+      </line>
+      <line>
+        <item>ca-central-1</item>
+        <item>Canada (Central)</item>
+      </line>
+      <line>
+        <item>eu-central-1</item>
+        <item>EU (Frankfurt)</item>
+      </line>
+      <line>
+        <item>eu-west-1</item>
+        <item>EU (Ireland)</item>
+      </line>
+      <line>
+        <item>eu-west-2</item>
+        <item>EU (London)</item>
+      </line>
+      <line>
+        <item>eu-west-3</item>
+        <item>EU (Paris)</item>
+      </line>
+      <line>
+        <item>eu-north-1</item>
+        <item>EU (Stockholm)</item>
+      </line>
+      <line>
+        <item>me-south-1</item>
+        <item>Middle East (Bahrain)</item>
+      </line>
+      <line>
+        <item>sa-east-1</item>
+        <item>South America (São Paulo)</item>
+      </line>
+    </data>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>939</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter region</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>AvailabilityZone</leftvalue>
+        <function>STARTS WITH</function>
+        <rightvalue>region_code</rightvalue>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1114</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Join rows (cartesian product)</name>
+    <type>JoinRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <cache_size>500</cache_size>
+    <main>Select values</main>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue/>
+        <function>=</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>939</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Output has_rds</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>Subnet</value>
+      </labels>
+      <properties>
+        <property>
+          <name>id</name>
+          <value>SubnetIdentifier</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>az</name>
+          <value>SubnetAvailabilityZoneName</value>
+          <type/>
+          <primary>N</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label/>
+        <value>Server</value>
+      </labels>
+      <properties>
+        <property>
+          <name>host</name>
+          <value>Address</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship/>
+    <relationship_value>HAS_RDS</relationship_value>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1464</xloc>
+      <yloc>376</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Output has_subnet</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>SubnetGroup</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>DBSubnetGroupName</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label/>
+        <value>Subnet</value>
+      </labels>
+      <properties>
+        <property>
+          <name>id</name>
+          <value>SubnetIdentifier</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>az</name>
+          <value>SubnetAvailabilityZoneName</value>
+          <type/>
+          <primary>N</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship/>
+    <relationship_value>HAS_SUBNET</relationship_value>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1464</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Output has_subnetgroup</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>VPC</value>
+      </labels>
+      <properties>
+        <property>
+          <name>id</name>
+          <value>VpcId</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>az</name>
+          <value>AvailabilityZone</value>
+          <type/>
+          <primary>N</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label/>
+        <value>SubnetGroup</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>DBSubnetGroupName</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship/>
+    <relationship_value>HAS_SUBNETGROUP</relationship_value>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1464</xloc>
+      <yloc>168</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Output has_vpc</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>Region</value>
+      </labels>
+      <properties>
+        <property>
+          <name>Code</name>
+          <value>region_code</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>Name</name>
+          <value>region_name</value>
+          <type/>
+          <primary>N</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label/>
+        <value>VPC</value>
+      </labels>
+      <properties>
+        <property>
+          <name>id</name>
+          <value>VpcId</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>az</name>
+          <value>AvailabilityZone</value>
+          <type/>
+          <primary>N</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship/>
+    <relationship_value>HAS_VPC</relationship_value>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1464</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Read DBSubnetGroup</name>
     <type>JsonInput</type>
     <description/>
@@ -595,6 +1088,159 @@
     </remotesteps>
     <GUI>
       <xloc>239</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Read SubnetAvailabilityZone</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>SubnetAvailabilityZoneName</name>
+        <path>$[*].Name</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>Subnets</valueField>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>589</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Read Subnets</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>SubnetIdentifier</name>
+        <path>$[*].SubnetIdentifier</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>SubnetAvailabilityZone</name>
+        <path>$[*].SubnetAvailabilityZone</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>Y</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>Subnets</valueField>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>414</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -891,83 +1537,63 @@
     <fields>
       <field>
         <name>DBInstanceIdentifier</name>
-        <rename/>
       </field>
       <field>
         <name>DBInstanceClass</name>
-        <rename/>
       </field>
       <field>
         <name>Engine</name>
-        <rename/>
       </field>
       <field>
         <name>MasterUsername</name>
-        <rename/>
       </field>
       <field>
         <name>DBName</name>
-        <rename/>
       </field>
       <field>
         <name>AllocatedStorage</name>
-        <rename/>
       </field>
       <field>
         <name>InstanceCreateTime</name>
-        <rename/>
       </field>
       <field>
         <name>PreferredBackupWindow</name>
-        <rename/>
       </field>
       <field>
         <name>BackupRetentionPeriod</name>
-        <rename/>
       </field>
       <field>
         <name>AvailabilityZone</name>
-        <rename/>
       </field>
       <field>
         <name>EngineVersion</name>
-        <rename/>
       </field>
       <field>
         <name>StorageType</name>
-        <rename/>
       </field>
       <field>
         <name>StorageEncrypted</name>
-        <rename/>
       </field>
       <field>
         <name>IAMDatabaseAuthenticationEnabled</name>
-        <rename/>
       </field>
       <field>
         <name>Address</name>
-        <rename/>
       </field>
       <field>
         <name>Port</name>
-        <rename/>
       </field>
       <field>
         <name>VpcId</name>
-        <rename/>
       </field>
       <field>
         <name>DBSubnetGroupName</name>
-        <rename/>
       </field>
       <field>
         <name>SubnetIdentifier</name>
-        <rename/>
       </field>
       <field>
         <name>SubnetAvailabilityZoneName</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -981,502 +1607,6 @@
     </remotesteps>
     <GUI>
       <xloc>764</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Data grid</name>
-    <type>DataGrid</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>region_code</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>region_name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <data>
-      <line>
-        <item>us-east-2</item>
-        <item>US East (Ohio)</item>
-      </line>
-      <line>
-        <item>us-east-1</item>
-        <item>US East (N. Virginia)</item>
-      </line>
-      <line>
-        <item>us-west-1</item>
-        <item>US West (N. California)</item>
-      </line>
-      <line>
-        <item>us-west-2</item>
-        <item>US West (Oregon)</item>
-      </line>
-      <line>
-        <item>ap-east-1</item>
-        <item>Asia Pacific (Hong Kong)</item>
-      </line>
-      <line>
-        <item>ap-south-1</item>
-        <item>Asia Pacific (Mumbai)</item>
-      </line>
-      <line>
-        <item>ap-northeast-3</item>
-        <item>Asia Pacific (Osaka-Local)</item>
-      </line>
-      <line>
-        <item>ap-northeast-2</item>
-        <item>Asia Pacific (Seoul)</item>
-      </line>
-      <line>
-        <item>ap-southeast-1</item>
-        <item>Asia Pacific (Singapore)</item>
-      </line>
-      <line>
-        <item>ap-southeast-2</item>
-        <item>Asia Pacific (Sydney)</item>
-      </line>
-      <line>
-        <item>ap-northeast-1</item>
-        <item>Asia Pacific (Tokyo)</item>
-      </line>
-      <line>
-        <item>ca-central-1</item>
-        <item>Canada (Central)</item>
-      </line>
-      <line>
-        <item>eu-central-1</item>
-        <item>EU (Frankfurt)</item>
-      </line>
-      <line>
-        <item>eu-west-1</item>
-        <item>EU (Ireland)</item>
-      </line>
-      <line>
-        <item>eu-west-2</item>
-        <item>EU (London)</item>
-      </line>
-      <line>
-        <item>eu-west-3</item>
-        <item>EU (Paris)</item>
-      </line>
-      <line>
-        <item>eu-north-1</item>
-        <item>EU (Stockholm)</item>
-      </line>
-      <line>
-        <item>me-south-1</item>
-        <item>Middle East (Bahrain)</item>
-      </line>
-      <line>
-        <item>sa-east-1</item>
-        <item>South America (São Paulo)</item>
-      </line>
-    </data>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>939</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Join rows (cartesian product)</name>
-    <type>JoinRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <cache_size>500</cache_size>
-    <main>Select values</main>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue/>
-        <function>=</function>
-        <rightvalue/>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>939</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter region</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to/>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>AvailabilityZone</leftvalue>
-        <function>STARTS WITH</function>
-        <rightvalue>region_code</rightvalue>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1114</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Output has_vpc</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>Region</value>
-      </labels>
-      <properties>
-        <property>
-          <name>Code</name>
-          <value>region_code</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>Name</name>
-          <value>region_name</value>
-          <type/>
-          <primary>N</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>VPC</value>
-      </labels>
-      <properties>
-        <property>
-          <name>id</name>
-          <value>VpcId</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>az</name>
-          <value>AvailabilityZone</value>
-          <type/>
-          <primary>N</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>HAS_VPC</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1464</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Output has_subnetgroup</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>VPC</value>
-      </labels>
-      <properties>
-        <property>
-          <name>id</name>
-          <value>VpcId</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>SubnetGroup</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>DBSubnetGroupName</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>HAS_SUBNETGROUP</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1464</xloc>
-      <yloc>168</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Read Subnets</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-      <name/>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>SubnetIdentifier</name>
-        <path>$[*].SubnetIdentifier</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>SubnetAvailabilityZone</name>
-        <path>$[*].SubnetAvailabilityZone</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>Y</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>Y</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField>Subnets</valueField>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>414</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Read SubnetAvailabilityZone</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-      <name/>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>SubnetAvailabilityZoneName</name>
-        <path>$[*].Name</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>Y</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField>Subnets</valueField>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>589</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1688,150 +1818,6 @@
     <GUI>
       <xloc>1289</xloc>
       <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Output has_subnet</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>SubnetGroup</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>DBSubnetGroupName</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>Subnet</value>
-      </labels>
-      <properties>
-        <property>
-          <name>id</name>
-          <value>SubnetIdentifier</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>az</name>
-          <value>SubnetAvailabilityZoneName</value>
-          <type/>
-          <primary>N</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>HAS_SUBNET</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1464</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Output has_rds</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>Subnet</value>
-      </labels>
-      <properties>
-        <property>
-          <name>id</name>
-          <value>SubnetIdentifier</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>az</name>
-          <value>SubnetAvailabilityZoneName</value>
-          <type/>
-          <primary>N</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>Server</value>
-      </labels>
-      <properties>
-        <property>
-          <name>host</name>
-          <value>Address</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>HAS_RDS</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1464</xloc>
-      <yloc>376</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
