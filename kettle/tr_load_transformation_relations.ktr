@@ -2,27 +2,27 @@
 <transformation>
   <info>
     <name>tr_load_transformation_relations</name>
-    <description />
-    <extended_description />
-    <trans_version />
+    <description/>
+    <extended_description/>
+    <trans_version/>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
       <parameter>
         <name>PRM_ETL_DIR</name>
-        <default_value />
-        <description />
+        <default_value/>
+        <description/>
       </parameter>
     </parameters>
     <log>
       <trans-log-table>
-        <connection />
-        <schema />
-        <table />
-        <size_limit_lines />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -47,37 +47,37 @@
           <id>LINES_READ</id>
           <enabled>Y</enabled>
           <name>LINES_READ</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_WRITTEN</id>
           <enabled>Y</enabled>
           <name>LINES_WRITTEN</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_UPDATED</id>
           <enabled>Y</enabled>
           <name>LINES_UPDATED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_INPUT</id>
           <enabled>Y</enabled>
           <name>LINES_INPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_OUTPUT</id>
           <enabled>Y</enabled>
           <name>LINES_OUTPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_REJECTED</id>
           <enabled>Y</enabled>
           <name>LINES_REJECTED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>ERRORS</id>
@@ -131,11 +131,11 @@
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection />
-        <schema />
-        <table />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -213,10 +213,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -279,10 +279,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -355,10 +355,10 @@
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -407,9 +407,9 @@
       </metrics-log-table>
     </log>
     <maxdate>
-      <connection />
-      <table />
-      <field />
+      <connection/>
+      <table/>
+      <field/>
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
@@ -420,7 +420,7 @@
     <feedback_shown>Y</feedback_shown>
     <feedback_size>50000</feedback_size>
     <using_thread_priorities>Y</using_thread_priorities>
-    <shared_objects_file />
+    <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
@@ -458,11 +458,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>remove .ktr</from>
-      <to>select</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>read hops</from>
       <to>remove .ktr 2</to>
       <enabled>Y</enabled>
@@ -483,31 +478,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>unique conn</from>
-      <to>has_connection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>sort connections</from>
-      <to>uses_connection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>unique table</from>
-      <to>has_table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>sort connections</from>
-      <to>filter tables</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>filter tables</from>
-      <to>uses_table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>sql not null</from>
       <to>extract tables</to>
       <enabled>Y</enabled>
@@ -523,39 +493,108 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>table_ext</from>
-      <to>uses_table 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>sort connections 2</from>
-      <to>unique table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>select</from>
-      <to>sort connections 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>extract tables</from>
       <to>errors</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>unique conn</from>
+      <to>Filter connection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter connection</from>
+      <to>has_connection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort connections</from>
+      <to>Filter connection 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter connection 2</from>
+      <to>uses_connection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Calc Cypher</from>
+      <to>Get database</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Get database</from>
+      <to>LU database</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>remove .ktr</from>
+      <to>LU database</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>LU database</from>
+      <to>select</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>remove .ktr</from>
+      <to>Calc Cypher</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort connections</from>
+      <to>If field value is null</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>If field value is null</from>
+      <to>filter tables</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>filter tables</from>
+      <to>uses_table</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>table_ext</from>
+      <to>Add schema</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add schema</from>
+      <to>uses_table 2</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
-    <name>errors</name>
-    <type>Dummy</type>
-    <description />
+    <name>Add schema</name>
+    <type>Constant</type>
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
-    <attributes />
-    <cluster_schema />
+    <fields>
+      <field>
+        <name>schema</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>public</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -563,21 +602,319 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>416</yloc>
+      <xloc>1149</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Calc Cypher</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>C_TMP1</field_name>
+      <calc_type>CONSTANT</calc_type>
+      <field_a>MATCH (n:Connection)-[r]-(m:Database) where n.connection='</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>Y</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>C_TMP2</field_name>
+      <calc_type>CONSTANT</calc_type>
+      <field_a>' return  n.connection, m.database</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>Y</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>get_database</field_name>
+      <calc_type>ADD3</calc_type>
+      <field_a>C_TMP1</field_a>
+      <field_b>connection</field_b>
+      <field_c>C_TMP2</field_c>
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>258</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter connection</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>connection</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>906</xloc>
+      <yloc>360</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter connection 2</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>connection</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>744</xloc>
+      <yloc>464</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Get database</name>
+    <type>Neo4jCypherOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <cypher>MATCH (n:Connection)-[r]-(m:Database) where n.connection='${PRM_CONNECTION}' return  n.connection, m.database
+</cypher>
+    <batch_size/>
+    <read_only>N</read_only>
+    <retry>Y</retry>
+    <cypher_from_field>Y</cypher_from_field>
+    <cypher_field>get_database</cypher_field>
+    <unwind>N</unwind>
+    <unwind_map/>
+    <returning_graph>N</returning_graph>
+    <return_graph_field/>
+    <mappings/>
+    <returns>
+      <return>
+        <name>n.connection</name>
+        <type>String</type>
+        <source_type>String</source_type>
+      </return>
+      <return>
+        <name>m.database</name>
+        <type>String</type>
+        <source_type>String</source_type>
+      </return>
+    </returns>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>420</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>If field value is null</name>
+    <type>IfNull</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <replaceAllByValue/>
+    <replaceAllMask/>
+    <selectFields>Y</selectFields>
+    <selectValuesType>N</selectValuesType>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <valuetypes>
+      </valuetypes>
+    <fields>
+      <field>
+        <name>schema</name>
+        <value>public</value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>744</xloc>
+      <yloc>572</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>LU database</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>Get database</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>connection</name>
+        <field>n.connection</field>
+      </key>
+      <value>
+        <name>m.database</name>
+        <rename>database</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>420</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>errors</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>906</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>extract tables</name>
     <type>ScriptValueMod</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <compatible>N</compatible>
     <optimizationLevel>9</optimizationLevel>
@@ -608,8 +945,8 @@ function splitQuery(value, index, array) {
         <replace>N</replace>
       </field>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -617,34 +954,34 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>432</xloc>
-      <yloc>384</yloc>
+      <xloc>906</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>filter tables</name>
     <type>FilterRows</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
-    <send_true_to>uses_table</send_true_to>
-    <send_false_to />
+    <send_true_to/>
+    <send_false_to/>
     <compare>
       <condition>
         <negated>N</negated>
         <leftvalue>table</leftvalue>
         <function>IS NOT NULL</function>
-        <rightvalue />
+        <rightvalue/>
       </condition>
     </compare>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -652,25 +989,25 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1024</xloc>
-      <yloc>368</yloc>
+      <xloc>906</xloc>
+      <yloc>572</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>has_connection</name>
     <type>Neo4JOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
-    <key />
+    <key/>
     <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
@@ -679,7 +1016,7 @@ function splitQuery(value, index, array) {
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
-        <label />
+        <label/>
         <value>Transformation</value>
       </labels>
       <properties>
@@ -694,7 +1031,7 @@ function splitQuery(value, index, array) {
     <to>
       <read_only_to_node>N</read_only_to_node>
       <labels>
-        <label />
+        <label/>
         <value>Connection</value>
       </labels>
       <properties>
@@ -706,11 +1043,11 @@ function splitQuery(value, index, array) {
         </property>
       </properties>
     </to>
-    <relationship />
+    <relationship/>
     <relationship_value>HAS_CONNECTION</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -718,25 +1055,25 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>240</yloc>
+      <xloc>1068</xloc>
+      <yloc>360</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>has_step</name>
     <type>Neo4JOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
-    <key />
+    <key/>
     <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
@@ -745,7 +1082,7 @@ function splitQuery(value, index, array) {
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
-        <label />
+        <label/>
         <value>Transformation</value>
       </labels>
       <properties>
@@ -760,7 +1097,7 @@ function splitQuery(value, index, array) {
     <to>
       <read_only_to_node>N</read_only_to_node>
       <labels>
-        <label />
+        <label/>
         <value>Step</value>
       </labels>
       <properties>
@@ -778,11 +1115,11 @@ function splitQuery(value, index, array) {
         </property>
       </properties>
     </to>
-    <relationship />
+    <relationship/>
     <relationship_value>HAS_STEP</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -790,91 +1127,25 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>has_table</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>N</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Connection</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>connection</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>Table</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>table</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship />
-    <relationship_value>HAS_TABLE</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>528</yloc>
+      <xloc>744</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>hop</name>
     <type>Neo4JOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
-    <key />
+    <key/>
     <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
@@ -883,7 +1154,7 @@ function splitQuery(value, index, array) {
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
-        <label />
+        <label/>
         <value>Step</value>
       </labels>
       <properties>
@@ -904,7 +1175,7 @@ function splitQuery(value, index, array) {
     <to>
       <read_only_to_node>N</read_only_to_node>
       <labels>
-        <label />
+        <label/>
         <value>Step</value>
       </labels>
       <properties>
@@ -922,17 +1193,17 @@ function splitQuery(value, index, array) {
         </property>
       </properties>
     </to>
-    <relationship />
+    <relationship/>
     <relationship_value>STEP_HOP</relationship_value>
     <relprops>
       <relprop>
-        <name />
+        <name/>
         <value>enabled</value>
         <type>Boolean</type>
       </relprop>
     </relprops>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -940,7 +1211,7 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>784</xloc>
+      <xloc>420</xloc>
       <yloc>736</yloc>
       <draw>Y</draw>
     </GUI>
@@ -948,17 +1219,17 @@ function splitQuery(value, index, array) {
   <step>
     <name>of_type</name>
     <type>Neo4JOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
-    <key />
+    <key/>
     <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
@@ -967,7 +1238,7 @@ function splitQuery(value, index, array) {
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
-        <label />
+        <label/>
         <value>Step</value>
       </labels>
       <properties>
@@ -988,7 +1259,7 @@ function splitQuery(value, index, array) {
     <to>
       <read_only_to_node>N</read_only_to_node>
       <labels>
-        <label />
+        <label/>
         <value>StepType</value>
       </labels>
       <properties>
@@ -1000,11 +1271,11 @@ function splitQuery(value, index, array) {
         </property>
       </properties>
     </to>
-    <relationship />
+    <relationship/>
     <relationship_value>STEP_IS_OF_TYPE</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1012,24 +1283,24 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>160</yloc>
+      <xloc>744</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>read hops</name>
     <type>getXMLData</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <include>N</include>
-    <include_field />
+    <include_field/>
     <rownum>N</rownum>
     <addresultfile>N</addresultfile>
     <namespaceaware>N</namespaceaware>
@@ -1039,12 +1310,12 @@ function splitQuery(value, index, array) {
     <usetoken>N</usetoken>
     <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
     <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <rownum_field />
+    <rownum_field/>
     <encoding>UTF-8</encoding>
     <file>
       <name>${PRM_ETL_DIR}</name>
       <filemask>.*.ktr</filemask>
-      <exclude_filemask />
+      <exclude_filemask/>
       <file_required>N</file_required>
       <include_subfolders>Y</include_subfolders>
     </file>
@@ -1055,10 +1326,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1070,10 +1341,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1085,10 +1356,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1099,18 +1370,18 @@ function splitQuery(value, index, array) {
     <loopxpath>/transformation/order/hop</loopxpath>
     <IsInFields>N</IsInFields>
     <IsAFile>N</IsAFile>
-    <XmlField />
-    <prunePath />
+    <XmlField/>
+    <prunePath/>
     <shortFileFieldName>V_FILENAME</shortFileFieldName>
-    <pathFieldName />
-    <hiddenFieldName />
-    <lastModificationTimeFieldName />
-    <uriNameFieldName />
-    <rootUriNameFieldName />
-    <extensionFieldName />
-    <sizeFieldName />
-    <attributes />
-    <cluster_schema />
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1126,16 +1397,16 @@ function splitQuery(value, index, array) {
   <step>
     <name>read transformations</name>
     <type>getXMLData</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <include>N</include>
-    <include_field />
+    <include_field/>
     <rownum>N</rownum>
     <addresultfile>N</addresultfile>
     <namespaceaware>N</namespaceaware>
@@ -1145,12 +1416,12 @@ function splitQuery(value, index, array) {
     <usetoken>N</usetoken>
     <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
     <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <rownum_field />
+    <rownum_field/>
     <encoding>UTF-8</encoding>
     <file>
       <name>${PRM_ETL_DIR}</name>
       <filemask>.*.ktr</filemask>
-      <exclude_filemask />
+      <exclude_filemask/>
       <file_required>N</file_required>
       <include_subfolders>Y</include_subfolders>
     </file>
@@ -1161,10 +1432,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1176,10 +1447,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1191,10 +1462,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1206,10 +1477,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1221,10 +1492,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1236,10 +1507,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1251,10 +1522,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1266,10 +1537,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1281,10 +1552,10 @@ function splitQuery(value, index, array) {
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1295,18 +1566,18 @@ function splitQuery(value, index, array) {
     <loopxpath>/transformation/step</loopxpath>
     <IsInFields>N</IsInFields>
     <IsAFile>N</IsAFile>
-    <XmlField />
-    <prunePath />
+    <XmlField/>
+    <prunePath/>
     <shortFileFieldName>transformation_name</shortFileFieldName>
-    <pathFieldName />
-    <hiddenFieldName />
-    <lastModificationTimeFieldName />
-    <uriNameFieldName />
-    <rootUriNameFieldName />
-    <extensionFieldName />
-    <sizeFieldName />
-    <attributes />
-    <cluster_schema />
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1315,20 +1586,20 @@ function splitQuery(value, index, array) {
     </remotesteps>
     <GUI>
       <xloc>96</xloc>
-      <yloc>48</yloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>remove .ktr</name>
     <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <fields>
       <field>
@@ -1336,16 +1607,16 @@ function splitQuery(value, index, array) {
         <out_stream_name>transformation</out_stream_name>
         <use_regex>no</use_regex>
         <replace_string>.ktr</replace_string>
-        <replace_by_string />
+        <replace_by_string/>
         <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
+        <replace_field_by_string/>
         <whole_word>no</whole_word>
         <case_sensitive>no</case_sensitive>
         <is_unicode>no</is_unicode>
       </field>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1353,21 +1624,21 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
-      <yloc>48</yloc>
+      <xloc>258</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>remove .ktr 2</name>
     <type>ReplaceString</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <fields>
       <field>
@@ -1375,16 +1646,16 @@ function splitQuery(value, index, array) {
         <out_stream_name>transformation</out_stream_name>
         <use_regex>no</use_regex>
         <replace_string>.ktr</replace_string>
-        <replace_by_string />
+        <replace_by_string/>
         <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
+        <replace_field_by_string/>
         <whole_word>no</whole_word>
         <case_sensitive>no</case_sensitive>
         <is_unicode>no</is_unicode>
       </field>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1392,7 +1663,7 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
+      <xloc>258</xloc>
       <yloc>736</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1400,13 +1671,13 @@ function splitQuery(value, index, array) {
   <step>
     <name>select</name>
     <type>SelectValues</type>
-    <description />
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <fields>
       <field>
@@ -1442,10 +1713,13 @@ function splitQuery(value, index, array) {
       <field>
         <name>transformation</name>
       </field>
+      <field>
+        <name>database</name>
+      </field>
       <select_unspecified>N</select_unspecified>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1453,28 +1727,28 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>432</xloc>
-      <yloc>48</yloc>
+      <xloc>582</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>sort connections</name>
     <type>SortRows</type>
-    <description />
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <directory>%%java.io.tmpdir%%</directory>
     <prefix>out</prefix>
     <sort_size>1000000</sort_size>
-    <free_memory />
+    <free_memory/>
     <compress>N</compress>
-    <compress_variable />
+    <compress_variable/>
     <unique_rows>N</unique_rows>
     <fields>
       <field>
@@ -1494,8 +1768,8 @@ function splitQuery(value, index, array) {
         <presorted>N</presorted>
       </field>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1503,84 +1777,34 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>848</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>sort connections 2</name>
-    <type>SortRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory />
-    <compress>N</compress>
-    <compress_variable />
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>connection</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>table</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>352</yloc>
+      <xloc>582</xloc>
+      <yloc>360</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>sql not null</name>
     <type>FilterRows</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <send_true_to>extract tables</send_true_to>
-    <send_false_to />
+    <send_false_to/>
     <compare>
       <condition>
         <negated>N</negated>
         <leftvalue>sql</leftvalue>
         <function>IS NOT NULL</function>
-        <rightvalue />
+        <rightvalue/>
       </condition>
     </compare>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1588,31 +1812,31 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>432</xloc>
-      <yloc>272</yloc>
+      <xloc>744</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>table_ext</name>
     <type>SplitFieldToRows3</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <splitfield>arrTables</splitfield>
     <delimiter>,</delimiter>
     <newfield>table_ext</newfield>
     <rownum>N</rownum>
-    <rownum_field />
+    <rownum_field/>
     <resetrownumber>Y</resetrownumber>
     <delimiter_is_regex>N</delimiter_is_regex>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1620,26 +1844,26 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>432</xloc>
-      <yloc>496</yloc>
+      <xloc>1068</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>unique conn</name>
     <type>Unique</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <count_rows>N</count_rows>
-    <count_field />
+    <count_field/>
     <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description />
+    <error_description/>
     <fields>
       <field>
         <name>transformation</name>
@@ -1650,8 +1874,8 @@ function splitQuery(value, index, array) {
         <case_insensitive>N</case_insensitive>
       </field>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1659,64 +1883,25 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1008</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>unique table</name>
-    <type>Unique</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <count_rows>N</count_rows>
-    <count_field />
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description />
-    <fields>
-      <field>
-        <name>connection</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-      <field>
-        <name>table</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>432</yloc>
+      <xloc>744</xloc>
+      <yloc>360</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>uses_connection</name>
     <type>Neo4JOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
-    <key />
+    <key/>
     <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
@@ -1725,7 +1910,7 @@ function splitQuery(value, index, array) {
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
-        <label />
+        <label/>
         <value>Step</value>
       </labels>
       <properties>
@@ -1746,7 +1931,7 @@ function splitQuery(value, index, array) {
     <to>
       <read_only_to_node>N</read_only_to_node>
       <labels>
-        <label />
+        <label/>
         <value>Connection</value>
       </labels>
       <properties>
@@ -1758,11 +1943,11 @@ function splitQuery(value, index, array) {
         </property>
       </properties>
     </to>
-    <relationship />
+    <relationship/>
     <relationship_value>USES_CONNECTION</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1770,25 +1955,25 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>352</yloc>
+      <xloc>1068</xloc>
+      <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>uses_table</name>
     <type>Neo4JOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
-    <key />
+    <key/>
     <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
@@ -1797,7 +1982,7 @@ function splitQuery(value, index, array) {
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
-        <label />
+        <label/>
         <value>Step</value>
       </labels>
       <properties>
@@ -1818,23 +2003,35 @@ function splitQuery(value, index, array) {
     <to>
       <read_only_to_node>N</read_only_to_node>
       <labels>
-        <label />
+        <label/>
         <value>Table</value>
       </labels>
       <properties>
         <property>
-          <name>name</name>
+          <name>table</name>
           <value>table</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>schema</name>
+          <value>schema</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>database</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
     </to>
-    <relationship />
+    <relationship/>
     <relationship_value>USES_TABLE</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1842,25 +2039,25 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>448</yloc>
+      <xloc>1068</xloc>
+      <yloc>572</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>uses_table 2</name>
     <type>Neo4JOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
-    <key />
+    <key/>
     <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
@@ -1869,7 +2066,7 @@ function splitQuery(value, index, array) {
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
-        <label />
+        <label/>
         <value>Step</value>
       </labels>
       <properties>
@@ -1890,23 +2087,35 @@ function splitQuery(value, index, array) {
     <to>
       <read_only_to_node>N</read_only_to_node>
       <labels>
-        <label />
+        <label/>
         <value>Table</value>
       </labels>
       <properties>
         <property>
-          <name>name</name>
+          <name>table</name>
           <value>table_ext</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>schema</name>
+          <value>schema</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>database</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
     </to>
-    <relationship />
+    <relationship/>
     <relationship_value>USES_TABLE</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1914,8 +2123,8 @@ function splitQuery(value, index, array) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>576</yloc>
+      <xloc>1230</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1924,17 +2133,17 @@ function splitQuery(value, index, array) {
       <source_step>extract tables</source_step>
       <target_step>errors</target_step>
       <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename />
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
     </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
-  <attributes />
+  <attributes/>
 </transformation>
