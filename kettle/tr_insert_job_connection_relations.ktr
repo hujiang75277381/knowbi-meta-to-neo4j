@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_load_job_nodes</name>
-    <description />
-    <extended_description />
-    <trans_version />
+    <name>tr_insert_job_connection_relations</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
       <parameter>
         <name>PRM_ETL_DIR</name>
-        <default_value />
-        <description />
+        <default_value/>
+        <description/>
       </parameter>
     </parameters>
     <log>
       <trans-log-table>
-        <connection />
-        <schema />
-        <table />
-        <size_limit_lines />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -47,37 +47,37 @@
           <id>LINES_READ</id>
           <enabled>Y</enabled>
           <name>LINES_READ</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_WRITTEN</id>
           <enabled>Y</enabled>
           <name>LINES_WRITTEN</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_UPDATED</id>
           <enabled>Y</enabled>
           <name>LINES_UPDATED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_INPUT</id>
           <enabled>Y</enabled>
           <name>LINES_INPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_OUTPUT</id>
           <enabled>Y</enabled>
           <name>LINES_OUTPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_REJECTED</id>
           <enabled>Y</enabled>
           <name>LINES_REJECTED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>ERRORS</id>
@@ -131,11 +131,11 @@
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection />
-        <schema />
-        <table />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -213,10 +213,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -279,10 +279,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -355,10 +355,10 @@
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -407,9 +407,9 @@
       </metrics-log-table>
     </log>
     <maxdate>
-      <connection />
-      <table />
-      <field />
+      <connection/>
+      <table/>
+      <field/>
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
@@ -420,7 +420,7 @@
     <feedback_shown>Y</feedback_shown>
     <feedback_size>50000</feedback_size>
     <using_thread_priorities>Y</using_thread_priorities>
-    <shared_objects_file />
+    <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
@@ -433,9 +433,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/09/06 11:43:02.622</created_date>
+    <created_date>2019/12/09 11:25:17.034</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/09/06 11:43:02.622</modified_date>
+    <modified_date>2019/12/09 11:25:17.034</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -443,76 +443,49 @@
   </notepads>
   <order>
     <hop>
-      <from>select</from>
-      <to>jobs</to>
+      <from>Select values</from>
+      <to>Filter connection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>select</from>
-      <to>entries</to>
+      <from>Filter connection</from>
+      <to>Write uses_connection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>select</from>
-      <to>entry types</to>
+      <from>Read jobs</from>
+      <to>Remove .kjb</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>read jobs</from>
-      <to>select</to>
+      <from>Remove .kjb</from>
+      <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>entries</name>
-    <type>Neo4JOutput</type>
-    <description />
+    <name>Filter connection</name>
+    <type>FilterRows</type>
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>JobEntry</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>parent</name>
-          <value>job</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
-    </to>
-    <relationship />
-    <relationship_value />
-    <relprops />
-    <attributes />
-    <cluster_schema />
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>connection</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -520,136 +493,24 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>entry types</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>EntryType</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>type</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
-    </to>
-    <relationship />
-    <relationship_value />
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>736</xloc>
-      <yloc>304</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>jobs</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Job</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>job</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
-    </to>
-    <relationship />
-    <relationship_value />
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>736</xloc>
+      <xloc>664</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>read jobs</name>
+    <name>Read jobs</name>
     <type>getXMLData</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <include>N</include>
-    <include_field />
+    <include_field/>
     <rownum>N</rownum>
     <addresultfile>N</addresultfile>
     <namespaceaware>N</namespaceaware>
@@ -659,41 +520,26 @@
     <usetoken>N</usetoken>
     <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
     <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <rownum_field />
+    <rownum_field/>
     <encoding>UTF-8</encoding>
     <file>
       <name>${PRM_ETL_DIR}</name>
       <filemask>.*.kjb</filemask>
-      <exclude_filemask />
+      <exclude_filemask/>
       <file_required>N</file_required>
       <include_subfolders>Y</include_subfolders>
     </file>
     <fields>
-      <field>
-        <name>Jobname</name>
-        <xpath>../../name</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
       <field>
         <name>name</name>
         <xpath>name</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -705,10 +551,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -720,10 +566,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -735,10 +581,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -750,10 +596,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -765,10 +611,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -780,10 +626,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -795,10 +641,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -810,10 +656,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -825,10 +671,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -840,10 +686,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -855,10 +701,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -870,10 +716,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -885,10 +731,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -900,10 +746,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -915,10 +761,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -930,10 +776,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -945,10 +791,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -960,10 +806,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -975,10 +821,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -990,10 +836,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1005,10 +851,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1020,10 +866,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1035,10 +881,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1050,10 +896,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1065,10 +911,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1080,10 +926,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1095,10 +941,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1110,10 +956,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1125,10 +971,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1140,10 +986,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1155,10 +1001,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1170,10 +1016,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1185,10 +1031,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1200,10 +1046,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1215,10 +1061,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1230,10 +1076,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1245,10 +1091,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1260,10 +1106,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1275,10 +1121,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1290,10 +1136,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1305,10 +1151,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1320,10 +1166,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1335,10 +1181,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1350,10 +1196,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1365,10 +1211,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1380,10 +1226,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1395,10 +1241,10 @@
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -1409,18 +1255,18 @@
     <loopxpath>/job/entries/entry</loopxpath>
     <IsInFields>N</IsInFields>
     <IsAFile>N</IsAFile>
-    <XmlField />
-    <prunePath />
+    <XmlField/>
+    <prunePath/>
     <shortFileFieldName>V_FILENAME</shortFileFieldName>
-    <pathFieldName />
-    <hiddenFieldName />
-    <lastModificationTimeFieldName />
-    <uriNameFieldName />
-    <rootUriNameFieldName />
-    <extensionFieldName />
-    <sizeFieldName />
-    <attributes />
-    <cluster_schema />
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1428,178 +1274,39 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
+      <xloc>64</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>select</name>
+    <name>Select values</name>
     <type>SelectValues</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <fields>
       <field>
-        <name>Jobname</name>
+        <name>job_filename</name>
         <rename>job</rename>
       </field>
       <field>
         <name>name</name>
-      </field>
-      <field>
-        <name>description</name>
-      </field>
-      <field>
-        <name>type</name>
-      </field>
-      <field>
-        <name>start</name>
-      </field>
-      <field>
-        <name>dummy</name>
-      </field>
-      <field>
-        <name>repeat</name>
-      </field>
-      <field>
-        <name>schedulerType</name>
-      </field>
-      <field>
-        <name>intervalSeconds</name>
-      </field>
-      <field>
-        <name>intervalMinutes</name>
-      </field>
-      <field>
-        <name>hour</name>
-      </field>
-      <field>
-        <name>minutes</name>
-      </field>
-      <field>
-        <name>weekDay</name>
-      </field>
-      <field>
-        <name>DayOfMonth</name>
-      </field>
-      <field>
-        <name>parallel</name>
-      </field>
-      <field>
-        <name>draw</name>
-      </field>
-      <field>
-        <name>nr</name>
-      </field>
-      <field>
-        <name>xloc</name>
-      </field>
-      <field>
-        <name>yloc</name>
-      </field>
-      <field>
-        <name>specification_method</name>
-      </field>
-      <field>
-        <name>trans_object_id</name>
-      </field>
-      <field>
-        <name>filename</name>
-      </field>
-      <field>
-        <name>transname</name>
-      </field>
-      <field>
-        <name>arg_from_previous</name>
-      </field>
-      <field>
-        <name>params_from_previous</name>
-      </field>
-      <field>
-        <name>exec_per_row</name>
-      </field>
-      <field>
-        <name>clear_rows</name>
-      </field>
-      <field>
-        <name>clear_files</name>
-      </field>
-      <field>
-        <name>set_logfile</name>
-      </field>
-      <field>
-        <name>logfile</name>
-      </field>
-      <field>
-        <name>logext</name>
-      </field>
-      <field>
-        <name>add_date</name>
-      </field>
-      <field>
-        <name>add_time</name>
-      </field>
-      <field>
-        <name>loglevel</name>
-      </field>
-      <field>
-        <name>cluster</name>
-      </field>
-      <field>
-        <name>slave_server_name</name>
-      </field>
-      <field>
-        <name>set_append_logfile</name>
-      </field>
-      <field>
-        <name>wait_until_finished</name>
-      </field>
-      <field>
-        <name>follow_abort_remote</name>
-      </field>
-      <field>
-        <name>create_parent_folder</name>
-      </field>
-      <field>
-        <name>logging_remote_work</name>
-      </field>
-      <field>
-        <name>run_configuration</name>
-      </field>
-      <field>
-        <name>pass_all_parameters</name>
-      </field>
-      <field>
-        <name>name_1</name>
-      </field>
-      <field>
-        <name>stream_name</name>
-      </field>
-      <field>
-        <name>value</name>
+        <rename/>
       </field>
       <field>
         <name>connection</name>
-      </field>
-      <field>
-        <name>tablename</name>
-      </field>
-      <field>
-        <name>schemaname</name>
-      </field>
-      <field>
-        <name>V_FILENAME</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1607,7 +1314,118 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
+      <xloc>464</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write uses_connection</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>Y</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>JobEntry</value>
+      </labels>
+      <properties>
+        <property>
+          <name>jobentry</name>
+          <value>name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>job</name>
+          <value>job</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label/>
+        <value>Connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>connection</name>
+          <value>connection</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship/>
+    <relationship_value>USES_CONNECTION</relationship_value>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>864</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Remove .kjb</name>
+    <type>ReplaceString</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>V_FILENAME</in_stream_name>
+        <out_stream_name>job_filename</out_stream_name>
+        <use_regex>no</use_regex>
+        <replace_string>.kjb</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>264</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1617,5 +1435,5 @@
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
-  <attributes />
+  <attributes/>
 </transformation>

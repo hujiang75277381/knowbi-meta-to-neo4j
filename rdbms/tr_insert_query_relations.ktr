@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_load_calculatedmembers</name>
+    <name>tr_insert_query_relations</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,17 +10,7 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>PRM_CONNECTION</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>PRM_DATABASE</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>PRM_SCHEMA</name>
+        <name>genconn_database</name>
         <default_value/>
         <description/>
       </parameter>
@@ -443,34 +433,102 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/04/05 15:02:14.277</created_date>
+    <created_date>2019/11/15 15:13:41.978</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/04/05 15:02:14.277</modified_date>
+    <modified_date>2019/11/15 15:13:41.978</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>gennconn</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>${genconn_name}</username>
+    <password>${genconn_pass}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>CUSTOM_DRIVER_CLASS</code>
+        <attribute>${genconn_driver}</attribute>
+      </attribute>
+      <attribute>
+        <code>CUSTOM_URL</code>
+        <attribute>${genconn_url}</attribute>
+      </attribute>
+      <attribute>
+        <code>DATABASE_DIALECT_ID</code>
+        <attribute>Generic database</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>1521</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>Get measures from XML</from>
-      <to>Get Variables</to>
+      <from>Read queries</from>
+      <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>has_cube</from>
-      <to>has_calculatedmember</to>
+      <from>Select values</from>
+      <to>Sort rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Get Variables</from>
-      <to>has_cube</to>
+      <from>Sort rows</from>
+      <to>Write has_executed</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>Write is_executed_on</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Get Variables</name>
-    <type>GetVariable</type>
+    <name>Read queries</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -479,198 +537,20 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>
-      <field>
-        <name>PRM_CONNECTION</name>
-        <variable>${PRM_CONNECTION}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>PRM_DATABASE</name>
-        <variable>${PRM_DATABASE}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>312</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Get measures from XML</name>
-    <type>getXMLData</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field>file_name</include_field>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <namespaceaware>N</namespaceaware>
-    <ignorecomments>N</ignorecomments>
-    <readurl>N</readurl>
-    <validating>N</validating>
-    <usetoken>N</usetoken>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <rownum_field/>
-    <encoding>UTF-8</encoding>
-    <file>
-      <name>${PRM_SCHEMA}</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>schema_name</name>
-        <xpath>../../name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>cube_name</name>
-        <xpath>../name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>table_name</name>
-        <xpath>../Table/name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>table_schema</name>
-        <xpath>../Table/schema</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>calcmember_name</name>
-        <xpath>name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>calcmember_caption</name>
-        <xpath>caption</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>calcmember_type</name>
-        <xpath>datatype</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
+    <connection>gennconn</connection>
+    <sql>select 
+	  datname
+	, usename
+	, query
+	, query_start::date as query_start_date
+	, query_start::time as query_start_time
+FROM pg_stat_activity
+where datname = '${genconn_database}' </sql>
     <limit>0</limit>
-    <loopxpath>/Schema/Cube/CalculatedMember</loopxpath>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <XmlField/>
-    <prunePath/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -680,13 +560,125 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
-      <yloc>64</yloc>
+      <xloc>128</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>has_calculatedmember</name>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <meta>
+        <name>query_start_date</name>
+        <rename>query_start_date</rename>
+        <type>Date</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>query_start_time</name>
+        <rename>query_start_time</rename>
+        <type>Timestamp</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>HH:mm:ss.SSS</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>usename</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>query</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>520</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write has_executed</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -699,22 +691,22 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key/>
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
+    <only_create_relationships>Y</only_create_relationships>
     <returning_graph>N</returning_graph>
     <return_graph_field>graph</return_graph_field>
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>MondrianCube</value>
+        <value>User</value>
       </labels>
       <properties>
         <property>
-          <name>name</name>
-          <value>cube_name</value>
-          <type/>
+          <name>user</name>
+          <value>usename</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
@@ -723,37 +715,19 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label/>
-        <value>CalculatedMember</value>
+        <value>Query</value>
       </labels>
       <properties>
         <property>
-          <name>name</name>
-          <value>calcmember_name</value>
-          <type/>
+          <name>query</name>
+          <value>query</value>
+          <type>String</type>
           <primary>Y</primary>
-        </property>
-        <property>
-          <name>cube</name>
-          <value>cube_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>datatype</name>
-          <value>calcmember_type</value>
-          <type/>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>displayname</name>
-          <value>calcmember_caption</value>
-          <type/>
-          <primary>N</primary>
         </property>
       </properties>
     </to>
     <relationship/>
-    <relationship_value>HAS_CALCULATEDMEMBER</relationship_value>
+    <relationship_value>HAS_EXECUTED</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -764,13 +738,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>712</xloc>
-      <yloc>64</yloc>
+      <xloc>720</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>has_cube</name>
+    <name>Write is_executed_on</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -783,22 +757,22 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key/>
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
+    <only_create_relationships>Y</only_create_relationships>
     <returning_graph>N</returning_graph>
     <return_graph_field>graph</return_graph_field>
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>MondrianSchema</value>
+        <value>Query</value>
       </labels>
       <properties>
         <property>
-          <name>name</name>
-          <value>schema_name</value>
-          <type/>
+          <name>query</name>
+          <value>query</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
@@ -807,19 +781,19 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label/>
-        <value>MondrianCube</value>
+        <value>Database</value>
       </labels>
       <properties>
         <property>
-          <name>name</name>
-          <value>cube_name</value>
-          <type/>
+          <name>database</name>
+          <value>datname</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
     </to>
     <relationship/>
-    <relationship_value>HAS_CUBE</relationship_value>
+    <relationship_value>IS_EXECUTED_ON</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -830,8 +804,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>64</yloc>
+      <xloc>720</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -840,9 +814,5 @@
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
-  <attributes>
-    <group>
-      <name>explorerState</name>
-    </group>
-  </attributes>
+  <attributes/>
 </transformation>

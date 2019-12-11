@@ -1,0 +1,63 @@
+Hi everyone, my name is Lokke Bruyndonckx. I am a data engineer at Know.bi.
+Today I will talk about our data lineage framework with Kettle and Neo4j.
+
+I want to start my presentation with a small question, who among you had the pleasure
+of starting on an existing kettle project with little or no technical documentation?
+>>
+So quite a lot.
+
+Best case scenario, you would get something like this.
+°°°
+A list of all jobs and transformation, most of the time, the repository or a folder.
+
+You could always query the information schema for some database information.
+°°°
+
+But what if, in your source system there is column or a field that will be deleted
+and you will need to examine the impact.
+What you could do is searching in your database for all tables using that column.
+In my example the column ean will be deleted.
+°°°
+If you have decent naming conventions, then that might get you somewhere.
+
+But if you need to adjust all transformations using this column, without decent technical
+documentation you are a bit lost.
+
+What if you could just simply retrieve the transformation names from a system.
+°°°
+
+Maybe even in a visual representation?
+°°°
+explenation verify with list.
+
+When you have made all this adjustments, you need to reload some parts of the ETL to test
+the solution.
+°°° 
+Whel in this case the jobs displayed will need to be executed
+
+All queries executed during this presentation are results of this framework.
+
+The lineage framework basically aims to stores everything. 
+- Infrastructure
+- Kettle/Hop execution logs
+- db information
+- query execution logs
+°°° SCHEMA explenation
+
+why graph databases:
+- focus on relations
+- path finding, graph algorithms allow to find all (known and unknown) relations between two data points, their centrality, connectedness, ...
+--> SQL requires you to know *what* you are looking for, no such this as path finding
+
+
+Whit the framework you will be able to track all information
+°°°
+But also the other way around, you are able to track your data through your whole process
+
+The framework can also contain aws cloud information
+°°°
+
+Next steps will be adding git dependencies, active directory, ...
+
+
+

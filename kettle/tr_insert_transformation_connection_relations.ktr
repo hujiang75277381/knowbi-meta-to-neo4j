@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_load_other_measures</name>
+    <name>tr_insert_transformation_connection_relations</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,17 +10,7 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>PRM_CONNECTION</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>PRM_DATABASE</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>PRM_SCHEMA</name>
+        <name>PRM_ETL_DIR</name>
         <default_value/>
         <description/>
       </parameter>
@@ -443,9 +433,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/04/02 14:48:05.228</created_date>
+    <created_date>2019/12/09 12:53:25.325</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/04/02 14:48:05.228</modified_date>
+    <modified_date>2019/12/09 12:53:25.325</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -453,39 +443,29 @@
   </notepads>
   <order>
     <hop>
-      <from>Get measures from XML</from>
-      <to>Replace in string</to>
+      <from>Select values</from>
+      <to>Filter connection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Replace in string</from>
-      <to>Split Fields</to>
+      <from>Filter connection</from>
+      <to>Write uses_connection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Split Fields</from>
-      <to>Add constants</to>
+      <from>Read transformations</from>
+      <to>Remove .ktr</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>has_cube</from>
-      <to>has_measure</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>has_measure</from>
-      <to>uses_measure</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants</from>
-      <to>has_cube</to>
+      <from>Remove .ktr</from>
+      <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Add constants</name>
-    <type>Constant</type>
+    <name>Filter connection</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -494,20 +474,16 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>
-      <field>
-        <name>V_TYPE</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>virtual</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>connection</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -517,13 +493,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>712</xloc>
-      <yloc>64</yloc>
+      <xloc>676</xloc>
+      <yloc>108</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Get measures from XML</name>
+    <name>Read transformations</name>
     <type>getXMLData</type>
     <description/>
     <distribute>Y</distribute>
@@ -534,7 +510,7 @@
       <schema_name/>
     </partitioning>
     <include>N</include>
-    <include_field>file_name</include_field>
+    <include_field/>
     <rownum>N</rownum>
     <addresultfile>N</addresultfile>
     <namespaceaware>N</namespaceaware>
@@ -547,17 +523,17 @@
     <rownum_field/>
     <encoding>UTF-8</encoding>
     <file>
-      <name>${PRM_SCHEMA}</name>
-      <filemask/>
+      <name>${PRM_ETL_DIR}</name>
+      <filemask>.*.ktr</filemask>
       <exclude_filemask/>
       <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
+      <include_subfolders>Y</include_subfolders>
     </file>
     <fields>
       <field>
-        <name>schema_name</name>
-        <xpath>../../name</xpath>
-        <element_type>attribut</element_type>
+        <name>displayname</name>
+        <xpath>../info/name</xpath>
+        <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
         <format/>
@@ -570,24 +546,9 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>cube_name</name>
-        <xpath>../name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>measure_name</name>
+        <name>name</name>
         <xpath>name</xpath>
-        <element_type>attribut</element_type>
+        <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
         <format/>
@@ -600,10 +561,115 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>measure_cubename</name>
-        <xpath>cubeName</xpath>
-        <element_type>attribut</element_type>
+        <name>type</name>
+        <xpath>type</xpath>
+        <element_type>node</element_type>
         <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>connection</name>
+        <xpath>connection</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>lookup_table</name>
+        <xpath>lookup/table</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>lookup_schema</name>
+        <xpath>lookup/schema</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>table</name>
+        <xpath>table</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>schema</name>
+        <xpath>schema</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>sql</name>
+        <xpath>sql</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>xml</name>
+        <xpath>.[1]</xpath>
+        <element_type>node</element_type>
+        <result_type>singlenode</result_type>
         <type>String</type>
         <format/>
         <currency/>
@@ -616,12 +682,12 @@
       </field>
     </fields>
     <limit>0</limit>
-    <loopxpath>/Schema/VirtualCube/VirtualCubeMeasure</loopxpath>
+    <loopxpath>/transformation/step</loopxpath>
     <IsInFields>N</IsInFields>
     <IsAFile>N</IsAFile>
     <XmlField/>
     <prunePath/>
-    <shortFileFieldName/>
+    <shortFileFieldName>transformation_name</shortFileFieldName>
     <pathFieldName/>
     <hiddenFieldName/>
     <lastModificationTimeFieldName/>
@@ -638,13 +704,125 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
-      <yloc>64</yloc>
+      <xloc>76</xloc>
+      <yloc>108</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Replace in string</name>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>name</name>
+        <rename/>
+      </field>
+      <field>
+        <name>connection</name>
+        <rename/>
+      </field>
+      <field>
+        <name>transformation</name>
+        <rename/>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>476</xloc>
+      <yloc>108</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write uses_connection</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>Y</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>Step</value>
+      </labels>
+      <properties>
+        <property>
+          <name>step</name>
+          <value>name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>transformation</name>
+          <value>transformation</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label/>
+        <value>Connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>connection</name>
+          <value>connection</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship/>
+    <relationship_value>USES_CONNECTION</relationship_value>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>876</xloc>
+      <yloc>108</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Remove .ktr</name>
     <type>ReplaceString</type>
     <description/>
     <distribute>Y</distribute>
@@ -656,22 +834,10 @@
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>measure_name</in_stream_name>
-        <out_stream_name/>
+        <in_stream_name>transformation_name</in_stream_name>
+        <out_stream_name>transformation</out_stream_name>
         <use_regex>no</use_regex>
-        <replace_string>[</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-        <is_unicode>no</is_unicode>
-      </field>
-      <field>
-        <in_stream_name>measure_name</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>]</replace_string>
+        <replace_string>.ktr</replace_string>
         <replace_by_string/>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
@@ -689,284 +855,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>312</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Split Fields</name>
-    <type>FieldSplitter</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <splitfield>measure_name</splitfield>
-    <delimiter>.</delimiter>
-    <enclosure/>
-    <fields>
-      <field>
-        <name>measures</name>
-        <id/>
-        <idrem>N</idrem>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <currency/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>none</trimtype>
-      </field>
-      <field>
-        <name>measure_value</name>
-        <id/>
-        <idrem>N</idrem>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <currency/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>none</trimtype>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>has_cube</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>MondrianSchema</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>schema_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>MondrianCube</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>cube_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>HAS_CUBE</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>has_measure</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>MondrianCube</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>cube_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>Measure</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>measure_value</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>cube</name>
-          <value>cube_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>HAS_MEASURE</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1112</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>uses_measure</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>Measure</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>measure_value</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>cube</name>
-          <value>cube_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>Measure</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>measure_value</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>cube</name>
-          <value>measure_cubename</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>USES_MEASURE</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1312</xloc>
-      <yloc>64</yloc>
+      <xloc>276</xloc>
+      <yloc>108</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

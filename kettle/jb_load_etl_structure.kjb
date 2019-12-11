@@ -1,48 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>jb_insert_db</name>
+  <name>jb_load_etl_structure</name>
   <description/>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2019/11/15 13:30:06.947</created_date>
+  <created_date>2019/12/10 10:24:42.094</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2019/11/15 13:30:06.947</modified_date>
+  <modified_date>2019/12/10 10:24:42.094</modified_date>
   <parameters>
     <parameter>
-      <name>PRM_CONNECTION_NAME</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>PRM_KETTLE_PROPERTIES_DIR</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>genconn_database</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>genconn_driver</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>genconn_name</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>genconn_pass</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>genconn_url</name>
+      <name>PRM_ETL_DIR</name>
       <default_value/>
       <description/>
     </parameter>
@@ -340,18 +310,18 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>200</xloc>
-      <yloc>100</yloc>
+      <xloc>80</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Create connection</name>
+      <name>Insert Job Nodes</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_create_db_connection.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_job_nodes.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -375,31 +345,69 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_CONNECTION_NAME</name>
+          <name>PRM_ETL_DIR</name>
           <stream_name/>
-          <value>${PRM_CONNECTION_NAME}</value>
+          <value>${PRM_ETL_DIR}</value>
         </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>280</xloc>
+      <yloc>80</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Insert Transformation Nodes</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_transformation_nodes.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_KETTLE_PROPERTIES_DIR</name>
+          <name>PRM_ETL_DIR</name>
           <stream_name/>
-          <value>${PRM_KETTLE_PROPERTIES_DIR}</value>
+          <value>${PRM_ETL_DIR}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>400</xloc>
-      <yloc>100</yloc>
+      <xloc>480</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Set Connection</name>
+      <name>Insert Job Relations</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_set_db_connection.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_job_relations.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -422,22 +430,27 @@
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>600</xloc>
-      <yloc>100</yloc>
+      <xloc>680</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Insert db</name>
+      <name>Insert Transformation Relations</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_db.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_transformation_relations.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -460,50 +473,17 @@
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>800</xloc>
-      <yloc>100</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert queries</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_queries.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1000</xloc>
-      <yloc>100</yloc>
+      <xloc>880</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -514,15 +494,15 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1200</xloc>
-      <yloc>100</yloc>
+      <xloc>1080</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
       <from>Start</from>
-      <to>Create connection</to>
+      <to>Insert Job Nodes</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -530,8 +510,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Create connection</from>
-      <to>Set Connection</to>
+      <from>Insert Job Nodes</from>
+      <to>Insert Transformation Nodes</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -539,8 +519,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Set Connection</from>
-      <to>Insert db</to>
+      <from>Insert Transformation Nodes</from>
+      <to>Insert Job Relations</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -548,8 +528,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert db</from>
-      <to>Insert queries</to>
+      <from>Insert Job Relations</from>
+      <to>Insert Transformation Relations</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -557,7 +537,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert queries</from>
+      <from>Insert Transformation Relations</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
