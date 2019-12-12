@@ -528,21 +528,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter update</from>
-      <to>Select values</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values</from>
-      <to>Add constants</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants</from>
-      <to>Replace schema 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>LU database</from>
       <to>Sort rows</to>
       <enabled>Y</enabled>
@@ -625,6 +610,21 @@
     <hop>
       <from>Switch / case</from>
       <to>Write is_key</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter update</from>
+      <to>Add constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants</from>
+      <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values</from>
+      <to>Replace schema 3</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -842,7 +842,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>460</xloc>
+      <xloc>286</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1163,7 +1163,7 @@
       <schema_name/>
     </partitioning>
     <send_true_to>Replace schema 2</send_true_to>
-    <send_false_to>Select values</send_false_to>
+    <send_false_to>Add constants</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -2295,31 +2295,55 @@
     <fields>
       <field>
         <name>trans_name</name>
+        <rename/>
       </field>
       <field>
         <name>step_name</name>
+        <rename/>
       </field>
       <field>
         <name>step_type</name>
+        <rename/>
       </field>
       <field>
         <name>connection</name>
+        <rename/>
       </field>
       <field>
         <name>schema</name>
+        <rename/>
       </field>
       <field>
         <name>table</name>
+        <rename/>
       </field>
       <field>
         <name>update_filter</name>
+        <rename/>
       </field>
       <field>
         <name>name</name>
+        <rename/>
       </field>
       <field>
         <name>lookup</name>
         <rename>rename</rename>
+      </field>
+      <field>
+        <name>creation_method</name>
+        <rename/>
+      </field>
+      <field>
+        <name>use_autoinc</name>
+        <rename/>
+      </field>
+      <field>
+        <name>version</name>
+        <rename/>
+      </field>
+      <field>
+        <name>transformation_name</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -2332,7 +2356,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>286</xloc>
+      <xloc>460</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2391,6 +2415,140 @@
     </remotesteps>
     <GUI>
       <xloc>1512</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Switch / case</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fieldname>relation</fieldname>
+    <use_contains>N</use_contains>
+    <case_value_type>None</case_value_type>
+    <case_value_format/>
+    <case_value_decimal/>
+    <case_value_group/>
+    <default_target_step/>
+    <cases>
+      <case>
+        <value>INSERTS</value>
+        <target_step>Write inserts</target_step>
+      </case>
+      <case>
+        <value>UPDATES</value>
+        <target_step>Write updates</target_step>
+      </case>
+      <case>
+        <value>RETURNS</value>
+        <target_step>Write returns</target_step>
+      </case>
+      <case>
+        <value>IS_KEY</value>
+        <target_step>Write is_key</target_step>
+      </case>
+    </cases>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1512</xloc>
+      <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write field relation</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>Y</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>Step</value>
+      </labels>
+      <properties>
+        <property>
+          <name>transformation</name>
+          <value>transformation</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>step</name>
+          <value>step_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label/>
+        <value>Field</value>
+      </labels>
+      <properties>
+        <property>
+          <name>transformation</name>
+          <value>transformation</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>step</name>
+          <value>step_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>field</name>
+          <value>field_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship/>
+    <relationship_value>HAS_FIELD</relationship_value>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1704</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2492,141 +2650,7 @@
     </GUI>
   </step>
   <step>
-    <name>Write field relation</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>Step</value>
-      </labels>
-      <properties>
-        <property>
-          <name>transformation</name>
-          <value>transformation</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>step</name>
-          <value>step_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label/>
-        <value>Field</value>
-      </labels>
-      <properties>
-        <property>
-          <name>transformation</name>
-          <value>transformation</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>step</name>
-          <value>step_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>field</name>
-          <value>field_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship/>
-    <relationship_value>HAS_FIELD</relationship_value>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1704</xloc>
-      <yloc>32</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Switch / case</name>
-    <type>SwitchCase</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fieldname>relation</fieldname>
-    <use_contains>N</use_contains>
-    <case_value_type>None</case_value_type>
-    <case_value_format/>
-    <case_value_decimal/>
-    <case_value_group/>
-    <default_target_step/>
-    <cases>
-      <case>
-        <value>INSERTS</value>
-        <target_step>Write inserts</target_step>
-      </case>
-      <case>
-        <value>UPDATES</value>
-        <target_step>Write updates</target_step>
-      </case>
-      <case>
-        <value>RETURNS</value>
-        <target_step>Write returns</target_step>
-      </case>
-      <case>
-        <value>IS_KEY</value>
-        <target_step>Write is_key</target_step>
-      </case>
-    </cases>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1512</xloc>
-      <yloc>144</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Write updates</name>
+    <name>Write is_key</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2705,7 +2729,7 @@
       </properties>
     </to>
     <relationship/>
-    <relationship_value>UPDATES</relationship_value>
+    <relationship_value>IS_KEY</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -2717,7 +2741,7 @@
     </remotesteps>
     <GUI>
       <xloc>1704</xloc>
-      <yloc>250</yloc>
+      <yloc>462</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2818,7 +2842,7 @@
     </GUI>
   </step>
   <step>
-    <name>Write is_key</name>
+    <name>Write updates</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2897,7 +2921,7 @@
       </properties>
     </to>
     <relationship/>
-    <relationship_value>IS_KEY</relationship_value>
+    <relationship_value>UPDATES</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -2909,7 +2933,7 @@
     </remotesteps>
     <GUI>
       <xloc>1704</xloc>
-      <yloc>462</yloc>
+      <yloc>250</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
