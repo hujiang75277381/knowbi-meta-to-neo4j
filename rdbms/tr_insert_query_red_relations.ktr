@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_insert_other_measures_nodes</name>
+    <name>tr_insert_query_red_relations</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,17 +10,7 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>PRM_CONNECTION</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>PRM_DATABASE</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>PRM_SCHEMA</name>
+        <name>genconn_database</name>
         <default_value/>
         <description/>
       </parameter>
@@ -443,83 +433,112 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/04/02 14:48:05.228</created_date>
+    <created_date>2019/11/15 15:13:41.978</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/04/02 14:48:05.228</modified_date>
+    <modified_date>2019/11/15 15:13:41.978</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>gennconn</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>${genconn_name}</username>
+    <password>${genconn_pass}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>CUSTOM_DRIVER_CLASS</code>
+        <attribute>${genconn_driver}</attribute>
+      </attribute>
+      <attribute>
+        <code>CUSTOM_URL</code>
+        <attribute>${genconn_url}</attribute>
+      </attribute>
+      <attribute>
+        <code>DATABASE_DIALECT_ID</code>
+        <attribute>Generic database</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>1521</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>Get measures from XML</from>
-      <to>Replace in string</to>
+      <from>Sort rows</from>
+      <to>Write has_executed</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>Write is_executed_on</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Replace in string</from>
-      <to>Split Fields</to>
+      <to>Get variables</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Split Fields</from>
-      <to>Add constants</to>
+      <from>Get variables</from>
+      <to>Filter database</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Add constants</from>
-      <to>Write Measure</to>
+      <from>Read queries</from>
+      <to>Replace in string</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Add constants</from>
-      <to>Write uses_measure</to>
+      <from>Filter database</from>
+      <to>Sort rows</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Add constants</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>V_TYPE</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>virtual</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>712</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Get measures from XML</name>
-    <type>getXMLData</type>
+    <name>Filter database</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -528,102 +547,16 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <include>N</include>
-    <include_field>file_name</include_field>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <namespaceaware>N</namespaceaware>
-    <ignorecomments>N</ignorecomments>
-    <readurl>N</readurl>
-    <validating>N</validating>
-    <usetoken>N</usetoken>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <rownum_field/>
-    <encoding>UTF-8</encoding>
-    <file>
-      <name>${PRM_SCHEMA}</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>schema_name</name>
-        <xpath>../../name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>cube_name</name>
-        <xpath>../name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>measure_name</name>
-        <xpath>name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>measure_cubename</name>
-        <xpath>cubeName</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <loopxpath>/Schema/VirtualCube/VirtualCubeMeasure</loopxpath>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <XmlField/>
-    <prunePath/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>datname</leftvalue>
+        <function>=</function>
+        <rightvalue>genconn_database</rightvalue>
+      </condition>
+    </compare>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -633,8 +566,88 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
-      <yloc>64</yloc>
+      <xloc>728</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Get variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>genconn_database</name>
+        <variable>${genconn_database}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Read queries</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>gennconn</connection>
+    <sql>select 
+	  case when version() like '%Redshift%'
+	  then 'REDSHIFT'
+	  else 'POSTGRESQL'
+	  end as version
+	, datname
+	, usename
+	, current_query as query
+	, query_start
+from pg_stat_activity</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>128</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -651,10 +664,10 @@
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>measure_name</in_stream_name>
+        <in_stream_name>datname</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string>[</replace_string>
+        <replace_string>{</replace_string>
         <replace_by_string/>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
@@ -663,10 +676,34 @@
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>measure_name</in_stream_name>
+        <in_stream_name>datname</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string>]</replace_string>
+        <replace_string>{</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>usename</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>}</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>usename</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>}</replace_string>
         <replace_by_string/>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
@@ -684,55 +721,45 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>312</xloc>
-      <yloc>64</yloc>
+      <xloc>328</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Split Fields</name>
-    <type>FieldSplitter</type>
+    <name>Sort rows</name>
+    <type>SortRows</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <splitfield>measure_name</splitfield>
-    <delimiter>.</delimiter>
-    <enclosure/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
     <fields>
       <field>
-        <name>measures</name>
-        <id/>
-        <idrem>N</idrem>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <currency/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>none</trimtype>
+        <name>usename</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
       </field>
       <field>
-        <name>measure_value</name>
-        <id/>
-        <idrem>N</idrem>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <currency/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>none</trimtype>
+        <name>query</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
       </field>
     </fields>
     <attributes/>
@@ -744,13 +771,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>64</yloc>
+      <xloc>928</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write Measure</name>
+    <name>Write has_executed</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -765,37 +792,41 @@
     <key/>
     <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
+    <only_create_relationships>Y</only_create_relationships>
     <returning_graph>N</returning_graph>
     <return_graph_field>graph</return_graph_field>
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>Measure</value>
+        <value>User</value>
       </labels>
       <properties>
         <property>
-          <name>measure</name>
-          <value>measure_value</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>mondriancube</name>
-          <value>cube_name</value>
-          <type/>
+          <name>user</name>
+          <value>usename</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
     </from>
     <to>
       <read_only_to_node>N</read_only_to_node>
-      <labels/>
-      <properties/>
+      <labels>
+        <label/>
+        <value>Query</value>
+      </labels>
+      <properties>
+        <property>
+          <name>query</name>
+          <value>query</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
     </to>
     <relationship/>
-    <relationship_value/>
+    <relationship_value>HAS_EXECUTED</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -806,13 +837,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>64</yloc>
+      <xloc>1128</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write uses_measure</name>
+    <name>Write is_executed_on</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -827,26 +858,20 @@
     <key/>
     <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
+    <only_create_relationships>Y</only_create_relationships>
     <returning_graph>N</returning_graph>
     <return_graph_field>graph</return_graph_field>
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>Measure</value>
+        <value>Query</value>
       </labels>
       <properties>
         <property>
-          <name>measure</name>
-          <value>measure_value</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>mondriancube</name>
-          <value>measure_cubename</value>
-          <type/>
+          <name>query</name>
+          <value>query</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
@@ -855,25 +880,25 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label/>
-        <value>Measure</value>
+        <value>Database</value>
       </labels>
       <properties>
         <property>
-          <name>measure</name>
-          <value>measure_value</value>
-          <type/>
+          <name>database</name>
+          <value>datname</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
-          <name>mondriancube</name>
-          <value>measure_cubename</value>
-          <type/>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
     </to>
     <relationship/>
-    <relationship_value>USES_MEASURE</relationship_value>
+    <relationship_value>IS_EXECUTED_ON</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -884,8 +909,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>190</yloc>
+      <xloc>1128</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

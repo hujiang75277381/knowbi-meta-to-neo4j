@@ -539,7 +539,11 @@
     </partitioning>
     <connection>gennconn</connection>
     <sql>select 
-	  datname
+	  case when version() like '%Redshift%'
+	  then 'REDSHIFT'
+	  else 'POSTGRESQL'
+	  end as version
+	, datname
 	, usename
 	, query
 	, query_start::date as query_start_date
@@ -644,7 +648,7 @@ where datname = '${genconn_database}' </sql>
     <free_memory/>
     <compress>N</compress>
     <compress_variable/>
-    <unique_rows>N</unique_rows>
+    <unique_rows>Y</unique_rows>
     <fields>
       <field>
         <name>usename</name>
@@ -691,7 +695,7 @@ where datname = '${genconn_database}' </sql>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key/>
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -757,7 +761,7 @@ where datname = '${genconn_database}' </sql>
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key/>
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>Y</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -787,6 +791,12 @@ where datname = '${genconn_database}' </sql>
         <property>
           <name>database</name>
           <value>datname</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
           <type>String</type>
           <primary>Y</primary>
         </property>

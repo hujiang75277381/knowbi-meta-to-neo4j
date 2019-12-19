@@ -26,6 +26,11 @@
       <default_value/>
       <description/>
     </parameter>
+    <parameter>
+      <name>PRM_VERSION</name>
+      <default_value/>
+      <description/>
+    </parameter>
   </parameters>
   <slaveservers>
     </slaveservers>
@@ -320,7 +325,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>64</xloc>
+      <xloc>112</xloc>
       <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
@@ -363,7 +368,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>264</xloc>
+      <xloc>312</xloc>
       <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
@@ -416,7 +421,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
+      <xloc>912</xloc>
       <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
@@ -469,7 +474,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
+      <xloc>1312</xloc>
       <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
@@ -522,8 +527,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1264</xloc>
-      <yloc>96</yloc>
+      <xloc>112</xloc>
+      <yloc>288</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -575,7 +580,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>264</xloc>
+      <xloc>512</xloc>
       <yloc>288</yloc>
       <attributes_kjc/>
     </entry>
@@ -624,11 +629,16 @@
           <stream_name/>
           <value>${PRM_DATABASE}</value>
         </parameter>
+        <parameter>
+          <name>PRM_VERSION</name>
+          <stream_name/>
+          <value>${PRM_VERSION}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
+      <xloc>1104</xloc>
       <yloc>288</yloc>
       <attributes_kjc/>
     </entry>
@@ -640,7 +650,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1064</xloc>
+      <xloc>1312</xloc>
       <yloc>288</yloc>
       <attributes_kjc/>
     </entry>
@@ -653,8 +663,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>764</xloc>
-      <yloc>208</yloc>
+      <xloc>800</xloc>
+      <yloc>192</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -702,11 +712,16 @@
           <stream_name/>
           <value>${PRM_DATABASE}</value>
         </parameter>
+        <parameter>
+          <name>PRM_VERSION</name>
+          <stream_name/>
+          <value>${PRM_VERSION}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>664</xloc>
+      <xloc>1112</xloc>
       <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
@@ -755,12 +770,17 @@
           <stream_name/>
           <value>${PRM_DATABASE}</value>
         </parameter>
+        <parameter>
+          <name>PRM_VERSION</name>
+          <stream_name/>
+          <value>${PRM_VERSION}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1064</xloc>
-      <yloc>96</yloc>
+      <xloc>1312</xloc>
+      <yloc>192</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -808,12 +828,17 @@
           <stream_name/>
           <value>${PRM_DATABASE}</value>
         </parameter>
+        <parameter>
+          <name>PRM_VERSION</name>
+          <stream_name/>
+          <value>${PRM_VERSION}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1264</xloc>
-      <yloc>192</yloc>
+      <xloc>304</xloc>
+      <yloc>288</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -861,11 +886,16 @@
           <stream_name/>
           <value>${PRM_DATABASE}</value>
         </parameter>
+        <parameter>
+          <name>PRM_VERSION</name>
+          <stream_name/>
+          <value>${PRM_VERSION}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
+      <xloc>704</xloc>
       <yloc>288</yloc>
       <attributes_kjc/>
     </entry>
@@ -918,21 +948,98 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>664</xloc>
+      <xloc>912</xloc>
       <yloc>288</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Insert Schema Nodes</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_schema_nodes.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_SCHEMA</name>
+          <stream_name/>
+          <value>${PRM_SCHEMA}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>512</xloc>
+      <yloc>96</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Insert Schema Relations</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_schema_relations.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_SCHEMA</name>
+          <stream_name/>
+          <value>${PRM_SCHEMA}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>712</xloc>
+      <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
-    <hop>
-      <from>Insert Roles</from>
-      <to>Insert Dimensions Nodes</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
     <hop>
       <from>Insert Other Measures Relations</from>
       <to>Success</to>
@@ -1124,6 +1231,51 @@
     </hop>
     <hop>
       <from>Insert Other Measures Nodes</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Insert Schema Relations</from>
+      <to>Insert Dimensions Nodes</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Insert Roles</from>
+      <to>Insert Schema Nodes</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Insert Schema Nodes</from>
+      <to>Insert Schema Relations</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Insert Schema Relations</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Insert Schema Nodes</from>
       <to>Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

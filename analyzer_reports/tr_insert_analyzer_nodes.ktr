@@ -681,6 +681,12 @@
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>mondriancube</name>
+          <value>report_cube</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
       </properties>
     </from>
     <to>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_insert_selectstable_relations</name>
+    <name>tr_insert_job_sql_relations</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -444,17 +444,7 @@
   <order>
     <hop>
       <from>Read TableInput</from>
-      <to>Filter TableInput</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter TableInput</from>
-      <to>Filter sql</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter sql</from>
-      <to>Calc tables</to>
+      <to>Filter SQL</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -478,13 +468,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter comment</from>
-      <to>Split table</to>
+      <from>Split table</from>
+      <to>Calc table_name</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Split table</from>
-      <to>Calc table_name</to>
+      <from>Filter comment</from>
+      <to>Split table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -514,7 +504,7 @@
     </hop>
     <hop>
       <from>Sort selects_table</from>
-      <to>Write selects_table</to>
+      <to>Write uses_in_sql</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -557,6 +547,26 @@
       <to>Sort selects_table</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Filter SQL</from>
+      <to>Split sql to rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter comment 2</from>
+      <to>Calc tables</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Split sql to rows</from>
+      <to>Trim split_sql</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Trim split_sql</from>
+      <to>Filter comment 2</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
     <name>Calc Cypher</name>
@@ -588,7 +598,7 @@
     <calculation>
       <field_name>C_TMP2</field_name>
       <calc_type>CONSTANT</calc_type>
-      <field_a>' return  n.connection, m.database</field_a>
+      <field_a>' return  n.connection, m.database, m.version</field_a>
       <field_b/>
       <field_c/>
       <value_type>String</value_type>
@@ -624,7 +634,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1294</xloc>
+      <xloc>1146</xloc>
       <yloc>165</yloc>
       <draw>Y</draw>
     </GUI>
@@ -785,7 +795,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1097</xloc>
+      <xloc>971</xloc>
       <yloc>399</yloc>
       <draw>Y</draw>
     </GUI>
@@ -826,7 +836,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1491</xloc>
+      <xloc>1321</xloc>
       <yloc>282</yloc>
       <draw>Y</draw>
     </GUI>
@@ -850,9 +860,9 @@
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>//Script here
 
-sql = sql.replace(/\n/g, " ");
+split_sql = split_sql.replace(/\n/g, " ");
 
-var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--inner|inner)\s+(\w+\.)?[a-zA-Z0-9 , .]*(\w+)(\w+)?/gmi));
+var table_sql = trim(split_sql.toLowerCase().match(/(from|--left|--right|left|right|--inner|inner|update)\s+(\w+\.)?[a-zA-Z0-9 , .]*(\w+)(\w+)?/gmi));
 </jsScript_script>
       </jsScript>
     </jsScripts>
@@ -875,7 +885,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>696</xloc>
+      <xloc>971</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
@@ -910,13 +920,13 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>703</xloc>
+      <xloc>621</xloc>
       <yloc>282</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Filter TableInput</name>
+    <name>Filter SQL</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -931,18 +941,30 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
     <compare>
       <condition>
         <negated>N</negated>
-        <leftvalue>type</leftvalue>
-        <function>=</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>TableInput</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask/>
-        </value>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <leftvalue>step_type</leftvalue>
+            <function>=</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>SQL</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>AND</operator>
+            <leftvalue>sql</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue/>
+          </condition>
+        </conditions>
       </condition>
     </compare>
     <attributes/>
@@ -954,7 +976,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>296</xloc>
+      <xloc>271</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1011,7 +1033,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
     </remotesteps>
     <GUI>
       <xloc>1496</xloc>
-      <yloc>48</yloc>
+      <yloc>165</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1045,43 +1067,8 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>900</xloc>
+      <xloc>796</xloc>
       <yloc>399</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter sql</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to/>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>sql</leftvalue>
-        <function>IS NOT NULL</function>
-        <rightvalue/>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>496</xloc>
-      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1120,6 +1107,11 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
         <type>String</type>
         <source_type>String</source_type>
       </return>
+      <return>
+        <name>m.version</name>
+        <type>String</type>
+        <source_type>String</source_type>
+      </return>
     </returns>
     <attributes/>
     <cluster_schema/>
@@ -1130,7 +1122,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1097</xloc>
+      <xloc>971</xloc>
       <yloc>165</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1175,7 +1167,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>703</xloc>
+      <xloc>621</xloc>
       <yloc>399</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1207,6 +1199,12 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
         <default/>
         <type>String</type>
       </value>
+      <value>
+        <name>m.version</name>
+        <rename>version</rename>
+        <default/>
+        <type>String</type>
+      </value>
     </lookup>
     <attributes/>
     <cluster_schema/>
@@ -1217,7 +1215,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1097</xloc>
+      <xloc>971</xloc>
       <yloc>282</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1248,14 +1246,29 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
     <encoding>UTF-8</encoding>
     <file>
       <name>${PRM_ETL_DIR}</name>
-      <filemask/>
+      <filemask>.*.kjb</filemask>
       <exclude_filemask/>
       <file_required>N</file_required>
       <include_subfolders>N</include_subfolders>
     </file>
     <fields>
       <field>
-        <name>name</name>
+        <name>job_name</name>
+        <xpath>../../name</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>step_name</name>
         <xpath>name</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
@@ -1270,38 +1283,8 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
         <repeat>N</repeat>
       </field>
       <field>
-        <name>type</name>
+        <name>step_type</name>
         <xpath>type</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>connection</name>
-        <xpath>connection</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>version</name>
-        <xpath>../connection/type</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1329,14 +1312,29 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
         <trim_type>none</trim_type>
         <repeat>N</repeat>
       </field>
+      <field>
+        <name>connection</name>
+        <xpath>connection</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
     </fields>
     <limit>0</limit>
-    <loopxpath>/transformation/step</loopxpath>
+    <loopxpath>/job/entries/entry</loopxpath>
     <IsInFields>N</IsInFields>
     <IsAFile>N</IsAFile>
     <XmlField/>
     <prunePath/>
-    <shortFileFieldName>transformation_name</shortFileFieldName>
+    <shortFileFieldName>job_name</shortFileFieldName>
     <pathFieldName/>
     <hiddenFieldName/>
     <lastModificationTimeFieldName/>
@@ -1458,6 +1456,18 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
         <in_stream_name>schema_table</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
+        <replace_string>update</replace_string>
+        <replace_by_string> </replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>yes</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>schema_table</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
         <replace_string>on</replace_string>
         <replace_by_string> </replace_by_string>
         <set_empty_string>N</set_empty_string>
@@ -1488,7 +1498,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1096</xloc>
+      <xloc>1321</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1506,25 +1516,32 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
     </partitioning>
     <fields>
       <field>
-        <name>transformation</name>
+        <name>job</name>
+        <rename/>
       </field>
       <field>
-        <name>name</name>
+        <name>step_name</name>
+        <rename/>
       </field>
       <field>
         <name>connection</name>
+        <rename/>
       </field>
       <field>
         <name>database</name>
+        <rename/>
       </field>
       <field>
         <name>schema_name</name>
+        <rename/>
       </field>
       <field>
         <name>table_name</name>
+        <rename/>
       </field>
       <field>
         <name>version</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1537,7 +1554,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>506</xloc>
+      <xloc>446</xloc>
       <yloc>282</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1562,7 +1579,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
     <unique_rows>Y</unique_rows>
     <fields>
       <field>
-        <name>transformation</name>
+        <name>job</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -1570,7 +1587,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
         <presorted>N</presorted>
       </field>
       <field>
-        <name>name</name>
+        <name>step_name</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -1627,7 +1644,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>309</xloc>
+      <xloc>271</xloc>
       <yloc>282</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1659,7 +1676,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>896</xloc>
+      <xloc>1146</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1720,7 +1737,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
     </remotesteps>
     <GUI>
       <xloc>1496</xloc>
-      <yloc>165</yloc>
+      <yloc>282</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1761,7 +1778,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>900</xloc>
+      <xloc>796</xloc>
       <yloc>282</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1801,13 +1818,13 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1296</xloc>
+      <xloc>1496</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write selects_table</name>
+    <name>Write uses_in_sql</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1829,18 +1846,18 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label/>
-        <value>Step</value>
+        <value>JobEntry</value>
       </labels>
       <properties>
         <property>
-          <name>transformation</name>
-          <value>transformation</value>
+          <name>job</name>
+          <value>job</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
-          <name>step</name>
-          <value>name</value>
+          <name>jobentry</name>
+          <value>step_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -1880,7 +1897,7 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </properties>
     </to>
     <relationship/>
-    <relationship_value>SELECTS_TABLE</relationship_value>
+    <relationship_value>USES_IN_SQL</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -1909,8 +1926,8 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>transformation_name</in_stream_name>
-        <out_stream_name>transformation</out_stream_name>
+        <in_stream_name>job_name</in_stream_name>
+        <out_stream_name>job</out_stream_name>
         <use_regex>no</use_regex>
         <replace_string>.ktr</replace_string>
         <replace_by_string/>
@@ -1930,8 +1947,136 @@ var table_sql = trim(sql.toLowerCase().match(/(from|--left|--right|left|right|--
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1294</xloc>
+      <xloc>1146</xloc>
       <yloc>282</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Split sql to rows</name>
+    <type>SplitFieldToRows3</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <splitfield>sql</splitfield>
+    <delimiter>;</delimiter>
+    <newfield>split_sql</newfield>
+    <rownum>N</rownum>
+    <rownum_field/>
+    <resetrownumber>Y</resetrownumber>
+    <delimiter_is_regex>N</delimiter_is_regex>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>446</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter comment 2</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <conditions>
+          <condition>
+            <negated>Y</negated>
+            <leftvalue>split_sql</leftvalue>
+            <function>STARTS WITH</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>/*</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+          <condition>
+            <negated>Y</negated>
+            <operator>AND</operator>
+            <leftvalue>split_sql</leftvalue>
+            <function>IS NULL</function>
+            <rightvalue/>
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>796</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Trim split_sql</name>
+    <type>StringOperations</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>split_sql</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>621</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

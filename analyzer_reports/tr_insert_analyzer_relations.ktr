@@ -594,21 +594,41 @@
     </hop>
     <hop>
       <from>Filter measure</from>
+      <to>Sort uses_measure</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort uses_measure</from>
       <to>Write uses_measure</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filter measure 2</from>
+      <to>Sort uses_in_expression</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort uses_in_expression</from>
       <to>Write uses_in_expression</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filter lookup</from>
+      <to>Sort uses_level</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort uses_level</from>
       <to>Write uses_level</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filter lookup 2</from>
+      <to>Sort filters_levels</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort filters_levels</from>
       <to>Write filters_levels</to>
       <enabled>Y</enabled>
     </hop>
@@ -2385,7 +2405,7 @@ RETURN n.calculatedmember AS name, n.mondriancube</cypher>
     </GUI>
   </step>
   <step>
-    <name>Write uses_measure</name>
+    <name>Write filters_levels</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2428,25 +2448,37 @@ RETURN n.calculatedmember AS name, n.mondriancube</cypher>
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label/>
-        <value>Measure</value>
+        <value>Level</value>
       </labels>
       <properties>
         <property>
-          <name>measure</name>
-          <value>measure_name</value>
-          <type/>
+          <name>mondriancube</name>
+          <value>report_cube</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
-          <name>mondriancube</name>
-          <value>report_cube</value>
-          <type/>
+          <name>level</name>
+          <value>level</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>dimension</name>
+          <value>dimension</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>hierarchy</name>
+          <value>hierarchy</value>
+          <type>String</type>
           <primary>Y</primary>
         </property>
       </properties>
     </to>
     <relationship/>
-    <relationship_value>USES_MEASURE</relationship_value>
+    <relationship_value>FILTERS_LEVELS</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -2457,8 +2489,8 @@ RETURN n.calculatedmember AS name, n.mondriancube</cypher>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
-      <yloc>128</yloc>
+      <xloc>1480</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2535,7 +2567,7 @@ RETURN n.calculatedmember AS name, n.mondriancube</cypher>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
+      <xloc>1480</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2625,13 +2657,13 @@ RETURN n.calculatedmember AS name, n.mondriancube</cypher>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
+      <xloc>1480</xloc>
       <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write filters_levels</name>
+    <name>Write uses_measure</name>
     <type>Neo4JOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2674,37 +2706,25 @@ RETURN n.calculatedmember AS name, n.mondriancube</cypher>
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label/>
-        <value>Level</value>
+        <value>Measure</value>
       </labels>
       <properties>
         <property>
+          <name>measure</name>
+          <value>measure_name</value>
+          <type/>
+          <primary>Y</primary>
+        </property>
+        <property>
           <name>mondriancube</name>
           <value>report_cube</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>level</name>
-          <value>level</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>dimension</name>
-          <value>dimension</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>hierarchy</name>
-          <value>hierarchy</value>
-          <type>String</type>
+          <type/>
           <primary>Y</primary>
         </property>
       </properties>
     </to>
     <relationship/>
-    <relationship_value>FILTERS_LEVELS</relationship_value>
+    <relationship_value>USES_MEASURE</relationship_value>
     <relprops/>
     <attributes/>
     <cluster_schema/>
@@ -2715,7 +2735,271 @@ RETURN n.calculatedmember AS name, n.mondriancube</cypher>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
+      <xloc>1480</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort uses_measure</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>report_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>report_cube</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>measure_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1308</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort uses_in_expression</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>report_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>report_cube</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>measure_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1308</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort uses_level</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>report_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>report_cube</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>dimension</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>hierarchy</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>level</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1300</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort filters_levels</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>report_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>report_cube</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>dimension</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>hierarchy</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>level</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1300</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>

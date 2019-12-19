@@ -464,16 +464,6 @@
     </hop>
     <hop>
       <from>Calc table</from>
-      <to>Write MondrianSchema</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Calc table</from>
-      <to>Write MondrianCube</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Calc table</from>
       <to>Write Dimension</to>
       <enabled>Y</enabled>
     </hop>
@@ -837,118 +827,6 @@
     </GUI>
   </step>
   <step>
-    <name>Write MondrianSchema</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>MondrianSchema</value>
-      </labels>
-      <properties>
-        <property>
-          <name>mondrianschema</name>
-          <value>schema_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels/>
-      <properties/>
-    </to>
-    <relationship/>
-    <relationship_value/>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Write MondrianCube</name>
-    <type>Neo4JOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key/>
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label/>
-        <value>MondrianCube</value>
-      </labels>
-      <properties>
-        <property>
-          <name>mondriancube</name>
-          <value>cube_name</value>
-          <type/>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels/>
-      <properties/>
-    </to>
-    <relationship/>
-    <relationship_value/>
-    <relprops/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>164</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Write Dimension</name>
     <type>Neo4JOutput</type>
     <description/>
@@ -1012,7 +890,7 @@
     </remotesteps>
     <GUI>
       <xloc>688</xloc>
-      <yloc>280</yloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1080,7 +958,7 @@
     </remotesteps>
     <GUI>
       <xloc>688</xloc>
-      <yloc>396</yloc>
+      <yloc>164</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1166,7 +1044,7 @@
     </remotesteps>
     <GUI>
       <xloc>688</xloc>
-      <yloc>512</yloc>
+      <yloc>280</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

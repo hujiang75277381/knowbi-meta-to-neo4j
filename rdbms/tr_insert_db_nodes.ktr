@@ -501,11 +501,6 @@
   </connection>
   <order>
     <hop>
-      <from>Read columns</from>
-      <to>Get Variables</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Get Variables</from>
       <to>Sort database</to>
       <enabled>Y</enabled>
@@ -566,11 +561,61 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Read columns</from>
+      <to>Replace in string</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace in string</from>
+      <to>Get Variables</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Sort Schema</from>
+      <to>Filter rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows</from>
       <to>Write User</to>
       <enabled>Y</enabled>
     </hop>
   </order>
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>schema_owner</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>680</xloc>
+      <yloc>234</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Get Variables</name>
     <type>GetVariable</type>
@@ -605,7 +650,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>300</xloc>
+      <xloc>480</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -623,7 +668,11 @@
     </partitioning>
     <connection>gennconn</connection>
     <sql>select distinct
-	  current_database()
+	  case when version() like '%Redshift%'
+	  then 'REDSHIFT'
+	  else 'POSTGRESQL'
+	  end as version
+	, current_database()
 	, isc.table_schema
 	, schema_owner
 	, isc.table_name
@@ -653,6 +702,57 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
     </GUI>
   </step>
   <step>
+    <name>Replace in string</name>
+    <type>ReplaceString</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>current_database</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>{</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>current_database</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>}</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>280</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Sort Column</name>
     <type>SortRows</type>
     <description/>
@@ -671,6 +771,14 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
     <compress_variable/>
     <unique_rows>Y</unique_rows>
     <fields>
+      <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
       <field>
         <name>current_database</name>
         <ascending>Y</ascending>
@@ -713,7 +821,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
+      <xloc>680</xloc>
       <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
@@ -755,7 +863,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
+      <xloc>680</xloc>
       <yloc>489</yloc>
       <draw>Y</draw>
     </GUI>
@@ -797,7 +905,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
+      <xloc>680</xloc>
       <yloc>574</yloc>
       <draw>Y</draw>
     </GUI>
@@ -821,6 +929,14 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
     <compress_variable/>
     <unique_rows>Y</unique_rows>
     <fields>
+      <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
       <field>
         <name>current_database</name>
         <ascending>Y</ascending>
@@ -847,7 +963,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>514</xloc>
+      <xloc>680</xloc>
       <yloc>149</yloc>
       <draw>Y</draw>
     </GUI>
@@ -871,6 +987,14 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
     <compress_variable/>
     <unique_rows>Y</unique_rows>
     <fields>
+      <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
       <field>
         <name>current_database</name>
         <ascending>Y</ascending>
@@ -905,7 +1029,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
+      <xloc>680</xloc>
       <yloc>319</yloc>
       <draw>Y</draw>
     </GUI>
@@ -930,6 +1054,14 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
     <unique_rows>Y</unique_rows>
     <fields>
       <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
         <name>current_database</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
@@ -947,7 +1079,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>514</xloc>
+      <xloc>680</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1002,6 +1134,12 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </from>
     <to>
@@ -1021,7 +1159,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
+      <xloc>880</xloc>
       <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1077,7 +1215,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
+      <xloc>880</xloc>
       <yloc>489</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1114,6 +1252,12 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </from>
     <to>
@@ -1133,7 +1277,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
+      <xloc>880</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1189,7 +1333,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
+      <xloc>880</xloc>
       <yloc>574</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1233,6 +1377,12 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
           <primary>Y</primary>
         </property>
         <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
           <name>owner</name>
           <value>schema_owner</value>
           <type>String</type>
@@ -1257,7 +1407,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
+      <xloc>880</xloc>
       <yloc>149</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1306,6 +1456,12 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </from>
     <to>
@@ -1325,7 +1481,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
+      <xloc>880</xloc>
       <yloc>319</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1381,7 +1537,7 @@ where table_schema not in ('information_schema', 'pg_catalog')</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
+      <xloc>880</xloc>
       <yloc>234</yloc>
       <draw>Y</draw>
     </GUI>

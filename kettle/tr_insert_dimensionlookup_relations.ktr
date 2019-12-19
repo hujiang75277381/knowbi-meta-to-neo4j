@@ -593,26 +593,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Switch / case</from>
-      <to>Write inserts</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Switch / case</from>
-      <to>Write updates</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Switch / case</from>
-      <to>Write returns</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Switch / case</from>
-      <to>Write is_key</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Filter update</from>
       <to>Add constants</to>
       <enabled>Y</enabled>
@@ -625,6 +605,46 @@
     <hop>
       <from>Select values</from>
       <to>Replace schema 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Switch / case</from>
+      <to>Sort inserts</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort inserts</from>
+      <to>Write inserts</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Switch / case</from>
+      <to>Sort updates</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort updates</from>
+      <to>Write updates</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Switch / case</from>
+      <to>Sort returns</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort returns</from>
+      <to>Write returns</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Switch / case</from>
+      <to>Sort is_key</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort is_key</from>
+      <to>Write is_key</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -662,7 +682,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>808</xloc>
+      <xloc>704</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -701,7 +721,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>808</xloc>
+      <xloc>704</xloc>
       <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
@@ -740,7 +760,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>808</xloc>
+      <xloc>704</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -779,7 +799,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>808</xloc>
+      <xloc>704</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -842,7 +862,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>286</xloc>
+      <xloc>224</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -913,8 +933,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1156</xloc>
-      <yloc>144</yloc>
+      <xloc>1024</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -954,7 +974,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>634</xloc>
+      <xloc>544</xloc>
       <yloc>248</yloc>
       <draw>Y</draw>
     </GUI>
@@ -979,7 +999,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>982</xloc>
+      <xloc>864</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1014,7 +1034,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>982</xloc>
+      <xloc>864</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1058,7 +1078,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>286</xloc>
+      <xloc>224</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1102,7 +1122,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>286</xloc>
+      <xloc>224</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1146,7 +1166,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>286</xloc>
+      <xloc>224</xloc>
       <yloc>248</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1190,7 +1210,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>460</xloc>
+      <xloc>384</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1234,7 +1254,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>634</xloc>
+      <xloc>544</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1284,8 +1304,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1330</xloc>
-      <yloc>144</yloc>
+      <xloc>1184</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1326,7 +1346,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1330</xloc>
+      <xloc>1184</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1411,6 +1431,21 @@
       <field>
         <name>connection</name>
         <xpath>../../connection</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>version</name>
+        <xpath>../../../connection/type</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1537,7 +1572,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
+      <xloc>64</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1635,6 +1670,21 @@
         <repeat>N</repeat>
       </field>
       <field>
+        <name>version</name>
+        <xpath>../../../connection/type</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
         <name>schema</name>
         <xpath>../../schema</xpath>
         <element_type>node</element_type>
@@ -1718,7 +1768,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
+      <xloc>64</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1803,6 +1853,21 @@
       <field>
         <name>connection</name>
         <xpath>../../connection</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>version</name>
+        <xpath>../../../connection/type</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1959,7 +2024,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
+      <xloc>64</xloc>
       <yloc>248</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1998,7 +2063,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1156</xloc>
+      <xloc>1024</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2038,7 +2103,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>460</xloc>
+      <xloc>384</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2078,7 +2143,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>634</xloc>
+      <xloc>544</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2118,7 +2183,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>460</xloc>
+      <xloc>384</xloc>
       <yloc>248</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2153,6 +2218,9 @@
         <name>connection</name>
       </field>
       <field>
+        <name>version</name>
+      </field>
+      <field>
         <name>schema</name>
       </field>
       <field>
@@ -2169,7 +2237,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>634</xloc>
+      <xloc>544</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2204,6 +2272,9 @@
         <name>connection</name>
       </field>
       <field>
+        <name>version</name>
+      </field>
+      <field>
         <name>schema</name>
       </field>
       <field>
@@ -2223,7 +2294,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>982</xloc>
+      <xloc>864</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2257,6 +2328,9 @@
         <name>connection</name>
       </field>
       <field>
+        <name>version</name>
+      </field>
+      <field>
         <name>schema</name>
       </field>
       <field>
@@ -2276,7 +2350,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>808</xloc>
+      <xloc>704</xloc>
       <yloc>248</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2295,35 +2369,30 @@
     <fields>
       <field>
         <name>trans_name</name>
-        <rename/>
       </field>
       <field>
         <name>step_name</name>
-        <rename/>
       </field>
       <field>
         <name>step_type</name>
-        <rename/>
       </field>
       <field>
         <name>connection</name>
-        <rename/>
+      </field>
+      <field>
+        <name>version</name>
       </field>
       <field>
         <name>schema</name>
-        <rename/>
       </field>
       <field>
         <name>table</name>
-        <rename/>
       </field>
       <field>
         <name>update_filter</name>
-        <rename/>
       </field>
       <field>
         <name>name</name>
-        <rename/>
       </field>
       <field>
         <name>lookup</name>
@@ -2331,19 +2400,15 @@
       </field>
       <field>
         <name>creation_method</name>
-        <rename/>
       </field>
       <field>
         <name>use_autoinc</name>
-        <rename/>
       </field>
       <field>
-        <name>version</name>
-        <rename/>
+        <name>version_1</name>
       </field>
       <field>
         <name>transformation_name</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -2356,7 +2421,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>460</xloc>
+      <xloc>384</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2414,7 +2479,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1512</xloc>
+      <xloc>1344</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2440,19 +2505,19 @@
     <cases>
       <case>
         <value>INSERTS</value>
-        <target_step>Write inserts</target_step>
+        <target_step>Sort inserts</target_step>
       </case>
       <case>
         <value>UPDATES</value>
-        <target_step>Write updates</target_step>
+        <target_step>Sort updates</target_step>
       </case>
       <case>
         <value>RETURNS</value>
-        <target_step>Write returns</target_step>
+        <target_step>Sort returns</target_step>
       </case>
       <case>
         <value>IS_KEY</value>
-        <target_step>Write is_key</target_step>
+        <target_step>Sort is_key</target_step>
       </case>
     </cases>
     <attributes/>
@@ -2464,8 +2529,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1512</xloc>
-      <yloc>144</yloc>
+      <xloc>1344</xloc>
+      <yloc>248</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2548,7 +2613,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1704</xloc>
+      <xloc>1504</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2630,6 +2695,12 @@
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </to>
     <relationship/>
@@ -2644,8 +2715,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1704</xloc>
-      <yloc>144</yloc>
+      <xloc>1664</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2726,6 +2797,12 @@
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </to>
     <relationship/>
@@ -2740,8 +2817,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1704</xloc>
-      <yloc>462</yloc>
+      <xloc>1664</xloc>
+      <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2822,6 +2899,12 @@
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </to>
     <relationship/>
@@ -2836,7 +2919,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1704</xloc>
+      <xloc>1664</xloc>
       <yloc>356</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2918,6 +3001,12 @@
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </to>
     <relationship/>
@@ -2932,8 +3021,400 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1704</xloc>
-      <yloc>250</yloc>
+      <xloc>1664</xloc>
+      <yloc>248</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort inserts</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>step_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>field_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>column_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>schema</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>transformation</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>140</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort updates</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>step_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>field_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>column_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>schema</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>transformation</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>248</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort returns</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>step_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>field_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>column_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>schema</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>transformation</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>356</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort is_key</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>step_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>field_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>column_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>version</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>schema</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>transformation</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
