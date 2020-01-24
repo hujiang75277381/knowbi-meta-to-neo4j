@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>jb_load_mondrian</name>
+  <name>jb_load_etl_structure</name>
   <description/>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2019/04/02 13:56:36.797</created_date>
+  <created_date>2019/12/10 10:24:42.094</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2019/04/02 13:56:36.797</modified_date>
+  <modified_date>2019/12/10 10:24:42.094</modified_date>
   <parameters>
     <parameter>
-      <name>PRM_FOLDER</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>PRM_MONDRIAN_PROPERTIES</name>
+      <name>PRM_ETL_DIR</name>
       <default_value/>
       <description/>
     </parameter>
@@ -298,7 +293,7 @@
   <shared_objects_file/>
   <entries>
     <entry>
-      <name>START</name>
+      <name>Start</name>
       <description/>
       <type>SPECIAL</type>
       <attributes/>
@@ -315,18 +310,18 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>200</xloc>
-      <yloc>100</yloc>
+      <xloc>80</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>List Schema</name>
+      <name>Insert Job Nodes</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_list_schema.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_job_nodes.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -350,88 +345,145 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_MONDRIAN_PROPERTIES</name>
+          <name>PRM_ETL_DIR</name>
           <stream_name/>
-          <value>${PRM_MONDRIAN_PROPERTIES}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_FOLDER</name>
-          <stream_name/>
-          <value>${PRM_FOLDER}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_REPLACE_CONN</name>
-          <stream_name/>
-          <value>${PRM_REPLACE_CONN}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_ACTUAL_CONN</name>
-          <stream_name/>
-          <value>${PRM_ACTUAL_CONN}</value>
+          <value>${PRM_ETL_DIR}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>400</xloc>
-      <yloc>100</yloc>
+      <xloc>280</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Load Mondrian Parts</name>
+      <name>Insert Transformation Nodes</name>
       <description/>
-      <type>JOB</type>
+      <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
-      <job_object_id/>
-      <filename>${Internal.Entry.Current.Directory}\jb_load_mondrian_parts.kjb</filename>
-      <jobname/>
-      <directory/>
+      <trans_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_transformation_nodes.ktr</filename>
+      <transname/>
       <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>Y</params_from_previous>
-      <exec_per_row>Y</exec_per_row>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
       <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
       <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
+      <logging_remote_work>N</logging_remote_work>
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name>datasource_value</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name>file_name</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name>database</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name>version</stream_name>
-          <value/>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
         </parameter>
       </parameters>
-      <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>600</xloc>
-      <yloc>100</yloc>
+      <xloc>480</xloc>
+      <yloc>80</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Insert Job Relations</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_job_relations.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>680</xloc>
+      <yloc>80</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Insert Transformation Relations</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/tr_insert_transformation_relations.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>880</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -442,28 +494,15 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>800</xloc>
-      <yloc>100</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Abort job</name>
-      <description/>
-      <type>ABORT</type>
-      <attributes/>
-      <message/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>500</xloc>
-      <yloc>224</yloc>
+      <xloc>1080</xloc>
+      <yloc>80</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>START</from>
-      <to>List Schema</to>
+      <from>Start</from>
+      <to>Insert Job Nodes</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -471,8 +510,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>List Schema</from>
-      <to>Load Mondrian Parts</to>
+      <from>Insert Job Nodes</from>
+      <to>Insert Transformation Nodes</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -480,7 +519,25 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load Mondrian Parts</from>
+      <from>Insert Transformation Nodes</from>
+      <to>Insert Job Relations</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Insert Job Relations</from>
+      <to>Insert Transformation Relations</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Insert Transformation Relations</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -488,35 +545,10 @@
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
-    <hop>
-      <from>List Schema</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load Mondrian Parts</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
   </hops>
   <notepads>
   </notepads>
   <attributes>
-    <group>
-      <name>JobRestart</name>
-      <attribute>
-        <key>UniqueConnections</key>
-        <value>N</value>
-      </attribute>
-    </group>
     <group>
       <name>METASTORE.pentaho</name>
       <attribute>

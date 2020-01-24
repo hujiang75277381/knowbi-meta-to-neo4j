@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>jb_load_mondrian</name>
+  <name>jb_load_analyzer</name>
   <description/>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2019/04/02 13:56:36.797</created_date>
+  <created_date>2019/07/15 10:15:57.838</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2019/04/02 13:56:36.797</modified_date>
+  <modified_date>2019/07/15 10:15:57.838</modified_date>
   <parameters>
     <parameter>
-      <name>PRM_FOLDER</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>PRM_MONDRIAN_PROPERTIES</name>
+      <name>PRM_REPORT_FOLDER</name>
       <default_value/>
       <description/>
     </parameter>
@@ -315,18 +310,18 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>200</xloc>
-      <yloc>100</yloc>
+      <xloc>64</xloc>
+      <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>List Schema</name>
+      <name>List analyzer</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_list_schema.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/tr_list_analyzer.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -350,41 +345,38 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_MONDRIAN_PROPERTIES</name>
+          <name>PRM_REPORT_FOLDER</name>
           <stream_name/>
-          <value>${PRM_MONDRIAN_PROPERTIES}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_FOLDER</name>
-          <stream_name/>
-          <value>${PRM_FOLDER}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_REPLACE_CONN</name>
-          <stream_name/>
-          <value>${PRM_REPLACE_CONN}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_ACTUAL_CONN</name>
-          <stream_name/>
-          <value>${PRM_ACTUAL_CONN}</value>
+          <value>${PRM_REPORT_FOLDER}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>400</xloc>
-      <yloc>100</yloc>
+      <xloc>264</xloc>
+      <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Load Mondrian Parts</name>
+      <name>Success</name>
+      <description/>
+      <type>SUCCESS</type>
+      <attributes/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>96</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Insert Analyzer</name>
       <description/>
       <type>JOB</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>${Internal.Entry.Current.Directory}\jb_load_mondrian_parts.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}/jb_insert_analyzer.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -406,23 +398,8 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name>datasource_value</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name>file_name</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name>database</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name>version</stream_name>
+          <name>PRM_REPORT</name>
+          <stream_name>filename</stream_name>
           <value/>
         </parameter>
       </parameters>
@@ -430,40 +407,15 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>600</xloc>
-      <yloc>100</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Success</name>
-      <description/>
-      <type>SUCCESS</type>
-      <attributes/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>800</xloc>
-      <yloc>100</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Abort job</name>
-      <description/>
-      <type>ABORT</type>
-      <attributes/>
-      <message/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>500</xloc>
-      <yloc>224</yloc>
+      <xloc>464</xloc>
+      <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
       <from>START</from>
-      <to>List Schema</to>
+      <to>List analyzer</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -471,8 +423,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>List Schema</from>
-      <to>Load Mondrian Parts</to>
+      <from>List analyzer</from>
+      <to>Insert Analyzer</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -480,30 +432,12 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load Mondrian Parts</from>
+      <from>Insert Analyzer</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>List Schema</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load Mondrian Parts</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>

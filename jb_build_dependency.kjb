@@ -1,33 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>jb_parse_mondrian_parts</name>
+  <name>jb_build_dependency</name>
   <description/>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2019/04/05 15:56:02.719</created_date>
+  <created_date>2019/04/06 10:40:52.651</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2019/04/05 15:56:02.719</modified_date>
+  <modified_date>2019/04/06 10:40:52.651</modified_date>
   <parameters>
     <parameter>
-      <name>PRM_CONNECTION</name>
+      <name>PRM_ANALYZER_DIR</name>
       <default_value/>
       <description/>
     </parameter>
     <parameter>
+      <name>PRM_AWS</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_CLEAN_NEO4J_DATA</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_COLUMNS</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
       <name>PRM_DATABASE</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_DMS_JSON_DIR</name>
+      <default_value/>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_ETL</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_ETL_DIR</name>
+      <default_value/>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_KETTLE_PROPERTIES_DIR</name>
+      <default_value/>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_MONDRIAN_PROPERTIES_DIR</name>
+      <default_value/>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_REPORT</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_REPORT_DIR</name>
       <default_value/>
       <description/>
     </parameter>
     <parameter>
       <name>PRM_SCHEMA</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_SCHEMA_DIR</name>
       <default_value/>
       <description/>
     </parameter>
     <parameter>
-      <name>PRM_VERSION</name>
+      <name>PRM_SYNC</name>
+      <default_value>Y</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PRM_SYNC_DIR</name>
       <default_value/>
       <description/>
     </parameter>
@@ -325,321 +385,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>112</xloc>
-      <yloc>96</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Roles</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_roles.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>312</xloc>
-      <yloc>96</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Dimensions Nodes</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_dimensions_nodes.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>912</xloc>
-      <yloc>96</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Measures Nodes</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_measures_nodes.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1312</xloc>
-      <yloc>96</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Calculated Members Nodes</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_calculatedmembers_nodes.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>112</xloc>
-      <yloc>288</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Other Dimensions Nodes</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_other_dimensions_nodes.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>512</xloc>
-      <yloc>288</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Other Measures Relations</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_other_measures_relations.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name/>
-          <value>${PRM_VERSION}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1104</xloc>
-      <yloc>288</yloc>
+      <xloc>64</xloc>
+      <yloc>112</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -650,8 +397,400 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1312</xloc>
-      <yloc>288</yloc>
+      <xloc>864</xloc>
+      <yloc>992</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>change to write container</name>
+      <description/>
+      <type>SHELL</type>
+      <attributes/>
+      <filename/>
+      <work_directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <set_append_logfile>N</set_append_logfile>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <insertScript>Y</insertScript>
+      <script>PRIVATE_IP=$(/snap/bin/aws ec2 describe-instances --filter Name=tag:Name,Values=*neo4j* Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[PrivateIpAddress]' --output text)
+curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/stop
+#if [[ $LOCAL_IP = *$PRIVATE_IP* ]]; then sudo rm -Rf /home/ubuntu/neo4j/data/databases ; fi
+curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-write/start
+sleep 20
+
+</script>
+      <loglevel>Basic</loglevel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>464</xloc>
+      <yloc>112</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>change to read container</name>
+      <description/>
+      <type>SHELL</type>
+      <attributes/>
+      <filename/>
+      <work_directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <set_append_logfile>N</set_append_logfile>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <insertScript>Y</insertScript>
+      <script>PRIVATE_IP=$(/snap/bin/aws ec2 describe-instances --filter Name=tag:Name,Values=*neo4j* Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[PrivateIpAddress]' --output text)
+curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-write/stop
+curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
+
+</script>
+      <loglevel>Basic</loglevel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>987</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Parse database?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>${PRM_DATABASE}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>Y</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>237</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load rdbms</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\rdbms\jb_loop_rdbms.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ACTIVE_KETTLE_PROPERTIES_DIR</name>
+          <stream_name/>
+          <value>${PRM_KETTLE_PROPERTIES_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>237</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Parse AWS?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname>${PRM_ETL}</fieldname>
+      <variablename>${PRM_AWS}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>Y</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>362</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load Connections</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\properties\jb_load_connections.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
+        <parameter>
+          <name>PRM_KETTLE_PROPERTIES_DIR</name>
+          <stream_name/>
+          <value>${PRM_KETTLE_PROPERTIES_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1064</xloc>
+      <yloc>237</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Parse Schema?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname>${PRM_SCHEMA}</fieldname>
+      <variablename>${PRM_SCHEMA}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>Y</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>737</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load Mondrian</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\mondrian\jb_load_mondrian.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_FOLDER</name>
+          <stream_name/>
+          <value>${PRM_SCHEMA_DIR}</value>
+        </parameter>
+        <parameter>
+          <name>PRM_MONDRIAN_PROPERTIES</name>
+          <stream_name/>
+          <value>${PRM_MONDRIAN_PROPERTIES_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>737</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Parse Reports?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname>${PRM_SCHEMA}</fieldname>
+      <variablename>${PRM_REPORT}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>Y</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>862</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load Analyzer</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\analyzer_reports\jb_load_analyzer.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_REPORT_FOLDER</name>
+          <stream_name/>
+          <value>${PRM_REPORT_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>862</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Copy connection</name>
+      <description/>
+      <type>COPY_FILES</type>
+      <attributes/>
+      <copy_empty_folders>Y</copy_empty_folders>
+      <arg_from_previous>N</arg_from_previous>
+      <overwrite_files>Y</overwrite_files>
+      <include_subfolders>N</include_subfolders>
+      <remove_source_files>N</remove_source_files>
+      <add_result_filesname>N</add_result_filesname>
+      <destination_is_a_file>N</destination_is_a_file>
+      <create_destination_folder>Y</create_destination_folder>
+      <fields>
+        <field>
+          <source_filefolder>EMPTY_SOURCE_URL-0-${Internal.Entry.Current.Directory}/connection/</source_filefolder>
+          <source_configuration_name>LOCAL-SOURCE-FILE-0</source_configuration_name>
+          <destination_filefolder>EMPTY_DEST_URL-0-${user.home}/.pentaho/metastore/Neo4j/Neo4j Connection/</destination_filefolder>
+          <destination_configuration_name>LOCAL-DEST-FILE-0</destination_configuration_name>
+          <wildcard>.*.xml</wildcard>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>264</xloc>
+      <yloc>112</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Dissabled change to read container 2</name>
+      <description/>
+      <type>SHELL</type>
+      <attributes/>
+      <filename/>
+      <work_directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <set_append_logfile>N</set_append_logfile>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <insertScript>Y</insertScript>
+      <script>PRIVATE_IP=$(/snap/bin/aws ec2 describe-instances --filter Name=tag:Name,Values=*neo4j* Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[PrivateIpAddress]' --output text)
+curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-write/stop
+curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
+
+</script>
+      <loglevel>Basic</loglevel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1464</xloc>
+      <yloc>237</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -663,18 +802,362 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>800</xloc>
-      <yloc>192</yloc>
+      <xloc>1464</xloc>
+      <yloc>487</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Insert Dimensions Relations</name>
+      <name>Clean Neo4j?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>${PRM_CLEAN_NEO4J_DATA}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>Y</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>112</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Clean Neo4j</name>
+      <description/>
+      <type>NEO4J_CYPHER_SCRIPT</type>
+      <attributes/>
+      <connection>lineage-graph</connection>
+      <script>match(n) detach delete n</script>
+      <replace_variables>N</replace_variables>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>112</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Parse ETL?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname>${PRM_ETL}</fieldname>
+      <variablename>${PRM_ETL}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>Y</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>487</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load rds</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\aws\jb_load_rds.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_RDS_JSON</name>
+          <stream_name/>
+          <value>${Internal.Entry.Current.Directory}/aws/</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>362</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load dms</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\aws\jb_load_dms.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_JSON_FOLDER</name>
+          <stream_name/>
+          <value>${PRM_DMS_JSON_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1064</xloc>
+      <yloc>362</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load etl Structure</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\kettle\jb_load_etl_structure.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>487</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load etl Fields</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\kettle\jb_load_etl_fields.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1064</xloc>
+      <yloc>487</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load etl Connections</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\kettle\jb_load_etl_connections.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_ETL_DIR</name>
+          <stream_name/>
+          <value>${PRM_ETL_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1264</xloc>
+      <yloc>487</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load prpt</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}\prpt_reports\jb_load_prpt.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>PRM_MONDRIAN_PROPERTIES</name>
+          <stream_name/>
+          <value>${PRM_MONDRIAN_PROPERTIES_DIR}</value>
+        </parameter>
+        <parameter>
+          <name>PRM_REPORT_FOLDER</name>
+          <stream_name/>
+          <value>${PRM_REPORT_DIR}</value>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1064</xloc>
+      <yloc>862</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Parse SYNC?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname>${PRM_ETL}</fieldname>
+      <variablename>${PRM_SYNC}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>Y</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>664</xloc>
+      <yloc>612</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Load Sync</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_dimensions_relations.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}\sync\tr_insert_sync.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -698,351 +1181,32 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_CONNECTION</name>
+          <name>PRM_SYNC_DIR</name>
           <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name/>
-          <value>${PRM_VERSION}</value>
+          <value>${PRM_SYNC_DIR}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1112</xloc>
-      <yloc>96</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Measures Relations</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_measures_relations.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name/>
-          <value>${PRM_VERSION}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1312</xloc>
-      <yloc>192</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Calculated Members Relations</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_calculatedmembers_relations.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name/>
-          <value>${PRM_VERSION}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>304</xloc>
-      <yloc>288</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Other Dimensions Relations</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_other_dimensions_relations.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name/>
-          <value>${PRM_VERSION}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>704</xloc>
-      <yloc>288</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Other Measures Nodes</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_other_measures_nodes.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name/>
-          <value>${PRM_CONNECTION}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name/>
-          <value>${PRM_DATABASE}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>912</xloc>
-      <yloc>288</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Schema Nodes</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_schema_nodes.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>512</xloc>
-      <yloc>96</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Insert Schema Relations</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_schema_relations.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name/>
-          <value>${PRM_SCHEMA}</value>
-        </parameter>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>712</xloc>
-      <yloc>96</yloc>
+      <xloc>864</xloc>
+      <yloc>612</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>Insert Other Measures Relations</from>
+      <from>change to read container</from>
       <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Parse database?</from>
+      <to>Load rdbms</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1050,8 +1214,35 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Roles</from>
-      <to>Abort job</to>
+      <from>Parse Schema?</from>
+      <to>Load Mondrian</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Mondrian</from>
+      <to>Parse Reports?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse Reports?</from>
+      <to>Load Analyzer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse Reports?</from>
+      <to>change to read container</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1059,44 +1250,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Dimensions Nodes</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Measures Nodes</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Calculated Members Nodes</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Other Dimensions Nodes</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Other Measures Relations</from>
-      <to>Abort job</to>
+      <from>Parse Schema?</from>
+      <to>Parse Reports?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1105,7 +1260,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Insert Roles</to>
+      <to>Copy connection</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1113,26 +1268,17 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Insert Dimensions Nodes</from>
-      <to>Insert Dimensions Relations</to>
+      <from>Copy connection</from>
+      <to>change to write container</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Insert Dimensions Relations</from>
-      <to>Insert Measures Nodes</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Dimensions Relations</from>
-      <to>Abort job</to>
+      <from>Load rdbms</from>
+      <to>Dissabled change to read container 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1140,26 +1286,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Measures Nodes</from>
-      <to>Insert Measures Relations</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Measures Relations</from>
-      <to>Insert Calculated Members Nodes</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Measures Relations</from>
-      <to>Abort job</to>
+      <from>Load Connections</from>
+      <to>Dissabled change to read container 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1167,26 +1295,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Calculated Members Nodes</from>
-      <to>Insert Calculated Members Relations</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Calculated Members Relations</from>
-      <to>Insert Other Dimensions Nodes</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Calculated Members Relations</from>
-      <to>Abort job</to>
+      <from>Load Mondrian</from>
+      <to>Dissabled change to read container 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1194,17 +1304,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Other Dimensions Nodes</from>
-      <to>Insert Other Dimensions Relations</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Other Dimensions Relations</from>
-      <to>Abort job</to>
+      <from>Load Analyzer</from>
+      <to>Dissabled change to read container 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1212,26 +1313,26 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Other Dimensions Relations</from>
-      <to>Insert Other Measures Nodes</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Other Measures Nodes</from>
-      <to>Insert Other Measures Relations</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Other Measures Nodes</from>
+      <from>Dissabled change to read container 2</from>
       <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>change to write container</from>
+      <to>Clean Neo4j?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Clean Neo4j?</from>
+      <to>Parse database?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1239,8 +1340,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Schema Relations</from>
-      <to>Insert Dimensions Nodes</to>
+      <from>Clean Neo4j?</from>
+      <to>Clean Neo4j</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1248,8 +1349,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Roles</from>
-      <to>Insert Schema Nodes</to>
+      <from>Clean Neo4j</from>
+      <to>Parse database?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1257,17 +1358,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Schema Nodes</from>
-      <to>Insert Schema Relations</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Insert Schema Relations</from>
-      <to>Abort job</to>
+      <from>Clean Neo4j</from>
+      <to>Dissabled change to read container 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1275,8 +1367,206 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert Schema Nodes</from>
-      <to>Abort job</to>
+      <from>Load rdbms</from>
+      <to>Load Connections</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse database?</from>
+      <to>Parse AWS?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Connections</from>
+      <to>Parse AWS?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse AWS?</from>
+      <to>Load rds</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load rds</from>
+      <to>Dissabled change to read container 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load rds</from>
+      <to>Load dms</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse AWS?</from>
+      <to>Parse ETL?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load dms</from>
+      <to>Parse ETL?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse ETL?</from>
+      <to>Load etl Structure</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load etl Structure</from>
+      <to>Load etl Fields</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load etl Fields</from>
+      <to>Load etl Connections</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Analyzer</from>
+      <to>Load prpt</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load prpt</from>
+      <to>change to read container</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load dms</from>
+      <to>Dissabled change to read container 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load etl Fields</from>
+      <to>Dissabled change to read container 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load etl Connections</from>
+      <to>Dissabled change to read container 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load prpt</from>
+      <to>Dissabled change to read container 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse ETL?</from>
+      <to>Parse SYNC?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse SYNC?</from>
+      <to>Parse Schema?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load etl Connections</from>
+      <to>Parse SYNC?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Parse SYNC?</from>
+      <to>Load Sync</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Sync</from>
+      <to>Parse Schema?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Sync</from>
+      <to>Dissabled change to read container 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

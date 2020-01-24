@@ -15,6 +15,11 @@
         <description/>
       </parameter>
       <parameter>
+        <name>PRM_CONNECTION_TYPE</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
         <name>PRM_KETTLE_PROPERTIES_DIR</name>
         <default_value/>
         <description/>
@@ -463,11 +468,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Calc connection</from>
-      <to>Copy rows to result</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Filter connection</from>
       <to>Calc db param</to>
       <enabled>Y</enabled>
@@ -479,13 +479,28 @@
     </hop>
     <hop>
       <from>Group by</from>
+      <to>Stream lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add connection</from>
+      <to>Stream lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Stream lookup</from>
       <to>Calc connection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Calc connection</from>
+      <to>Copy rows to result</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Calc connection</name>
-    <type>Calculator</type>
+    <name>Add connection</name>
+    <type>DataGrid</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -494,112 +509,73 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>C_DRIVER_CLASS_NAME</field_name>
-      <calc_type>CONSTANT</calc_type>
-      <field_a>org.postgresql.Driver</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>C_CONNECTION_URL</field_name>
-      <calc_type>CONSTANT</calc_type>
-      <field_a>jdbc:postgresql://</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>Y</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>C_DOUBLE_POINT</field_name>
-      <calc_type>CONSTANT</calc_type>
-      <field_a>:</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>Y</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>C_SLASH</field_name>
-      <calc_type>CONSTANT</calc_type>
-      <field_a>/</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>Y</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>V_URL_PART_1</field_name>
-      <calc_type>ADD3</calc_type>
-      <field_a>C_CONNECTION_URL</field_a>
-      <field_b>V_HOST</field_b>
-      <field_c>C_DOUBLE_POINT</field_c>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>Y</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>V_URL_PART_2</field_name>
-      <calc_type>ADD3</calc_type>
-      <field_a>V_URL_PART_1</field_a>
-      <field_b>V_PORT</field_b>
-      <field_c>C_SLASH</field_c>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>Y</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>V_CONNECTION_URL</field_name>
-      <calc_type>ADD</calc_type>
-      <field_a>V_URL_PART_2</field_a>
-      <field_b>V_DATABASE</field_b>
-      <field_c/>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
+    <fields>
+      <field>
+        <name>connection_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>C_DRIVER_CLASS_NAME</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>C_CONNECTION_URL</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <data>
+      <line>
+        <item>REDSHIFT</item>
+        <item>org.postgresql.Driver</item>
+        <item>jdbc:postgresql://</item>
+      </line>
+      <line>
+        <item>POSTGRESQL</item>
+        <item>org.postgresql.Driver</item>
+        <item>jdbc:postgresql://</item>
+      </line>
+      <line>
+        <item>MYSQL</item>
+        <item>com.mysql.jdbc.Driver</item>
+        <item>jdbc:mysql://</item>
+      </line>
+      <line>
+        <item>MSSQL</item>
+        <item>com.microsoft.sqlserver.jdbc. SQLServerDriver</item>
+        <item>jdbc:sqlserver://</item>
+      </line>
+      <line>
+        <item/>
+        <item/>
+        <item/>
+      </line>
+      <line>
+        <item/>
+        <item/>
+        <item/>
+      </line>
+    </data>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -609,7 +585,62 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1400</xloc>
+      <xloc>1250</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Calc connection</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+var V_CONNECTION_URL;
+
+if(PRM_CONNECTION_TYPE == "MSSQL")
+{
+	V_CONNECTION_URL=C_CONNECTION_URL+V_HOST+':'+V_PORT+';DatabaseName='+V_DATABASE;
+}
+else
+{
+	V_CONNECTION_URL=C_CONNECTION_URL+V_HOST+':'+V_PORT+'/'+V_DATABASE;
+}</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>V_CONNECTION_URL</name>
+        <rename>V_CONNECTION_URL</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1425</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
@@ -740,7 +771,7 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1000</xloc>
+      <xloc>900</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
@@ -809,7 +840,7 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
+      <xloc>375</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
@@ -844,7 +875,7 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
+      <xloc>725</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
@@ -873,6 +904,18 @@ Alert("index of 'o', search from position 7 : " + str3);
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
+      <field>
+        <name>PRM_CONNECTION_TYPE</name>
+        <variable>${PRM_CONNECTION_TYPE}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -883,7 +926,7 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>600</xloc>
+      <xloc>550</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
@@ -910,6 +953,9 @@ Alert("index of 'o', search from position 7 : " + str3);
     <group>
       <field>
         <name>PRM_CONNECTION_NAME</name>
+      </field>
+      <field>
+        <name>PRM_CONNECTION_TYPE</name>
       </field>
     </group>
     <fields>
@@ -953,7 +999,7 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
+      <xloc>1075</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1074,6 +1120,54 @@ Alert("index of 'o', search from position 7 : " + str3);
     </remotesteps>
     <GUI>
       <xloc>200</xloc>
+      <yloc>100</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Stream lookup</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>Add connection</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>PRM_CONNECTION_TYPE</name>
+        <field>connection_type</field>
+      </key>
+      <value>
+        <name>C_DRIVER_CLASS_NAME</name>
+        <rename>C_DRIVER_CLASS_NAME</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>C_CONNECTION_URL</name>
+        <rename>C_CONNECTION_URL</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1250</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>

@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>jb_load_mondrian</name>
+  <name>jb_loop_rdbms</name>
   <description/>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2019/04/02 13:56:36.797</created_date>
+  <created_date>2020/01/09 10:08:30.765</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2019/04/02 13:56:36.797</modified_date>
+  <modified_date>2020/01/09 10:08:30.765</modified_date>
   <parameters>
     <parameter>
-      <name>PRM_FOLDER</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>PRM_MONDRIAN_PROPERTIES</name>
+      <name>PRM_ACTIVE_KETTLE_PROPERTIES_DIR</name>
       <default_value/>
       <description/>
     </parameter>
@@ -298,7 +293,7 @@
   <shared_objects_file/>
   <entries>
     <entry>
-      <name>START</name>
+      <name>Start</name>
       <description/>
       <type>SPECIAL</type>
       <attributes/>
@@ -320,13 +315,13 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>List Schema</name>
+      <name>List Connections</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_list_schema.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/tr_list_connections.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -349,26 +344,6 @@
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_MONDRIAN_PROPERTIES</name>
-          <stream_name/>
-          <value>${PRM_MONDRIAN_PROPERTIES}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_FOLDER</name>
-          <stream_name/>
-          <value>${PRM_FOLDER}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_REPLACE_CONN</name>
-          <stream_name/>
-          <value>${PRM_REPLACE_CONN}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_ACTUAL_CONN</name>
-          <stream_name/>
-          <value>${PRM_ACTUAL_CONN}</value>
-        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -378,13 +353,13 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Load Mondrian Parts</name>
+      <name>Load rdbms</name>
       <description/>
       <type>JOB</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>${Internal.Entry.Current.Directory}\jb_load_mondrian_parts.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}/jb_load_rdbms.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -406,23 +381,23 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_CONNECTION</name>
-          <stream_name>datasource_value</stream_name>
+          <name>PRM_ACTIVE_KETTLE_PROPERTIES_DIR</name>
+          <stream_name/>
+          <value>${PRM_ACTIVE_KETTLE_PROPERTIES_DIR}</value>
+        </parameter>
+        <parameter>
+          <name>PRM_CONNECTION_NAME</name>
+          <stream_name>connection</stream_name>
           <value/>
         </parameter>
         <parameter>
-          <name>PRM_SCHEMA</name>
-          <stream_name>file_name</stream_name>
+          <name>PRM_CONNECTION_TYPE</name>
+          <stream_name>connection_type</stream_name>
           <value/>
         </parameter>
         <parameter>
-          <name>PRM_DATABASE</name>
-          <stream_name>database</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>PRM_VERSION</name>
-          <stream_name>version</stream_name>
+          <name>PRM_QUERY_PROCESSING</name>
+          <stream_name>query_processing</stream_name>
           <value/>
         </parameter>
       </parameters>
@@ -446,24 +421,11 @@
       <yloc>100</yloc>
       <attributes_kjc/>
     </entry>
-    <entry>
-      <name>Abort job</name>
-      <description/>
-      <type>ABORT</type>
-      <attributes/>
-      <message/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>500</xloc>
-      <yloc>224</yloc>
-      <attributes_kjc/>
-    </entry>
   </entries>
   <hops>
     <hop>
-      <from>START</from>
-      <to>List Schema</to>
+      <from>Start</from>
+      <to>List Connections</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -471,8 +433,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>List Schema</from>
-      <to>Load Mondrian Parts</to>
+      <from>List Connections</from>
+      <to>Load rdbms</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -480,7 +442,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load Mondrian Parts</from>
+      <from>Load rdbms</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -488,35 +450,10 @@
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
-    <hop>
-      <from>List Schema</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load Mondrian Parts</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
   </hops>
   <notepads>
   </notepads>
   <attributes>
-    <group>
-      <name>JobRestart</name>
-      <attribute>
-        <key>UniqueConnections</key>
-        <value>N</value>
-      </attribute>
-    </group>
     <group>
       <name>METASTORE.pentaho</name>
       <attribute>
