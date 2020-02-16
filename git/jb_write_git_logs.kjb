@@ -13,7 +13,12 @@
   <parameters>
     <parameter>
       <name>PRM_ETL_DIR</name>
-      <default_value />
+      <default_value>/home/bart/git-knowbi/knowbi-meta-to-neo4j</default_value>
+      <description />
+    </parameter>
+    <parameter>
+      <name>PRM_OUT_DIR</name>
+      <default_value>/home/bart/git-knowbi/knowbi-meta-to-neo4j/git/tmp-data</default_value>
       <description />
     </parameter>
   </parameters>
@@ -308,13 +313,13 @@
       <add_date>N</add_date>
       <add_time>N</add_time>
       <insertScript>Y</insertScript>
-      <script>cd ${PRM_ETL_DIR} &amp;&amp; git log --all --format='%d;%H;%cn;%ce;%cd;%s' --all > /tmp/git.log</script>
+      <script>cd ${PRM_ETL_DIR} &amp;&amp; git log --all --format='%d;%H;%cn;%ce;%cd;%s' --all > ${PRM_OUT_DIR}/git.csv</script>
       <loglevel>Basic</loglevel>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>80</yloc>
+      <xloc>288</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -336,7 +341,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>96</xloc>
-      <yloc>80</yloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -347,21 +352,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>736</xloc>
-      <yloc>80</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Abort job</name>
-      <description />
-      <type>ABORT</type>
-      <attributes />
-      <message />
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>240</yloc>
+      <xloc>1632</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -398,17 +390,17 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>336</xloc>
-      <yloc>80</yloc>
+      <xloc>512</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>commit-updates.sh</name>
+      <name>get commit files</name>
       <description />
       <type>SHELL</type>
       <attributes />
-      <filename>${Internal.Entry.Current.Directory}/commit-updates.sh</filename>
-      <work_directory>${PRM_ETL_DIR}</work_directory>
+      <filename />
+      <work_directory>${Internal.Entry.Current.Directory}</work_directory>
       <arg_from_previous>Y</arg_from_previous>
       <exec_per_row>Y</exec_per_row>
       <set_logfile>N</set_logfile>
@@ -417,14 +409,15 @@
       <logext />
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <insertScript>N</insertScript>
-      <script />
+      <insertScript>Y</insertScript>
+      <script>echo python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}
+python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
       <loglevel>Basic</loglevel>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>80</yloc>
+      <xloc>1152</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -461,8 +454,46 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>608</xloc>
-      <yloc>80</yloc>
+      <xloc>1408</xloc>
+      <yloc>64</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>tr_load_git_relationships</name>
+      <description />
+      <type>TRANS</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <trans_object_id />
+      <filename>${Internal.Entry.Current.Directory}/tr_load_git_relationships.ktr</filename>
+      <transname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>832</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
   </entries>
@@ -478,15 +509,6 @@
     </hop>
     <hop>
       <from>write git log</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>write git log</from>
       <to>tr_load_git_logs</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -495,16 +517,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>tr_load_git_logs</from>
-      <to>commit-updates.sh</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>commit-updates.sh</from>
+      <from>get commit files</from>
       <to>tr_load_git_updates</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -521,8 +534,47 @@
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
+    <hop>
+      <from>tr_load_git_logs</from>
+      <to>tr_load_git_relationships</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_git_relationships</from>
+      <to>get commit files</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>for i in `cut /tmp/git.csv -d ';' -f 2 ` ; do details=$(git show --name-status  --pretty="format:" $i) &amp;&amp; line=$i";"\"$details\" &amp;&amp; echo $line  >> /tmp/commit-details.csv ; done </note>
+      <xloc>64</xloc>
+      <yloc>224</yloc>
+      <width>2014</width>
+      <heigth>42</heigth>
+      <fontname>Cantarell</fontname>
+      <fontsize>11</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <attributes>
     <group>

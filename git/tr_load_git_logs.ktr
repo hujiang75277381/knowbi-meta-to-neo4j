@@ -443,112 +443,112 @@
   </notepads>
   <order>
     <hop>
-      <from>columns</from>
-      <to>denormalize</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>read git.log</from>
-      <to>columns</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>denormalize</from>
-      <to>split author</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>split author</from>
-      <to>clean mail</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>clean mail</from>
-      <to>parse date</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
       <from>parse date</from>
       <to>format date</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>format date</from>
-      <to>previous_hash</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>previous_hash</from>
-      <to>create commits</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>create commits</from>
-      <to>create users</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>create refers</from>
-      <to>create commited</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>hashes only</from>
-      <to>to results</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Blocking step</from>
-      <to>create refers</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>read git.log</from>
-      <to>branches</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>branches</from>
       <to>parse date</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>create users</from>
+      <from>format date</from>
+      <to>create commits</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort email</from>
+      <to>create users</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>keep user, email</from>
+      <to>sort email</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>read git.log</from>
+      <to>keep branch, tag</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>keep branch, tag</from>
+      <to>branch?</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>read git.log</from>
+      <to>user known?</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>user known?</from>
+      <to>email -> user</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>user known?</from>
+      <to>keep user, email</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>email -> user</from>
+      <to>keep user, email</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>branch?</from>
+      <to>D</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>D</from>
+      <to>branches</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>D</from>
+      <to>tags</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>branches</from>
+      <to>sort branch</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort branch</from>
       <to>create branches</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>create branches</from>
-      <to>Blocking step</to>
+      <from>tags</from>
+      <to>sort tag</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>create commited</from>
-      <to>create committed_on</to>
+      <from>sort tag</from>
+      <to>no empty tags</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>create committed_on</from>
-      <to>hashes only</to>
+      <from>no empty tags</from>
+      <to>create tags</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Blocking step</name>
-    <type>BlockingStep</type>
+    <name>D</name>
+    <type>Dummy</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <pass_all_rows>Y</pass_all_rows>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>block</prefix>
-    <cache_size>500000</cache_size>
-    <compress>Y</compress>
     <attributes />
     <cluster_schema />
     <remotesteps>
@@ -558,14 +558,119 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>944</xloc>
-      <yloc>448</yloc>
+      <xloc>768</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>clean mail</name>
-    <type>ReplaceString</type>
+    <name>branch?</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to />
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>branch</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>user known?</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>keep user, email</send_true_to>
+    <send_false_to>email -> user</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>user</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>768</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>no empty tags</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to />
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>tag</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1472</xloc>
+      <yloc>672</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>keep user, email</name>
+    <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -576,16 +681,80 @@
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>mail</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>&gt;</replace_string>
-        <replace_by_string />
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-        <is_unicode>no</is_unicode>
+        <name>user</name>
+        <rename />
+      </field>
+      <field>
+        <name>email</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>992</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>keep branch, tag</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>branch</name>
+        <rename />
+      </field>
+      <field>
+        <name>branch</name>
+        <rename>tag</rename>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>352</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>email -> user</name>
+    <type>SetValueField</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>user</name>
+        <replaceby>email</replaceby>
       </field>
     </fields>
     <attributes />
@@ -597,13 +766,139 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>64</yloc>
+      <xloc>768</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>columns</name>
+    <name>sort email</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>email</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort branch</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>branch</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort tag</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>tag</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>672</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>branches</name>
     <type>ScriptValueMod</type>
     <description />
     <distribute>Y</distribute>
@@ -619,51 +914,23 @@
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>// determine column type
-var col = "";
-var counter;
+        <jsScript_script>if(!branch){branch = 'master'};
 
-// initialize counter if first row
-if (counter == null){
-    counter = 0;
+if(!branch.match(/\(\b[a-z0-9]+\/.*\)/) &amp;&amp; branch != 'master'){
+	branch = 'master';
 }
 
-// set col type
-if(text.match('^commit.*')){
-	counter++; // increase counter if new commit
-	col = "hash";
-} else if (text.match('^Author.*')){
-	col = "author";
-} else if (text.match('^Date.*')){
-	col = "date";
-} else if (text.match('^    .*')){
-	col = "message";
-}
+branch = branch.replace(branch.match(/\(/), '')
+	.replace(branch.match(/\)/), '')
+	.replace(/^.*[\\\/]/, '');
 
-// clean text
-text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsScript_script>
+</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
       <field>
-        <name>col</name>
-        <rename>col</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>counter</name>
-        <rename>counter</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>text</name>
-        <rename>text</rename>
+        <name>branch</name>
+        <rename>branch</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -679,13 +946,13 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>64</yloc>
+      <xloc>992</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>create commited</name>
+    <name>create branches</name>
     <type>Neo4JOutput</type>
     <description />
     <distribute>Y</distribute>
@@ -700,25 +967,19 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
     <key />
     <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
+    <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
     <return_graph_field>graph</return_graph_field>
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>User</value>
+        <value>Branch</value>
       </labels>
       <properties>
         <property>
           <name>name</name>
-          <value>user</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>mail</name>
-          <value>mail</value>
+          <value>branch</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -726,21 +987,11 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
     </from>
     <to>
       <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>Commit</value>
-      </labels>
-      <properties>
-        <property>
-          <name>commit</name>
-          <value>hash</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
+      <labels />
+      <properties />
     </to>
     <relationship />
-    <relationship_value>COMMITTED</relationship_value>
+    <relationship_value />
     <relprops />
     <attributes />
     <cluster_schema />
@@ -751,8 +1002,8 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>944</xloc>
-      <yloc>656</yloc>
+      <xloc>1728</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -819,13 +1070,13 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>944</xloc>
-      <yloc>160</yloc>
+      <xloc>1728</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>create refers</name>
+    <name>create tags</name>
     <type>Neo4JOutput</type>
     <description />
     <distribute>Y</distribute>
@@ -840,19 +1091,19 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
     <key />
     <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
+    <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
     <return_graph_field>graph</return_graph_field>
     <from>
       <read_only_from_node>N</read_only_from_node>
       <labels>
         <label />
-        <value>Commit</value>
+        <value>Tag</value>
       </labels>
       <properties>
         <property>
-          <name>commit</name>
-          <value>hash</value>
+          <name>name</name>
+          <value>tag</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -860,21 +1111,11 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
     </from>
     <to>
       <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>Commit</value>
-      </labels>
-      <properties>
-        <property>
-          <name>commit</name>
-          <value>previous_hash</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
+      <labels />
+      <properties />
     </to>
     <relationship />
-    <relationship_value>REFERS</relationship_value>
+    <relationship_value />
     <relprops />
     <attributes />
     <cluster_schema />
@@ -885,8 +1126,8 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>944</xloc>
-      <yloc>544</yloc>
+      <xloc>1728</xloc>
+      <yloc>672</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -917,16 +1158,16 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </labels>
       <properties>
         <property>
-          <name>name</name>
-          <value>user</value>
+          <name>mail</name>
+          <value>email</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
-          <name>mail</name>
-          <value>mail</value>
+          <name>name</name>
+          <value>user</value>
           <type>String</type>
-          <primary>Y</primary>
+          <primary>N</primary>
         </property>
       </properties>
     </from>
@@ -947,97 +1188,8 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>944</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>denormalize</name>
-    <type>Denormaliser</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <key_field>col</key_field>
-    <group>
-      <field>
-        <name>counter</name>
-      </field>
-    </group>
-    <fields>
-      <field>
-        <field_name>text</field_name>
-        <key_value>hash</key_value>
-        <target_name>hash</target_name>
-        <target_type>String</target_type>
-        <target_format />
-        <target_length>-1</target_length>
-        <target_precision>-1</target_precision>
-        <target_decimal_symbol />
-        <target_grouping_symbol />
-        <target_currency_symbol />
-        <target_null_string />
-        <target_aggregation_type>-</target_aggregation_type>
-      </field>
-      <field>
-        <field_name>text</field_name>
-        <key_value>author</key_value>
-        <target_name>author</target_name>
-        <target_type>String</target_type>
-        <target_format />
-        <target_length>-1</target_length>
-        <target_precision>-1</target_precision>
-        <target_decimal_symbol />
-        <target_grouping_symbol />
-        <target_currency_symbol />
-        <target_null_string />
-        <target_aggregation_type>-</target_aggregation_type>
-      </field>
-      <field>
-        <field_name>text</field_name>
-        <key_value>date</key_value>
-        <target_name>date</target_name>
-        <target_type>String</target_type>
-        <target_format />
-        <target_length>-1</target_length>
-        <target_precision>-1</target_precision>
-        <target_decimal_symbol />
-        <target_grouping_symbol />
-        <target_currency_symbol />
-        <target_null_string />
-        <target_aggregation_type>-</target_aggregation_type>
-      </field>
-      <field>
-        <field_name>text</field_name>
-        <key_value>message</key_value>
-        <target_name>message</target_name>
-        <target_type>String</target_type>
-        <target_format />
-        <target_length>-1</target_length>
-        <target_precision>-1</target_precision>
-        <target_decimal_symbol />
-        <target_grouping_symbol />
-        <target_currency_symbol />
-        <target_null_string />
-        <target_aggregation_type>-</target_aggregation_type>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>336</xloc>
-      <yloc>64</yloc>
+      <xloc>1728</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1081,39 +1233,8 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
+      <xloc>1472</xloc>
       <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>hashes only</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>hash</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1088</xloc>
-      <yloc>768</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1142,7 +1263,7 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
         <rename />
       </field>
       <field>
-        <name>mail</name>
+        <name>email</name>
         <rename />
       </field>
       <field>
@@ -1181,42 +1302,7 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>720</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>previous_hash</name>
-    <type>AnalyticQuery</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <group>
-      </group>
-    <fields>
-      <field>
-        <aggregate>previous_hash</aggregate>
-        <subject>hash</subject>
-        <type>LEAD</type>
-        <valuefield>1</valuefield>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>944</xloc>
+      <xloc>992</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1225,7 +1311,7 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
     <name>read git.log</name>
     <type>TextFileInput</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1256,11 +1342,11 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
     <rownumByFile>N</rownumByFile>
     <rownum_field />
     <format>mixed</format>
-    <encoding />
+    <encoding>UTF-8</encoding>
     <length>Characters</length>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>/tmp/git.log</name>
+      <name>${Internal.Entry.Current.Directory}/tmp-data/git.csv</name>
       <filemask />
       <exclude_filemask />
       <file_required>N</file_required>
@@ -1317,7 +1403,7 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
         <repeat>N</repeat>
       </field>
       <field>
-        <name>mail</name>
+        <name>email</name>
         <type>String</type>
         <format />
         <currency />
@@ -1397,97 +1483,12 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
     </remotesteps>
     <GUI>
       <xloc>64</xloc>
-      <yloc>64</yloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>split author</name>
-    <type>FieldSplitter</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <splitfield>author</splitfield>
-    <delimiter>&lt;</delimiter>
-    <enclosure />
-    <fields>
-      <field>
-        <name>user</name>
-        <id />
-        <idrem>N</idrem>
-        <type>String</type>
-        <format />
-        <group />
-        <decimal />
-        <currency />
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif />
-        <ifnull />
-        <trimtype>none</trimtype>
-      </field>
-      <field>
-        <name>mail</name>
-        <id />
-        <idrem>N</idrem>
-        <type>String</type>
-        <format />
-        <group />
-        <decimal />
-        <currency />
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif />
-        <ifnull />
-        <trimtype>none</trimtype>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>to results</name>
-    <type>RowsToResult</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1440</xloc>
-      <yloc>768</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>branches</name>
+    <name>tags</name>
     <type>ScriptValueMod</type>
     <description />
     <distribute>Y</distribute>
@@ -1503,21 +1504,21 @@ text = text.replace(text.match('^commit |^Author: |^Date:   |^    '), '');</jsSc
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>if(!branch){branch = 'master'};
-
-if(!branch.match(/\(\b[a-z0-9]+\/.*\)/) &amp;&amp; branch != 'master'){
-	branch = 'master';
+        <jsScript_script>if(indexOf(tag, 'tag: ') > -1 &amp;&amp; !indexOf(tag, 'origin/') > -1) {
+  tag = tag.replace(tag.match(/\(/), '')
+	  .replace(tag.match(/\)/), '')
+	  .replace(/^.*[\\\/]/, '')
+      .replace('tag: ', '');
+}else{
+  tag = null;
 }
-
-branch = branch.replace(branch.match(/\(/), '')
-	.replace(branch.match(/\)/), '')
-	.replace(/^.*[\\\/]/, '');</jsScript_script>
+</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
       <field>
-        <name>branch</name>
-        <rename>branch</rename>
+        <name>tag</name>
+        <rename>tag</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -1533,130 +1534,8 @@ branch = branch.replace(branch.match(/\(/), '')
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>create branches</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Branch</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>branch</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
-    </to>
-    <relationship />
-    <relationship_value />
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>944</xloc>
-      <yloc>336</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>create committed_on</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Commit</value>
-      </labels>
-      <properties>
-        <property>
-          <name>commit</name>
-          <value>hash</value>
-          <type />
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>Branch</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>branch</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship />
-    <relationship_value>COMMITTED_ON</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>944</xloc>
-      <yloc>768</yloc>
+      <xloc>992</xloc>
+      <yloc>672</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
