@@ -912,7 +912,7 @@ branch = branch.replace(branch.match(/\(/), '')
     <length>Characters</length>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name />
+      <name>${PRM_OUT_DIR}git.csv</name>
       <filemask />
       <exclude_filemask />
       <file_required>N</file_required>
