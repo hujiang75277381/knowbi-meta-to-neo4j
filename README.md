@@ -8,8 +8,7 @@ Currently supported are: git, kettle, mondrian, rdbms and rds. It also has suppo
 
 ## Usage
 
-### Parsing Kettle
-
+### Getting Started
 1. Clone this repository to a location on your computer.
 
 ```sh
@@ -18,14 +17,17 @@ git clone https://github.com/knowbi/knowbi-meta-to-neo4j.git
 
 2. Make sure you have a Neo4j database running with a graph named 'lineage-graph', version 4.0 is currently not supported so 3.5 is advised.
 3. Boot up Kettle (with the Neo4j plugins) and create a Neo4j connection.
-4. To start, open **jb_load_kettle_etl.kjb** in the *knowbi-meta-to-neo4j/kettle/* directory.
-5. In this job there are 3 parameters:
+
+### Parsing Kettle
+
+1. To start, open **jb_load_kettle_etl.kjb** in the *knowbi-meta-to-neo4j/kettle/* directory.
+2. In this job there are 3 parameters:
     - PRM_ETL_DIR: The Kettle ETL directory to parse.
     - PRM_CONNECTION_NAME: Which connection to read tables, columns, queries, .. from. (optional)
     - PRM_KETTLE_PROPERTIES_DIR: The kettle.properties file directory, this is used to get the connection settings defined in the previous parameter. (optional)
 
-6. Currently this job loads all provisioned modules; for now, to deactivate the database load (Insert DB) and rds (tr_load_rds) disable the hops and redraw hops excluding the entries.
-7. Run the job.
+3. Currently this job loads all provisioned modules; for now, to deactivate the database load (Insert DB) and rds (tr_load_rds) disable the hops and redraw hops excluding the entries.
+4. Run the job.
 
 ### Parsing Git
 
