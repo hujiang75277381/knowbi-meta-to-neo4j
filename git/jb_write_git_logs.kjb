@@ -13,12 +13,12 @@
   <parameters>
     <parameter>
       <name>PRM_ETL_DIR</name>
-      <default_value>/home/bart/git-knowbi/knowbi-meta-to-neo4j</default_value>
+      <default_value />
       <description />
     </parameter>
     <parameter>
       <name>PRM_OUT_DIR</name>
-      <default_value>/home/bart/git-knowbi/knowbi-meta-to-neo4j/git/tmp-data</default_value>
+      <default_value />
       <description />
     </parameter>
   </parameters>
@@ -319,7 +319,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>288</xloc>
-      <yloc>64</yloc>
+      <yloc>128</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -341,7 +341,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>96</xloc>
-      <yloc>64</yloc>
+      <yloc>128</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -353,7 +353,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>1632</xloc>
-      <yloc>64</yloc>
+      <yloc>128</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -391,33 +391,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>512</xloc>
-      <yloc>64</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>get commit files</name>
-      <description />
-      <type>SHELL</type>
-      <attributes />
-      <filename />
-      <work_directory>${Internal.Entry.Current.Directory}</work_directory>
-      <arg_from_previous>Y</arg_from_previous>
-      <exec_per_row>Y</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile />
-      <set_append_logfile>N</set_append_logfile>
-      <logext />
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <insertScript>Y</insertScript>
-      <script>echo python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}
-python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
-      <loglevel>Basic</loglevel>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1152</xloc>
-      <yloc>64</yloc>
+      <yloc>128</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -455,7 +429,7 @@ python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>1408</xloc>
-      <yloc>64</yloc>
+      <yloc>128</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -493,7 +467,33 @@ python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>832</xloc>
-      <yloc>64</yloc>
+      <yloc>128</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>get commit files</name>
+      <description />
+      <type>SHELL</type>
+      <attributes />
+      <filename />
+      <work_directory>${Internal.Entry.Current.Directory}</work_directory>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <set_append_logfile>N</set_append_logfile>
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <insertScript>Y</insertScript>
+      <script>echo python3 git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}
+python3 git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
+      <loglevel>Basic</loglevel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1136</xloc>
+      <yloc>128</yloc>
       <attributes_kjc />
     </entry>
   </entries>
@@ -510,15 +510,6 @@ python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
     <hop>
       <from>write git log</from>
       <to>tr_load_git_logs</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>get commit files</from>
-      <to>tr_load_git_updates</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -546,6 +537,15 @@ python git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
     <hop>
       <from>tr_load_git_relationships</from>
       <to>get commit files</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>get commit files</from>
+      <to>tr_load_git_updates</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
