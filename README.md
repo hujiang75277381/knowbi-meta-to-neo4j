@@ -31,7 +31,7 @@ git clone https://github.com/knowbi/knowbi-meta-to-neo4j.git
 
 Currently this module is run separately and is available in the git_parsing branch, this will change in a future iteration.
 
-1. Assuming you've followed the steps above: open **jb_write_git_logs** in the *knowbi-meta-to-neo4j/kettle/* directory.
+1. Assuming you've followed the steps above: open **jb_write_git_logs** in the *knowbi-meta-to-neo4j/git/* directory.
 2. In this job there are 2 parameters:
     - PRM_ETL_DIR: The Kettle ETL directory to parse.
     - PRM_OUT_DIR: Temporary directory for git-python.
