@@ -478,7 +478,7 @@
     <filename_field />
     <rownum_field />
     <include_filename>N</include_filename>
-    <separator>,</separator>
+    <separator> </separator>
     <enclosure />
     <header>Y</header>
     <buffer_size>50000</buffer_size>
@@ -489,17 +489,6 @@
     <format />
     <encoding />
     <fields>
-      <field>
-        <name>index</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
       <field>
         <name>commit_hash</name>
         <type>String</type>

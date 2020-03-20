@@ -486,13 +486,18 @@
       <add_date>N</add_date>
       <add_time>N</add_time>
       <insertScript>Y</insertScript>
-      <script>echo python3 git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}
-python3 git-python.py ${PRM_ETL_DIR} ${PRM_OUT_DIR}</script>
+      <script>cd ${PRM_ETL_DIR}
+
+while read p; do
+	hash=$(cut -d\; -f 2 &lt;&lt;&lt; $p)
+	git show --name-status --pretty="format:" $hash | while read x; do echo $hash $x; done >> ${PRM_OUT_DIR}/gp-commit-details.csv
+done &lt; ${PRM_OUT_DIR}/git.csv
+</script>
       <loglevel>Basic</loglevel>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1136</xloc>
+      <xloc>1104</xloc>
       <yloc>128</yloc>
       <attributes_kjc />
     </entry>
