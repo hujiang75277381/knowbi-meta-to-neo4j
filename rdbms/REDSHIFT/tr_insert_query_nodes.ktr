@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_create_db_connection</name>
+    <name>tr_insert_query_red_nodes</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,17 +10,12 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>PRM_CONNECTION_NAME</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
         <name>PRM_CONNECTION_TYPE</name>
         <default_value/>
         <description/>
       </parameter>
       <parameter>
-        <name>PRM_KETTLE_PROPERTIES_DIR</name>
+        <name>genconn_database</name>
         <default_value/>
         <description/>
       </parameter>
@@ -443,410 +438,111 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/11/15 11:07:46.715</created_date>
+    <created_date>2019/11/15 15:13:41.978</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/11/15 11:07:46.715</modified_date>
+    <modified_date>2019/11/15 15:13:41.978</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>gennconn</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>${genconn_name}</username>
+    <password>${genconn_pass}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>CUSTOM_DRIVER_CLASS</code>
+        <attribute>${genconn_driver}</attribute>
+      </attribute>
+      <attribute>
+        <code>CUSTOM_URL</code>
+        <attribute>${genconn_url}</attribute>
+      </attribute>
+      <attribute>
+        <code>DATABASE_DIALECT_ID</code>
+        <attribute>Generic database</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>1521</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>Read kettle.properties</from>
-      <to>Filter comment</to>
+      <from>Sort rows</from>
+      <to>Write User</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter comment</from>
+      <from>Sort rows</from>
+      <to>Write Query</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Read queries</from>
+      <to>Replace in string</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace in string</from>
       <to>Get variables</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Get variables</from>
-      <to>Filter connection</to>
+      <to>Filter database</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter connection</from>
-      <to>Calc db param</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Calc db param</from>
-      <to>Group by</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Group by</from>
-      <to>Stream lookup</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add connection</from>
-      <to>Stream lookup</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Stream lookup</from>
-      <to>Calc connection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Calc connection</from>
-      <to>Copy rows to result</to>
+      <from>Filter database</from>
+      <to>Sort rows</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Add connection</name>
-    <type>DataGrid</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>connection_type</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>C_DRIVER_CLASS_NAME</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>C_CONNECTION_URL</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <data>
-      <line>
-        <item>REDSHIFT</item>
-        <item>org.postgresql.Driver</item>
-        <item>jdbc:postgresql://</item>
-      </line>
-      <line>
-        <item>POSTGRESQL</item>
-        <item>org.postgresql.Driver</item>
-        <item>jdbc:postgresql://</item>
-      </line>
-      <line>
-        <item>MYSQL</item>
-        <item>com.mysql.jdbc.Driver</item>
-        <item>jdbc:mysql://</item>
-      </line>
-      <line>
-        <item>MSSQL</item>
-        <item>com.microsoft.sqlserver.jdbc. SQLServerDriver</item>
-        <item>jdbc:sqlserver://</item>
-      </line>
-      <line>
-        <item/>
-        <item/>
-        <item/>
-      </line>
-      <line>
-        <item/>
-        <item/>
-        <item/>
-      </line>
-    </data>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1250</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Calc connection</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>//Script here
-
-var V_CONNECTION_URL;
-
-if(PRM_CONNECTION_TYPE == "MSSQL")
-{
-	V_CONNECTION_URL=C_CONNECTION_URL+V_HOST+':'+V_PORT+';DatabaseName='+V_DATABASE;
-}
-else
-{
-	V_CONNECTION_URL=C_CONNECTION_URL+V_HOST+':'+V_PORT+'/'+V_DATABASE;
-}</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>V_CONNECTION_URL</name>
-        <rename>V_CONNECTION_URL</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1425</xloc>
-      <yloc>100</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Calc db param</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>//Script here
-
-var V_HOST = null;
-var V_USER = null;
-var V_PASS = null;
-var V_PORT = null;
-var V_DATABASE = null;
-
-if(indexOf(upper(param_name), "HOST") > 0 || indexOf(upper(param_name), "SERVER") > 0)
-{
-
-	V_HOST="${" + param_name + "}";
-}
-
-if(indexOf(upper(param_name), "USER") > 0 )
-{
-
-	V_USER="${" + param_name + "}";
-}
-
-if(indexOf(upper(param_name), "PASS") > 0 )
-{
-
-	V_PASS="${" + param_name + "}";
-}
-
-if(indexOf(upper(param_name), "PORT") > 0 )
-{
-
-	V_PORT="${" + param_name + "}";
-}
-
-if(indexOf(upper(param_name), "DATABASE") > 0 || indexOf(upper(param_name), "DBNM") > 0)
-{
-
-	V_DATABASE="${" + param_name + "}";
-}</jsScript_script>
-      </jsScript>
-      <jsScript>
-        <jsScript_type>-1</jsScript_type>
-        <jsScript_name>indexOf_Sample</jsScript_name>
-        <jsScript_script>// Perform the indexOf function
-// 
-// Usage:
-// indexOf(string, substring);
-// indexOf(string, substring, fromIndex);
-//
-// 2007-09-25
-//
-var str1= "Hello Pentaho!";
-var str2= indexOf(str1, "Pentaho");
-var str3= indexOf(str1, "o", 7);
-Alert("Input : " + str1);
-Alert("Index of 'Pentaho' : " + str2);
-Alert("index of 'o', search from position 7 : " + str3);
-</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>V_HOST</name>
-        <rename>V_HOST</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>V_USER</name>
-        <rename>V_USER</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>V_PASS</name>
-        <rename>V_PASS</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>V_PORT</name>
-        <rename>V_PORT</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>V_DATABASE</name>
-        <rename>V_DATABASE</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>900</xloc>
-      <yloc>100</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Copy rows to result</name>
-    <type>RowsToResult</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1600</xloc>
-      <yloc>100</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter comment</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to/>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>Y</negated>
-        <leftvalue>param_name</leftvalue>
-        <function>STARTS WITH</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>#</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask/>
-        </value>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>375</xloc>
-      <yloc>100</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter connection</name>
+    <name>Filter database</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -861,9 +557,9 @@ Alert("index of 'o', search from position 7 : " + str3);
     <compare>
       <condition>
         <negated>N</negated>
-        <leftvalue>param_name</leftvalue>
-        <function>STARTS WITH</function>
-        <rightvalue>PRM_CONNECTION_NAME</rightvalue>
+        <leftvalue>datname</leftvalue>
+        <function>=</function>
+        <rightvalue>genconn_database</rightvalue>
       </condition>
     </compare>
     <attributes/>
@@ -875,8 +571,8 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>725</xloc>
-      <yloc>100</yloc>
+      <xloc>728</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -893,8 +589,8 @@ Alert("index of 'o', search from position 7 : " + str3);
     </partitioning>
     <fields>
       <field>
-        <name>PRM_CONNECTION_NAME</name>
-        <variable>${PRM_CONNECTION_NAME}</variable>
+        <name>genconn_database</name>
+        <variable>${genconn_database}</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -905,7 +601,7 @@ Alert("index of 'o', search from position 7 : " + str3);
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>PRM_CONNECTION_TYPE</name>
+        <name>version</name>
         <variable>${PRM_CONNECTION_TYPE}</variable>
         <type>String</type>
         <format/>
@@ -926,14 +622,14 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>550</xloc>
-      <yloc>100</yloc>
+      <xloc>528</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Group by</name>
-    <type>GroupBy</type>
+    <name>Read queries</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -942,174 +638,18 @@ Alert("index of 'o', search from position 7 : " + str3);
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <all_rows>N</all_rows>
-    <ignore_aggregate>N</ignore_aggregate>
-    <field_ignore/>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>grp</prefix>
-    <add_linenr>N</add_linenr>
-    <linenr_fieldname/>
-    <give_back_row>N</give_back_row>
-    <group>
-      <field>
-        <name>PRM_CONNECTION_NAME</name>
-      </field>
-      <field>
-        <name>PRM_CONNECTION_TYPE</name>
-      </field>
-    </group>
-    <fields>
-      <field>
-        <aggregate>V_HOST</aggregate>
-        <subject>V_HOST</subject>
-        <type>FIRST</type>
-        <valuefield/>
-      </field>
-      <field>
-        <aggregate>V_USER</aggregate>
-        <subject>V_USER</subject>
-        <type>FIRST</type>
-        <valuefield/>
-      </field>
-      <field>
-        <aggregate>V_PASS</aggregate>
-        <subject>V_PASS</subject>
-        <type>FIRST</type>
-        <valuefield/>
-      </field>
-      <field>
-        <aggregate>V_PORT</aggregate>
-        <subject>V_PORT</subject>
-        <type>FIRST</type>
-        <valuefield/>
-      </field>
-      <field>
-        <aggregate>V_DATABASE</aggregate>
-        <subject>V_DATABASE</subject>
-        <type>FIRST</type>
-        <valuefield/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1075</xloc>
-      <yloc>100</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Read kettle.properties</name>
-    <type>TextFileInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <accept_filenames>N</accept_filenames>
-    <passing_through_fields>N</passing_through_fields>
-    <accept_field/>
-    <accept_stepname/>
-    <separator>=</separator>
-    <enclosure>"</enclosure>
-    <enclosure_breaks>N</enclosure_breaks>
-    <escapechar/>
-    <header>Y</header>
-    <nr_headerlines>1</nr_headerlines>
-    <footer>N</footer>
-    <nr_footerlines>1</nr_footerlines>
-    <line_wrapped>N</line_wrapped>
-    <nr_wraps>1</nr_wraps>
-    <layout_paged>N</layout_paged>
-    <nr_lines_per_page>80</nr_lines_per_page>
-    <nr_lines_doc_header>0</nr_lines_doc_header>
-    <noempty>Y</noempty>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <rownumByFile>N</rownumByFile>
-    <rownum_field/>
-    <format>Unix</format>
-    <encoding/>
-    <length>Characters</length>
-    <add_to_result_filenames>Y</add_to_result_filenames>
-    <file>
-      <name>${PRM_KETTLE_PROPERTIES_DIR}</name>
-      <filemask>kettle.properties</filemask>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-      <type>CSV</type>
-      <compression>None</compression>
-    </file>
-    <filters>
-    </filters>
-    <fields>
-      <field>
-        <name>param_name</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif>-</nullif>
-        <ifnull/>
-        <position>-1</position>
-        <length>67</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>param_value</name>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <ifnull/>
-        <position>-1</position>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
+    <connection>gennconn</connection>
+    <sql>select 
+	  datname
+	, usename
+	, current_query as query
+	, query_start
+from pg_stat_activity</sql>
     <limit>0</limit>
-    <error_ignored>N</error_ignored>
-    <skip_bad_files>N</skip_bad_files>
-    <file_error_field/>
-    <file_error_message_field/>
-    <error_line_skipped>N</error_line_skipped>
-    <error_count_field/>
-    <error_fields_field/>
-    <error_text_field/>
-    <bad_line_files_destination_directory/>
-    <bad_line_files_extension>warning</bad_line_files_extension>
-    <error_line_files_destination_directory/>
-    <error_line_files_extension>error</error_line_files_extension>
-    <line_number_files_destination_directory/>
-    <line_number_files_extension>line</line_number_files_extension>
-    <date_format_lenient>Y</date_format_lenient>
-    <date_format_locale>en_US</date_format_locale>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1119,14 +659,14 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>200</xloc>
-      <yloc>100</yloc>
+      <xloc>128</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Stream lookup</name>
-    <type>StreamLookup</type>
+    <name>Replace in string</name>
+    <type>ReplaceString</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1135,29 +675,56 @@ Alert("index of 'o', search from position 7 : " + str3);
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>Add connection</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>PRM_CONNECTION_TYPE</name>
-        <field>connection_type</field>
-      </key>
-      <value>
-        <name>C_DRIVER_CLASS_NAME</name>
-        <rename>C_DRIVER_CLASS_NAME</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>C_CONNECTION_URL</name>
-        <rename>C_CONNECTION_URL</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
+    <fields>
+      <field>
+        <in_stream_name>datname</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>{</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>datname</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>{</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>usename</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>}</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>usename</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>}</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1167,8 +734,170 @@ Alert("index of 'o', search from position 7 : " + str3);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1250</xloc>
-      <yloc>100</yloc>
+      <xloc>328</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>usename</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>query</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>928</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write Query</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>Query</value>
+      </labels>
+      <properties>
+        <property>
+          <name>query</name>
+          <value>query</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels/>
+      <properties/>
+    </to>
+    <relationship/>
+    <relationship_value/>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1128</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write User</name>
+    <type>Neo4JOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key/>
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label/>
+        <value>User</value>
+      </labels>
+      <properties>
+        <property>
+          <name>user</name>
+          <value>usename</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels/>
+      <properties/>
+    </to>
+    <relationship/>
+    <relationship_value/>
+    <relprops/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1128</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
