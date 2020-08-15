@@ -708,7 +708,7 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>264</xloc>
+      <xloc>256</xloc>
       <yloc>112</yloc>
       <attributes_kjc />
     </entry>
