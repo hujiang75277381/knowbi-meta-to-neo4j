@@ -1,0 +1,2 @@
+database,query
+bigquery,"SELECT query, destination_table.project_id, destination_table.dataset_id, destination_table.table_id, referenced_tables.project_id as ref_project_id, referenced_tables.dataset_id as ref_datset_id, referenced_tables.table_id as ref_table_id FROM `region-eu`.INFORMATION_SCHEMA.JOBS_BY_PROJECT, UNNEST(referenced_tables) referenced_tables WHERE DATE(creation_time)=CURRENT_DATE and destination_table.table_id not like 'anon%'"
