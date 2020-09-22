@@ -320,7 +320,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
+      <xloc>448</xloc>
       <yloc>96</yloc>
       <attributes_kjc />
     </entry>
@@ -358,7 +358,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
+      <xloc>448</xloc>
       <yloc>416</yloc>
       <attributes_kjc />
     </entry>
@@ -396,8 +396,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>304</yloc>
+      <xloc>448</xloc>
+      <yloc>320</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -434,8 +434,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>880</yloc>
+      <xloc>448</xloc>
+      <yloc>1024</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -472,8 +472,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>768</yloc>
+      <xloc>448</xloc>
+      <yloc>896</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -484,8 +484,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>1008</yloc>
+      <xloc>448</xloc>
+      <yloc>1120</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -499,8 +499,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>880</xloc>
-      <yloc>688</yloc>
+      <xloc>896</xloc>
+      <yloc>832</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -537,8 +537,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>656</yloc>
+      <xloc>448</xloc>
+      <yloc>768</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -575,8 +575,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>208</yloc>
+      <xloc>448</xloc>
+      <yloc>192</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -613,8 +613,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>528</yloc>
+      <xloc>448</xloc>
+      <yloc>544</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -626,8 +626,46 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1056</xloc>
-      <yloc>688</yloc>
+      <xloc>1088</xloc>
+      <yloc>832</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>tr_load_steptypes</name>
+      <description />
+      <type>TRANS</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <trans_object_id />
+      <filename>${Internal.Entry.Current.Directory}/tr_load_steptypes.ktr</filename>
+      <transname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>672</yloc>
       <attributes_kjc />
     </entry>
   </entries>
@@ -733,15 +771,6 @@
     </hop>
     <hop>
       <from>tr_load_transformation_fields</from>
-      <to>tr_load_parameters</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>tr_load_transformation_fields</from>
       <to>error</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -774,6 +803,33 @@
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_transformation_fields</from>
+      <to>tr_load_steptypes</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_steptypes</from>
+      <to>tr_load_parameters</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_steptypes</from>
+      <to>error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>
