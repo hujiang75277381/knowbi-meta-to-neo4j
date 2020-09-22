@@ -571,11 +571,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort Table</from>
-      <to>Write Table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Sort Column</from>
       <to>Write Column</to>
       <enabled>Y</enabled>
@@ -615,7 +610,66 @@
       <to>Write User</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Sort Table</from>
+      <to>Filter View</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter View</from>
+      <to>Write View</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter View</from>
+      <to>Write Table</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>Filter View</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Write View</send_true_to>
+    <send_false_to>Write Table</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>table_type</leftvalue>
+        <function>=</function>
+        <rightvalue />
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>VIEW</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask />
+        </value>
+      </condition>
+    </compare>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>784</xloc>
+      <yloc>322</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Filter rows</name>
     <type>FilterRows</type>
@@ -647,7 +701,7 @@
     </remotesteps>
     <GUI>
       <xloc>680</xloc>
-      <yloc>234</yloc>
+      <yloc>236</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -854,8 +908,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>680</xloc>
-      <yloc>404</yloc>
+      <xloc>672</xloc>
+      <yloc>494</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -876,7 +930,7 @@
     <free_memory />
     <compress>N</compress>
     <compress_variable />
-    <unique_rows>N</unique_rows>
+    <unique_rows>Y</unique_rows>
     <fields>
       <field>
         <name>data_type</name>
@@ -896,8 +950,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>680</xloc>
-      <yloc>489</yloc>
+      <xloc>672</xloc>
+      <yloc>580</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -918,7 +972,7 @@
     <free_memory />
     <compress>N</compress>
     <compress_variable />
-    <unique_rows>N</unique_rows>
+    <unique_rows>Y</unique_rows>
     <fields>
       <field>
         <name>is_nullable</name>
@@ -938,8 +992,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>680</xloc>
-      <yloc>574</yloc>
+      <xloc>672</xloc>
+      <yloc>666</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -997,7 +1051,7 @@
     </remotesteps>
     <GUI>
       <xloc>680</xloc>
-      <yloc>149</yloc>
+      <yloc>150</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1063,7 +1117,7 @@
     </remotesteps>
     <GUI>
       <xloc>680</xloc>
-      <yloc>319</yloc>
+      <yloc>322</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1131,7 +1185,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1193,7 +1247,7 @@
     </remotesteps>
     <GUI>
       <xloc>880</xloc>
-      <yloc>404</yloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1211,7 +1265,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1249,7 +1303,7 @@
     </remotesteps>
     <GUI>
       <xloc>880</xloc>
-      <yloc>489</yloc>
+      <yloc>580</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1267,7 +1321,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1329,7 +1383,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1367,7 +1421,7 @@
     </remotesteps>
     <GUI>
       <xloc>880</xloc>
-      <yloc>574</yloc>
+      <yloc>666</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1385,7 +1439,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1441,7 +1495,7 @@
     </remotesteps>
     <GUI>
       <xloc>880</xloc>
-      <yloc>149</yloc>
+      <yloc>150</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1459,7 +1513,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1515,7 +1569,7 @@
     </remotesteps>
     <GUI>
       <xloc>880</xloc>
-      <yloc>319</yloc>
+      <yloc>322</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1533,7 +1587,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>Y</create_indexes>
+    <create_indexes>N</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1571,7 +1625,81 @@
     </remotesteps>
     <GUI>
       <xloc>880</xloc>
-      <yloc>234</yloc>
+      <yloc>236</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write View</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>N</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>View</value>
+      </labels>
+      <properties>
+        <property>
+          <name>table</name>
+          <value>table_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>schema</name>
+          <value>table_schema</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>current_database</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels />
+      <properties />
+    </to>
+    <relationship />
+    <relationship_value />
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>880</xloc>
+      <yloc>408</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

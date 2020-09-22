@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_insert_db_relationships</name>
+    <name>tr_create_table_view_relationships</name>
     <description />
     <extended_description />
     <trans_version />
@@ -26,7 +26,7 @@
       </parameter>
       <parameter>
         <name>DB_URL</name>
-        <default_value>jdbc:bigquery://https://www.googleapis.com/bigquery/v2:443;ProjectId=data-lake-dwh-sls;OAuthType=0;OAuthPvtKeyPath=/home/hans/projects/TVH/monitoring.json;OAuthServiceAcctEmail=id-data-lake-monitoring@data-lake-monitoring.iam.gserviceaccount.com;Timeout=120</default_value>
+        <default_value>jdbc:bigquery://https://www.googleapis.com/bigquery/v2:443;ProjectId=data-lake-dwh-sls;OAuthType=0;OAuthPvtKeyPath=/home/hans/projects/TVH/sls_mkt_prc.json;OAuthServiceAcctEmail=sls-mkt-prc-data-trans@data-lake-infrastructure-prod.iam.gserviceaccount.com;Timeout=120</default_value>
         <description />
       </parameter>
       <parameter>
@@ -36,12 +36,12 @@
       </parameter>
       <parameter>
         <name>DB_VERSION</name>
-        <default_value />
+        <default_value>0</default_value>
         <description />
       </parameter>
       <parameter>
         <name>PRM_QUERY</name>
-        <default_value>select distinct c.table_catalog as current_database, c.table_schema, '' as schema_owner, c.table_name, c.column_name, c.data_type, c.is_nullable, t.table_type FROM `region-eu`.INFORMATION_SCHEMA.COLUMNS c left outer join `region-eu`.INFORMATION_SCHEMA.TABLES t on t.table_catalog = c.table_catalog and t.table_schema = c.table_schema and t.table_name = c.table_name</default_value>
+        <default_value>SELECT query, destination_table.project_id, destination_table.dataset_id, destination_table.table_id, referenced_tables.project_id as ref_project_id, referenced_tables.dataset_id as ref_datset_id, referenced_tables.table_id as ref_table_id FROM `region-eu`.INFORMATION_SCHEMA.JOBS_BY_PROJECT, UNNEST(referenced_tables) referenced_tables WHERE DATE(creation_time)=CURRENT_DATE and destination_table.table_id not like 'anon%'</default_value>
         <description />
       </parameter>
     </parameters>
@@ -463,9 +463,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/02/18 21:09:51.923</created_date>
+    <created_date>2020/08/31 15:12:25.418</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/02/18 21:09:51.923</modified_date>
+    <modified_date>2020/08/31 15:12:25.418</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -536,88 +536,521 @@
   </connection>
   <order>
     <hop>
-      <from>Get Variables</from>
-      <to>Sort Schema</to>
+      <from>Replace in string</from>
+      <to>NOT Create or Replace</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Get Variables</from>
-      <to>Sort Table</to>
+      <from>NOT Create or Replace</from>
+      <to>Get Tables</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Get Variables</from>
-      <to>Sort Column</to>
+      <from>fill database</from>
+      <to>Keep distinct</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort Column</from>
-      <to>Write is_of_type</to>
+      <from>Keep distinct</from>
+      <to>Cleanup</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort Schema</from>
-      <to>Write has_schema</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort Column</from>
-      <to>Write is_nullable</to>
+      <from>Cleanup</from>
+      <to>Write creates</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Read columns</from>
+      <to>Add version</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add version</from>
       <to>Replace in string</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Replace in string</from>
-      <to>Get Variables</to>
+      <from>fill database</from>
+      <to>Keep distinct view</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort Schema</from>
-      <to>Filter rows</to>
+      <from>Keep distinct view</from>
+      <to>cleanup views</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows</from>
-      <to>Write is_owner</to>
+      <from>cleanup views</from>
+      <to>Write uses</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort Table</from>
-      <to>Filter view</to>
+      <from>Cleanup</from>
+      <to>Write child_of</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter view</from>
-      <to>Write has_view</to>
+      <from>cleanup views</from>
+      <to>Write child_of 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter view</from>
-      <to>Write has_table</to>
+      <from>Get Tables</from>
+      <to>Replace in string 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort Column</from>
-      <to>Filter view 2</to>
+      <from>Replace in string 2</from>
+      <to>fill database</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter view 2</from>
-      <to>Write has_column view</to>
+      <from>Keep distinct view 2</from>
+      <to>cleanup views 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter view 2</from>
-      <to>Write has_column</to>
+      <from>cleanup views 2</from>
+      <to>Write child_of 2 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>fill database</from>
+      <to>Keep distinct view 2</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Filter rows</name>
+    <name>Add version</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>version</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>0</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>234</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Cleanup</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>view_project_name</name>
+      </field>
+      <field>
+        <name>view_dataset_name</name>
+      </field>
+      <field>
+        <name>view_name</name>
+      </field>
+      <field>
+        <name>project_id</name>
+      </field>
+      <field>
+        <name>dataset_id</name>
+      </field>
+      <field>
+        <name>table_id</name>
+      </field>
+      <field>
+        <name>version</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1258</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Get Tables</name>
+    <type>UserDefinedJavaClass</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <definitions>
+      <definition>
+        <class_type>TRANSFORM_CLASS</class_type>
+        <class_name>Processor</class_name>
+        <class_source>import bi.know.kettle.sqlparser.QueryParser;
+import java.util.List; 
+
+public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws KettleException{
+
+  Object[] row = getRow(); 
+
+  if(row == null){
+    setOutputDone(); 
+    return false; 
+  } 
+
+
+  String query = get(Fields.In, "query").getString(row);
+
+  QueryParser parser = new QueryParser();
+  parser.parseQuery(query);
+  
+  List&lt;String[]&gt; tableList = parser.getTables();
+  for(String[] tableArray : tableList){
+      Object[] outputRow = createOutputRow(row, data.outputRowMeta.size()); 
+      get(Fields.Out, "alias").setValue(outputRow, tableArray[0]);
+      get(Fields.Out, "view_project_name").setValue(outputRow, tableArray[1]);
+      get(Fields.Out, "view_dataset_name").setValue(outputRow, tableArray[2]);
+      get(Fields.Out, "view_name").setValue(outputRow, tableArray[3]);
+      putRow(data.outputRowMeta, outputRow); 
+    
+  } 
+
+
+
+  return true; 
+}</class_source>
+      </definition>
+    </definitions>
+    <fields>
+      <field>
+        <field_name>alias</field_name>
+        <field_type>String</field_type>
+        <field_length>-1</field_length>
+        <field_precision>-1</field_precision>
+      </field>
+      <field>
+        <field_name>view_project_name</field_name>
+        <field_type>String</field_type>
+        <field_length>-1</field_length>
+        <field_precision>-1</field_precision>
+      </field>
+      <field>
+        <field_name>view_dataset_name</field_name>
+        <field_type>String</field_type>
+        <field_length>-1</field_length>
+        <field_precision>-1</field_precision>
+      </field>
+      <field>
+        <field_name>view_name</field_name>
+        <field_type>String</field_type>
+        <field_length>-1</field_length>
+        <field_precision>-1</field_precision>
+      </field>
+    </fields>
+    <clear_result_fields>N</clear_result_fields>
+    <info_steps />
+    <target_steps />
+    <usage_parameters />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>648</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Keep distinct</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>view_project_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>view_dataset_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>view_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>project_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>dataset_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1092</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Keep distinct view</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>view_project_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>view_dataset_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>view_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>ref_project_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>ref_datset_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>ref_table_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1096</xloc>
+      <yloc>298</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Keep distinct view 2</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>view_project_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>view_dataset_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>view_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>dataset_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>project_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1104</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>NOT Create or Replace</name>
     <type>FilterRows</type>
     <description />
     <distribute>Y</distribute>
@@ -632,9 +1065,56 @@
     <compare>
       <condition>
         <negated>N</negated>
-        <leftvalue>schema_owner</leftvalue>
-        <function>IS NOT NULL</function>
-        <rightvalue />
+        <conditions>
+          <condition>
+            <negated>Y</negated>
+            <operator>AND</operator>
+            <leftvalue>query</leftvalue>
+            <function>CONTAINS</function>
+            <rightvalue />
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>create or replace</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask />
+            </value>
+          </condition>
+          <condition>
+            <negated>Y</negated>
+            <operator>AND</operator>
+            <leftvalue>query</leftvalue>
+            <function>CONTAINS</function>
+            <rightvalue />
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>CREATE OR REPLACE</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask />
+            </value>
+          </condition>
+          <condition>
+            <negated>Y</negated>
+            <operator>AND</operator>
+            <leftvalue>query</leftvalue>
+            <function>CONTAINS</function>
+            <rightvalue />
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>DELETE</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask />
+            </value>
+          </condition>
+        </conditions>
       </condition>
     </compare>
     <attributes />
@@ -646,147 +1126,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>680</xloc>
-      <yloc>144</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter view</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Write has_view</send_true_to>
-    <send_false_to>Write has_table</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>table_type</leftvalue>
-        <function>=</function>
-        <rightvalue />
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>VIEW</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask />
-        </value>
-      </condition>
-    </compare>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter view 2</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Write has_column view</send_true_to>
-    <send_false_to>Write has_column</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>table_type</leftvalue>
-        <function>=</function>
-        <rightvalue />
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>VIEW</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask />
-        </value>
-      </condition>
-    </compare>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>784</xloc>
-      <yloc>432</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Get Variables</name>
-    <type>GetVariable</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>PRM_DATABASE_TYPE</name>
-        <variable>${DB_TYPE}</variable>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>version</name>
-        <variable>${DB_VERSION}</variable>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>64</yloc>
+      <xloc>510</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -817,8 +1158,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>80</xloc>
-      <yloc>64</yloc>
+      <xloc>96</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -835,10 +1176,10 @@
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>current_database</in_stream_name>
+        <in_stream_name>query</in_stream_name>
         <out_stream_name />
         <use_regex>no</use_regex>
-        <replace_string>{</replace_string>
+        <replace_string>`</replace_string>
         <replace_by_string />
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string />
@@ -847,11 +1188,23 @@
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>current_database</in_stream_name>
+        <in_stream_name>query</in_stream_name>
         <out_stream_name />
         <use_regex>no</use_regex>
-        <replace_string>}</replace_string>
-        <replace_by_string />
+        <replace_string>-</replace_string>
+        <replace_by_string>_</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>query</in_stream_name>
+        <out_stream_name />
+        <use_regex>yes</use_regex>
+        <replace_string>([a-z]*)-([a-z]*)</replace_string>
+        <replace_by_string>$1_$2</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string />
         <whole_word>no</whole_word>
@@ -868,154 +1221,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>280</xloc>
-      <yloc>64</yloc>
+      <xloc>372</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Sort Column</name>
-    <type>SortRows</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory />
-    <compress>N</compress>
-    <compress_variable />
-    <unique_rows>Y</unique_rows>
-    <fields>
-      <field>
-        <name>version</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>current_database</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>table_schema</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>table_name</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>column_name</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>432</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort Schema</name>
-    <type>SortRows</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory />
-    <compress>N</compress>
-    <compress_variable />
-    <unique_rows>Y</unique_rows>
-    <fields>
-      <field>
-        <name>version</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>current_database</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>table_schema</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>schema_owner</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>680</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort Table</name>
-    <type>SortRows</type>
+    <name>Replace in string 2</name>
+    <type>ReplaceString</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -1024,45 +1237,18 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory />
-    <compress>N</compress>
-    <compress_variable />
-    <unique_rows>Y</unique_rows>
     <fields>
       <field>
-        <name>version</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>current_database</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>table_schema</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>table_name</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
+        <in_stream_name>view_project_name</in_stream_name>
+        <out_stream_name />
+        <use_regex>yes</use_regex>
+        <replace_string>([a-z]*)_([a-z]*)</replace_string>
+        <replace_by_string>$1-$2</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
       </field>
     </fields>
     <attributes />
@@ -1074,13 +1260,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>680</xloc>
-      <yloc>224</yloc>
+      <xloc>786</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write has_column</name>
+    <name>Write child_of</name>
     <type>Neo4JOutput</type>
     <description />
     <distribute>Y</distribute>
@@ -1107,19 +1293,19 @@
       <properties>
         <property>
           <name>table</name>
-          <value>table_name</value>
+          <value>table_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>schema</name>
-          <value>table_schema</value>
+          <value>dataset_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>database</name>
-          <value>current_database</value>
+          <value>project_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -1135,30 +1321,24 @@
       <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Column</value>
+        <value>View</value>
       </labels>
       <properties>
         <property>
-          <name>column</name>
-          <value>column_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
           <name>table</name>
-          <value>table_name</value>
+          <value>view_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>schema</name>
-          <value>table_schema</value>
+          <value>view_dataset_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>database</name>
-          <value>current_database</value>
+          <value>view_project_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -1171,7 +1351,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>HAS_COLUMN</relationship_value>
+    <relationship_value>CHILD_OF</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1182,13 +1362,217 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>432</yloc>
+      <xloc>1456</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write has_column view</name>
+    <name>Write child_of 2</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>N</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>Y</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Table</value>
+      </labels>
+      <properties>
+        <property>
+          <name>table</name>
+          <value>ref_table_id</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>schema</name>
+          <value>ref_datset_id</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>ref_project_id</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label />
+        <value>View</value>
+      </labels>
+      <properties>
+        <property>
+          <name>table</name>
+          <value>view_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>schema</name>
+          <value>view_dataset_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>view_project_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship />
+    <relationship_value>CHILD_OF</relationship_value>
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1456</xloc>
+      <yloc>420</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write child_of 2 2</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>N</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>Y</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Table</value>
+      </labels>
+      <properties>
+        <property>
+          <name>table</name>
+          <value>table_id</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>schema</name>
+          <value>dataset_id</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>project_id</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label />
+        <value>View</value>
+      </labels>
+      <properties>
+        <property>
+          <name>table</name>
+          <value>view_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>schema</name>
+          <value>view_dataset_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>database</name>
+          <value>view_project_name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>version</name>
+          <value>version</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship />
+    <relationship_value>CHILD_OF</relationship_value>
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1456</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write creates</name>
     <type>Neo4JOutput</type>
     <description />
     <distribute>Y</distribute>
@@ -1215,205 +1599,19 @@
       <properties>
         <property>
           <name>table</name>
-          <value>table_name</value>
+          <value>view_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>schema</name>
-          <value>table_schema</value>
+          <value>view_dataset_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>database</name>
-          <value>current_database</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>version</name>
-          <value>version</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>Column</value>
-      </labels>
-      <properties>
-        <property>
-          <name>column</name>
-          <value>column_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>table</name>
-          <value>table_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>schema</name>
-          <value>table_schema</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>database</name>
-          <value>current_database</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>version</name>
-          <value>version</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship />
-    <relationship_value>HAS_COLUMN</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>520</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Write has_schema</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>N</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Database</value>
-      </labels>
-      <properties>
-        <property>
-          <name>database</name>
-          <value>current_database</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>version</name>
-          <value>version</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>Schema</value>
-      </labels>
-      <properties>
-        <property>
-          <name>schema</name>
-          <value>table_schema</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>database</name>
-          <value>current_database</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>version</name>
-          <value>version</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship />
-    <relationship_value>HAS_SCHEMA</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Write has_table</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>N</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Schema</value>
-      </labels>
-      <properties>
-        <property>
-          <name>schema</name>
-          <value>table_schema</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>database</name>
-          <value>current_database</value>
+          <value>view_project_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -1434,19 +1632,19 @@
       <properties>
         <property>
           <name>table</name>
-          <value>table_name</value>
+          <value>table_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>schema</name>
-          <value>table_schema</value>
+          <value>dataset_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>database</name>
-          <value>current_database</value>
+          <value>project_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -1459,7 +1657,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>HAS_TABLE</relationship_value>
+    <relationship_value>CREATES</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1470,13 +1668,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>224</yloc>
+      <xloc>1456</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write has_view</name>
+    <name>Write uses</name>
     <type>Neo4JOutput</type>
     <description />
     <distribute>Y</distribute>
@@ -1496,33 +1694,6 @@
     <return_graph_field>graph</return_graph_field>
     <from>
       <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Schema</value>
-      </labels>
-      <properties>
-        <property>
-          <name>schema</name>
-          <value>table_schema</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>database</name>
-          <value>current_database</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>version</name>
-          <value>version</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
         <value>View</value>
@@ -1530,19 +1701,19 @@
       <properties>
         <property>
           <name>table</name>
-          <value>table_name</value>
+          <value>view_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>schema</name>
-          <value>table_schema</value>
+          <value>view_dataset_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>database</name>
-          <value>current_database</value>
+          <value>view_project_name</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -1553,71 +1724,29 @@
           <primary>Y</primary>
         </property>
       </properties>
-    </to>
-    <relationship />
-    <relationship_value>HAS_VIEW</relationship_value>
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>320</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Write is_nullable</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>N</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
       <labels>
         <label />
-        <value>Column</value>
+        <value>Table</value>
       </labels>
       <properties>
-        <property>
-          <name>column</name>
-          <value>column_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
         <property>
           <name>table</name>
-          <value>table_name</value>
+          <value>ref_table_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>schema</name>
-          <value>table_schema</value>
+          <value>ref_datset_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
           <name>database</name>
-          <value>current_database</value>
+          <value>ref_project_id</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
@@ -1628,24 +1757,9 @@
           <primary>Y</primary>
         </property>
       </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>Nullable</value>
-      </labels>
-      <properties>
-        <property>
-          <name>nullable</name>
-          <value>is_nullable</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
     </to>
     <relationship />
-    <relationship_value>IS_NULLABLE</relationship_value>
+    <relationship_value>USES</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1656,87 +1770,46 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>672</yloc>
+      <xloc>1456</xloc>
+      <yloc>298</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write is_of_type</name>
-    <type>Neo4JOutput</type>
+    <name>cleanup views</name>
+    <type>SelectValues</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>N</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Column</value>
-      </labels>
-      <properties>
-        <property>
-          <name>column</name>
-          <value>column_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>table</name>
-          <value>table_name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>schema</name>
-          <value>table_schema</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>database</name>
-          <value>current_database</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>version</name>
-          <value>version</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>DataType</value>
-      </labels>
-      <properties>
-        <property>
-          <name>datatype</name>
-          <value>data_type</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship />
-    <relationship_value>IS_OF_TYPE</relationship_value>
-    <relprops />
+    <fields>
+      <field>
+        <name>view_project_name</name>
+      </field>
+      <field>
+        <name>view_dataset_name</name>
+      </field>
+      <field>
+        <name>view_name</name>
+      </field>
+      <field>
+        <name>ref_project_id</name>
+      </field>
+      <field>
+        <name>ref_datset_id</name>
+      </field>
+      <field>
+        <name>ref_table_id</name>
+      </field>
+      <field>
+        <name>version</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
     <attributes />
     <cluster_schema />
     <remotesteps>
@@ -1746,75 +1819,46 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>608</yloc>
+      <xloc>1264</xloc>
+      <yloc>298</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Write is_owner</name>
-    <type>Neo4JOutput</type>
+    <name>cleanup views 2</name>
+    <type>SelectValues</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>N</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>Y</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Schema</value>
-      </labels>
-      <properties>
-        <property>
-          <name>schema</name>
-          <value>table_schema</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>database</name>
-          <value>current_database</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>version</name>
-          <value>version</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels>
-        <label />
-        <value>User</value>
-      </labels>
-      <properties>
-        <property>
-          <name>user</name>
-          <value>schema_owner</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </to>
-    <relationship />
-    <relationship_value>IS_OWNER</relationship_value>
-    <relprops />
+    <fields>
+      <field>
+        <name>view_project_name</name>
+      </field>
+      <field>
+        <name>view_dataset_name</name>
+      </field>
+      <field>
+        <name>view_name</name>
+      </field>
+      <field>
+        <name>dataset_id</name>
+      </field>
+      <field>
+        <name>project_id</name>
+      </field>
+      <field>
+        <name>table_id</name>
+      </field>
+      <field>
+        <name>version</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
     <attributes />
     <cluster_schema />
     <remotesteps>
@@ -1824,8 +1868,87 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>144</yloc>
+      <xloc>1264</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>fill database</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+view_project_name=view_project_name.split('_').join('-');
+
+if(view_project_name==''){
+view_project_name = project_id;
+}</jsScript_script>
+      </jsScript>
+      <jsScript>
+        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>replace_Sample</jsScript_name>
+        <jsScript_script>// Replaces Strings inside the given Variable.
+// It is possible to make more replacements inside
+// one call. The given variables must be an odd number
+//
+// Usage:
+// replace(var, var, var);
+// 1: String - The Variable with the content to replace.
+// 2: String - The Value to search for.
+// 3: String - The Value to replace with.
+//
+// replace(var, var, var, var,var,...)
+// 1: String - The Variable with the content to replace.
+// 2: String - The First Value to search for.
+// 3: String - The First Value to replace with.
+// 4: String - The Second Value to search for.
+// 5: String - The Second Value to replace with.
+// ...
+//
+// 2006-11-15
+//
+var str1 = "Hello World, this is a nice function";      
+var str2 = replace(str1,"World", "Folk");
+Alert(str2);
+var str2 = replace(str1,"World", "Folk", "nice","beautifull");
+Alert(str2);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>view_project_name</name>
+        <rename>view_project_name</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>924</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1834,9 +1957,5 @@
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
-  <attributes>
-    <group>
-      <name>explorerState</name>
-    </group>
-  </attributes>
+  <attributes />
 </transformation>
