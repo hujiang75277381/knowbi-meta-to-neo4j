@@ -413,7 +413,7 @@
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
-    <size_rowset>10000</size_rowset>
+    <size_rowset>50000</size_rowset>
     <sleep_time_empty>50</sleep_time_empty>
     <sleep_time_full>50</sleep_time_full>
     <unique_connections>N</unique_connections>
@@ -760,6 +760,12 @@
       <field>
         <name>schema_1</name>
         <value>public</value>
+        <mask />
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>database</name>
+        <value>unknown</value>
         <mask />
         <set_empty_string>N</set_empty_string>
       </field>

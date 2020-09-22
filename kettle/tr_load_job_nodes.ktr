@@ -11,7 +11,7 @@
     <parameters>
       <parameter>
         <name>PRM_ETL_DIR</name>
-        <default_value />
+        <default_value>/home/bart/Projects/ABN AMRO</default_value>
         <description />
       </parameter>
     </parameters>
@@ -449,17 +449,22 @@
     </hop>
     <hop>
       <from>select</from>
-      <to>entries</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>select</from>
       <to>entry types</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>read jobs</from>
       <to>select</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select</from>
+      <to>If field value is null</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>If field value is null</from>
+      <to>entries</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -501,6 +506,30 @@
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>type</name>
+          <value>type</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>filename</name>
+          <value>filename</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>transname</name>
+          <value>transname</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>jobname</name>
+          <value>entry_jobname</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
       </properties>
     </from>
     <to>
@@ -521,7 +550,7 @@
     </remotesteps>
     <GUI>
       <xloc>736</xloc>
-      <yloc>176</yloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1015,6 +1044,21 @@
         <repeat>N</repeat>
       </field>
       <field>
+        <name>entry_jobname</name>
+        <xpath>entry_jobname</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
         <name>arg_from_previous</name>
         <xpath>arg_from_previous</xpath>
         <element_type>node</element_type>
@@ -1451,150 +1495,203 @@
       </field>
       <field>
         <name>name</name>
+        <rename />
       </field>
       <field>
         <name>description</name>
+        <rename />
       </field>
       <field>
         <name>type</name>
+        <rename />
       </field>
       <field>
         <name>start</name>
+        <rename />
       </field>
       <field>
         <name>dummy</name>
+        <rename />
       </field>
       <field>
         <name>repeat</name>
+        <rename />
       </field>
       <field>
         <name>schedulerType</name>
+        <rename />
       </field>
       <field>
         <name>intervalSeconds</name>
+        <rename />
       </field>
       <field>
         <name>intervalMinutes</name>
+        <rename />
       </field>
       <field>
         <name>hour</name>
+        <rename />
       </field>
       <field>
         <name>minutes</name>
+        <rename />
       </field>
       <field>
         <name>weekDay</name>
+        <rename />
       </field>
       <field>
         <name>DayOfMonth</name>
+        <rename />
       </field>
       <field>
         <name>parallel</name>
+        <rename />
       </field>
       <field>
         <name>draw</name>
+        <rename />
       </field>
       <field>
         <name>nr</name>
+        <rename />
       </field>
       <field>
         <name>xloc</name>
+        <rename />
       </field>
       <field>
         <name>yloc</name>
+        <rename />
       </field>
       <field>
         <name>specification_method</name>
+        <rename />
       </field>
       <field>
         <name>trans_object_id</name>
+        <rename />
       </field>
       <field>
         <name>filename</name>
+        <rename />
       </field>
       <field>
         <name>transname</name>
+        <rename />
+      </field>
+      <field>
+        <name>entry_jobname</name>
+        <rename />
       </field>
       <field>
         <name>arg_from_previous</name>
+        <rename />
       </field>
       <field>
         <name>params_from_previous</name>
+        <rename />
       </field>
       <field>
         <name>exec_per_row</name>
+        <rename />
       </field>
       <field>
         <name>clear_rows</name>
+        <rename />
       </field>
       <field>
         <name>clear_files</name>
+        <rename />
       </field>
       <field>
         <name>set_logfile</name>
+        <rename />
       </field>
       <field>
         <name>logfile</name>
+        <rename />
       </field>
       <field>
         <name>logext</name>
+        <rename />
       </field>
       <field>
         <name>add_date</name>
+        <rename />
       </field>
       <field>
         <name>add_time</name>
+        <rename />
       </field>
       <field>
         <name>loglevel</name>
+        <rename />
       </field>
       <field>
         <name>cluster</name>
+        <rename />
       </field>
       <field>
         <name>slave_server_name</name>
+        <rename />
       </field>
       <field>
         <name>set_append_logfile</name>
+        <rename />
       </field>
       <field>
         <name>wait_until_finished</name>
+        <rename />
       </field>
       <field>
         <name>follow_abort_remote</name>
+        <rename />
       </field>
       <field>
         <name>create_parent_folder</name>
+        <rename />
       </field>
       <field>
         <name>logging_remote_work</name>
+        <rename />
       </field>
       <field>
         <name>run_configuration</name>
+        <rename />
       </field>
       <field>
         <name>pass_all_parameters</name>
+        <rename />
       </field>
       <field>
         <name>name_1</name>
+        <rename />
       </field>
       <field>
         <name>stream_name</name>
+        <rename />
       </field>
       <field>
         <name>value</name>
+        <rename />
       </field>
       <field>
         <name>connection</name>
+        <rename />
       </field>
       <field>
         <name>tablename</name>
+        <rename />
       </field>
       <field>
         <name>schemaname</name>
+        <rename />
       </field>
       <field>
         <name>V_FILENAME</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1609,6 +1706,58 @@
     <GUI>
       <xloc>256</xloc>
       <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>If field value is null</name>
+    <type>IfNull</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <replaceAllByValue />
+    <replaceAllMask />
+    <selectFields>Y</selectFields>
+    <selectValuesType>N</selectValuesType>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <valuetypes>
+      </valuetypes>
+    <fields>
+      <field>
+        <name>filename</name>
+        <value>-</value>
+        <mask />
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>transname</name>
+        <value>-</value>
+        <mask />
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>entry_jobname</name>
+        <value>-</value>
+        <mask />
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -630,6 +630,12 @@
           <type>String</type>
           <primary>Y</primary>
         </property>
+        <property>
+          <name>type</name>
+          <value>type</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
       </properties>
     </to>
     <relationship />
