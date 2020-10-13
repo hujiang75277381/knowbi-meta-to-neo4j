@@ -11,7 +11,7 @@
     <parameters>
       <parameter>
         <name>PRM_ETL_DIR</name>
-        <default_value />
+        <default_value>/home/bart/Projects/ABN AMRO</default_value>
         <description />
       </parameter>
     </parameters>
@@ -1218,11 +1218,21 @@
     </from>
     <to>
       <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
+      <labels>
+        <label />
+        <value>Connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>connection</name>
+          <value>connection</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
     </to>
     <relationship />
-    <relationship_value />
+    <relationship_value>USES_CONNECTION</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />

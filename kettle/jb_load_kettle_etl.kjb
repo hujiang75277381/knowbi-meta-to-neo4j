@@ -18,7 +18,7 @@
     </parameter>
     <parameter>
       <name>PRM_ETL_DIR</name>
-      <default_value />
+      <default_value>/home/bart/Projects/ABN AMRO</default_value>
       <description />
     </parameter>
     <parameter>
@@ -359,7 +359,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>416</yloc>
+      <yloc>556</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -397,7 +397,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>320</yloc>
+      <yloc>441</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -435,7 +435,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>1024</yloc>
+      <yloc>1280</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -473,7 +473,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>896</yloc>
+      <yloc>1024</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -485,7 +485,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>1120</yloc>
+      <yloc>1376</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -538,17 +538,17 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>768</yloc>
+      <yloc>901</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>tr_load_connections</name>
+      <name>tr_load_connection_relationships</name>
       <description />
       <type>TRANS</type>
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_connections.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/tr_load_connection_relationships.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -576,7 +576,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>192</yloc>
+      <yloc>326</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -614,7 +614,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>544</yloc>
+      <yloc>671</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -665,7 +665,83 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>672</yloc>
+      <yloc>786</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>tr_load_connection_nodes</name>
+      <description />
+      <type>TRANS</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <trans_object_id />
+      <filename>${Internal.Entry.Current.Directory}/tr_load_connection_nodes.ktr</filename>
+      <transname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>211</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>tr_load_transformation_hops</name>
+      <description />
+      <type>TRANS</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <trans_object_id />
+      <filename>${Internal.Entry.Current.Directory}/tr_load_transformation_hops.ktr</filename>
+      <transname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>1152</yloc>
       <attributes_kjc />
     </entry>
   </entries>
@@ -716,15 +792,6 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>tr_load_job_relations</from>
-      <to>tr_load_transformation_relations</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>tr_load_transformation_relations</from>
       <to>Success</to>
       <from_nr>0</from_nr>
@@ -743,7 +810,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>tr_load_connections</from>
+      <from>tr_load_connection_relationships</from>
       <to>error</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -779,16 +846,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Start</from>
-      <to>tr_load_connections</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>tr_load_connections</from>
+      <from>tr_load_connection_relationships</from>
       <to>tr_load_job_nodes</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -825,6 +883,60 @@
     </hop>
     <hop>
       <from>tr_load_steptypes</from>
+      <to>error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Start</from>
+      <to>tr_load_connection_nodes</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_connection_nodes</from>
+      <to>tr_load_connection_relationships</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_connection_nodes</from>
+      <to>error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_job_relations</from>
+      <to>tr_load_transformation_hops</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_transformation_hops</from>
+      <to>tr_load_transformation_relations</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>tr_load_transformation_hops</from>
       <to>error</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

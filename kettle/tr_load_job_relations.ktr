@@ -497,6 +497,26 @@
       <to>select 2</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Filter connection</from>
+      <to>has_connection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>unique conn</from>
+      <to>Filter connection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>read jobs</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>unique conn</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
     <name>filter nulls</name>
@@ -572,8 +592,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>288</yloc>
+      <xloc>288</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -650,7 +670,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
+      <xloc>960</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
@@ -734,8 +754,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>496</yloc>
+      <xloc>960</xloc>
+      <yloc>768</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -806,7 +826,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
+      <xloc>960</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -973,7 +993,7 @@
     </remotesteps>
     <GUI>
       <xloc>128</xloc>
-      <yloc>496</yloc>
+      <yloc>768</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1699,6 +1719,21 @@
         <trim_type>none</trim_type>
         <repeat>N</repeat>
       </field>
+      <field>
+        <name>connection</name>
+        <xpath>connection</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
     </fields>
     <limit>0</limit>
     <loopxpath>/job/entries/entry</loopxpath>
@@ -1762,8 +1797,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>496</yloc>
+      <xloc>288</xloc>
+      <yloc>768</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1802,7 +1837,7 @@
     </remotesteps>
     <GUI>
       <xloc>128</xloc>
-      <yloc>288</yloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1839,7 +1874,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
+      <xloc>448</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1876,8 +1911,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>288</yloc>
+      <xloc>448</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1948,8 +1983,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>384</yloc>
+      <xloc>960</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2020,8 +2055,190 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
+      <xloc>960</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter connection</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to />
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>connection</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>672</xloc>
       <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>has_connection</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>N</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>Y</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Job</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>Jobname</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label />
+        <value>Connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>connection</name>
+          <value>connection</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship />
+    <relationship_value>HAS_CONNECTION</relationship_value>
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>960</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>unique conn</name>
+    <type>Unique</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <count_rows>N</count_rows>
+    <count_field />
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description />
+    <fields>
+      <field>
+        <name>Jobname</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>connection</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>connection</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

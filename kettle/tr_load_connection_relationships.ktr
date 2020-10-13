@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_load_connections</name>
+    <name>tr_load_connection_relationships</name>
     <description />
     <extended_description />
     <trans_version />
