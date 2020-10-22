@@ -715,7 +715,7 @@
       </labels>
       <properties>
         <property>
-          <name>database</name>
+          <name>name</name>
           <value>dec_database</value>
           <type>String</type>
           <primary>Y</primary>
@@ -730,7 +730,7 @@
       </labels>
       <properties>
         <property>
-          <name>host</name>
+          <name>name</name>
           <value>dec_server</value>
           <type>String</type>
           <primary>Y</primary>
@@ -738,7 +738,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>USES_HOST</relationship_value>
+    <relationship_value>DB_HOST</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -781,7 +781,7 @@
       </labels>
       <properties>
         <property>
-          <name>database</name>
+          <name>name</name>
           <value>dec_database</value>
           <type>String</type>
           <primary>Y</primary>
@@ -804,7 +804,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>USES_PORT</relationship_value>
+    <relationship_value>DB_PORT</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -847,7 +847,7 @@
       </labels>
       <properties>
         <property>
-          <name>database</name>
+          <name>name</name>
           <value>dec_database</value>
           <type>String</type>
           <primary>Y</primary>
@@ -862,7 +862,7 @@
       </labels>
       <properties>
         <property>
-          <name>connection</name>
+          <name>name</name>
           <value>name</value>
           <type>String</type>
           <primary>Y</primary>
@@ -870,7 +870,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>HAS_CONNECTION</relationship_value>
+    <relationship_value>DB_CONNECTION</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />

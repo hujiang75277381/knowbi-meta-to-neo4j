@@ -444,11 +444,6 @@
   <order>
     <hop>
       <from>select</from>
-      <to>jobs</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>select</from>
       <to>entry types</to>
       <enabled>Y</enabled>
     </hop>
@@ -467,7 +462,69 @@
       <to>entries</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>select</from>
+      <to>remove PRM_ETL_DIR from job_path</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>remove PRM_ETL_DIR from job_path</from>
+      <to>jobs</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>If field value is null</name>
+    <type>IfNull</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <replaceAllByValue />
+    <replaceAllMask />
+    <selectFields>Y</selectFields>
+    <selectValuesType>N</selectValuesType>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <valuetypes>
+      </valuetypes>
+    <fields>
+      <field>
+        <name>filename</name>
+        <value>-</value>
+        <mask />
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>transname</name>
+        <value>-</value>
+        <mask />
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>entry_jobname</name>
+        <value>-</value>
+        <mask />
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>704</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>entries</name>
     <type>Neo4JOutput</type>
@@ -482,7 +539,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -501,13 +558,13 @@
           <primary>Y</primary>
         </property>
         <property>
-          <name>parent</name>
+          <name>jobName</name>
           <value>job</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
-          <name>type</name>
+          <name>pluginId</name>
           <value>type</value>
           <type>String</type>
           <primary>Y</primary>
@@ -519,13 +576,13 @@
           <primary>N</primary>
         </property>
         <property>
-          <name>transname</name>
+          <name>entry_transname</name>
           <value>transname</value>
           <type>String</type>
           <primary>N</primary>
         </property>
         <property>
-          <name>jobname</name>
+          <name>entry_jobname</name>
           <value>entry_jobname</value>
           <type>String</type>
           <primary>N</primary>
@@ -549,7 +606,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
+      <xloc>928</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -568,7 +625,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -605,8 +662,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>304</yloc>
+      <xloc>928</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -624,7 +681,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -641,6 +698,18 @@
           <value>job</value>
           <type>String</type>
           <primary>Y</primary>
+        </property>
+        <property>
+          <name>filename</name>
+          <value>job_filename</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>path</name>
+          <value>job_path</value>
+          <type>String</type>
+          <primary>N</primary>
         </property>
       </properties>
     </from>
@@ -661,7 +730,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
+      <xloc>928</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1455,8 +1524,8 @@
     <IsAFile>N</IsAFile>
     <XmlField />
     <prunePath />
-    <shortFileFieldName>V_FILENAME</shortFileFieldName>
-    <pathFieldName />
+    <shortFileFieldName>job_filename</shortFileFieldName>
+    <pathFieldName>job_path</pathFieldName>
     <hiddenFieldName />
     <lastModificationTimeFieldName />
     <uriNameFieldName />
@@ -1690,7 +1759,11 @@
         <rename />
       </field>
       <field>
-        <name>V_FILENAME</name>
+        <name>job_filename</name>
+        <rename />
+      </field>
+      <field>
+        <name>job_path</name>
         <rename />
       </field>
       <select_unspecified>N</select_unspecified>
@@ -1710,8 +1783,8 @@
     </GUI>
   </step>
   <step>
-    <name>If field value is null</name>
-    <type>IfNull</type>
+    <name>remove PRM_ETL_DIR from job_path</name>
+    <type>ScriptValueMod</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -1720,31 +1793,25 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <replaceAllByValue />
-    <replaceAllMask />
-    <selectFields>Y</selectFields>
-    <selectValuesType>N</selectValuesType>
-    <setEmptyStringAll>N</setEmptyStringAll>
-    <valuetypes>
-      </valuetypes>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+var job_path = replace(job_path,getVariable('PRM_ETL_DIR', ''),'');</jsScript_script>
+      </jsScript>
+    </jsScripts>
     <fields>
       <field>
-        <name>filename</name>
-        <value>-</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>transname</name>
-        <value>-</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>entry_jobname</name>
-        <value>-</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
+        <name>job_path</name>
+        <rename>job_path</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
       </field>
     </fields>
     <attributes />
@@ -1756,8 +1823,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>128</yloc>
+      <xloc>704</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

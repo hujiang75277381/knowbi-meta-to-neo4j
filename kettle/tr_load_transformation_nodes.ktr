@@ -443,11 +443,6 @@
   </notepads>
   <order>
     <hop>
-      <from>select</from>
-      <to>transformations</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>read transformations</from>
       <to>remove .ktr</to>
       <enabled>Y</enabled>
@@ -455,16 +450,6 @@
     <hop>
       <from>select</from>
       <to>step uses table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>select</from>
-      <to>step types</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>select</from>
-      <to>steps</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -498,8 +483,68 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>If field value is null</from>
+      <from>select</from>
+      <to>remove PRM_ETL_DIR from trans_path</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort transformations</from>
+      <to>transformations</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>remove PRM_ETL_DIR from trans_path</from>
+      <to>select transformations</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select transformations</from>
+      <to>sort transformations</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select</from>
+      <to>select steps</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select steps</from>
+      <to>sort steps</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort steps</from>
+      <to>steps</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort tables</from>
       <to>tables</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>If field value is null</from>
+      <to>select tables</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select tables</from>
+      <to>sort tables</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select</from>
+      <to>select types</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select types</from>
+      <to>sort types</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort types</from>
+      <to>step types</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -518,7 +563,7 @@
     <calculation>
       <field_name>C_TMP1</field_name>
       <calc_type>CONSTANT</calc_type>
-      <field_a>MATCH (n:Connection)-[r]-(m:Database) where n.connection='</field_a>
+      <field_a>MATCH (c:Connection)-[r]-(d:Database) where c.name='</field_a>
       <field_b />
       <field_c />
       <value_type>String</value_type>
@@ -533,7 +578,7 @@
     <calculation>
       <field_name>C_TMP2</field_name>
       <calc_type>CONSTANT</calc_type>
-      <field_a>' return  n.connection, m.database</field_a>
+      <field_a>' return  c.name, d.name</field_a>
       <field_b />
       <field_c />
       <value_type>String</value_type>
@@ -886,8 +931,8 @@
     <IsAFile>N</IsAFile>
     <XmlField />
     <prunePath />
-    <shortFileFieldName>transformation_name</shortFileFieldName>
-    <pathFieldName />
+    <shortFileFieldName>trans_filename</shortFileFieldName>
+    <pathFieldName>trans_path</pathFieldName>
     <hiddenFieldName />
     <lastModificationTimeFieldName />
     <uriNameFieldName />
@@ -921,7 +966,7 @@
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>transformation_name</in_stream_name>
+        <in_stream_name>trans_filename</in_stream_name>
         <out_stream_name>transformation</out_stream_name>
         <use_regex>no</use_regex>
         <replace_string>.ktr</replace_string>
@@ -944,6 +989,52 @@
     <GUI>
       <xloc>324</xloc>
       <yloc>277</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>remove PRM_ETL_DIR from trans_path</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+var trans_path = replace(trans_path,getVariable('PRM_ETL_DIR', ''),'');</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>trans_path</name>
+        <rename>trans_path</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -984,9 +1075,6 @@
         <name>sql</name>
       </field>
       <field>
-        <name>transformation_name</name>
-      </field>
-      <field>
         <name>transformation</name>
       </field>
       <field>
@@ -994,6 +1082,12 @@
       </field>
       <field>
         <name>database</name>
+      </field>
+      <field>
+        <name>trans_filename</name>
+      </field>
+      <field>
+        <name>trans_path</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1025,7 +1119,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1062,8 +1156,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>160</yloc>
+      <xloc>1824</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1116,7 +1210,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1135,13 +1229,13 @@
           <primary>Y</primary>
         </property>
         <property>
-          <name>parent</name>
+          <name>transName</name>
           <value>transformation</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
-          <name>type</name>
+          <name>pluginId</name>
           <value>type</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1165,8 +1259,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>394</yloc>
+      <xloc>1824</xloc>
+      <yloc>426</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1224,7 +1318,7 @@
       </labels>
       <properties>
         <property>
-          <name>connection</name>
+          <name>name</name>
           <value>connection</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1232,7 +1326,7 @@
       </properties>
     </to>
     <relationship />
-    <relationship_value>USES_CONNECTION</relationship_value>
+    <relationship_value>TABLE_CONNECTION</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1243,7 +1337,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1224</xloc>
+      <xloc>1824</xloc>
       <yloc>277</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1262,7 +1356,7 @@
     <connection>lineage-graph</connection>
     <batch_size>1000</batch_size>
     <key />
-    <create_indexes>N</create_indexes>
+    <create_indexes>Y</create_indexes>
     <use_create>N</use_create>
     <only_create_relationships>N</only_create_relationships>
     <returning_graph>N</returning_graph>
@@ -1279,6 +1373,18 @@
           <value>transformation</value>
           <type>String</type>
           <primary>Y</primary>
+        </property>
+        <property>
+          <name>filename</name>
+          <value>trans_filename</value>
+          <type>String</type>
+          <primary>N</primary>
+        </property>
+        <property>
+          <name>path</name>
+          <value>trans_path</value>
+          <type>String</type>
+          <primary>N</primary>
         </property>
       </properties>
     </from>
@@ -1299,8 +1405,380 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>511</yloc>
+      <xloc>1824</xloc>
+      <yloc>575</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort transformations</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>transformation</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>trans_filename</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>trans_path</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select transformations</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>transformation</name>
+        <rename />
+      </field>
+      <field>
+        <name>trans_filename</name>
+        <rename />
+      </field>
+      <field>
+        <name>trans_path</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select steps</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>name</name>
+        <rename />
+      </field>
+      <field>
+        <name>transformation</name>
+        <rename />
+      </field>
+      <field>
+        <name>type</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>426</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort steps</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>transformation</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>type</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>426</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort tables</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>connection</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>schema</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>277</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select tables</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>connection</name>
+        <rename />
+      </field>
+      <field>
+        <name>database</name>
+        <rename />
+      </field>
+      <field>
+        <name>schema</name>
+        <rename />
+      </field>
+      <field>
+        <name>table</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>277</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select types</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>type</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort types</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>N</unique_rows>
+    <fields>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

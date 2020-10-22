@@ -1062,7 +1062,7 @@ function splitQuery(value, index, array) {
       </labels>
       <properties>
         <property>
-          <name>connection</name>
+          <name>name</name>
           <value>connection</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1134,13 +1134,13 @@ function splitQuery(value, index, array) {
           <primary>Y</primary>
         </property>
         <property>
-          <name>parent</name>
+          <name>transName</name>
           <value>transformation</value>
           <type>String</type>
           <primary>Y</primary>
         </property>
         <property>
-          <name>type</name>
+          <name>pluginId</name>
           <value>type</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1148,7 +1148,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>HAS_STEP</relationship_value>
+    <relationship_value>STEP_OF_TRANSFORMATION</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />
@@ -1197,10 +1197,16 @@ function splitQuery(value, index, array) {
           <primary>Y</primary>
         </property>
         <property>
-          <name>parent</name>
+          <name>transName</name>
           <value>transformation</value>
           <type>String</type>
           <primary>Y</primary>
+        </property>
+        <property>
+          <name>pluginId</name>
+          <value>type</value>
+          <type>String</type>
+          <primary>N</primary>
         </property>
       </properties>
     </from>
@@ -1798,7 +1804,7 @@ function splitQuery(value, index, array) {
           <primary>Y</primary>
         </property>
         <property>
-          <name>parent</name>
+          <name>transName</name>
           <value>transformation</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1821,7 +1827,7 @@ function splitQuery(value, index, array) {
       </properties>
     </to>
     <relationship />
-    <relationship_value>USES_CONNECTION</relationship_value>
+    <relationship_value>HAS_CONNECTION</relationship_value>
     <relprops />
     <attributes />
     <cluster_schema />

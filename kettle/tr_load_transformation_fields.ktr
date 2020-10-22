@@ -508,18 +508,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values</from>
-      <to>wait</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>wait</from>
       <to>step -> field</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>If field value is null</from>
-      <to>field -> column</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -545,6 +535,36 @@
     <hop>
       <from>Select values</from>
       <to>Calc Cypher</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values</from>
+      <to>select step, field</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select step, field</from>
+      <to>sort step, field</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort step, field</from>
+      <to>wait</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>If field value is null</from>
+      <to>select field, column</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>select field, column</from>
+      <to>sort field, column</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>sort field, column</from>
+      <to>field -> column</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1076,7 +1096,7 @@
           <primary>Y</primary>
         </property>
         <property>
-          <name>stepname</name>
+          <name>stepName</name>
           <value>name</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1128,7 +1148,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2080</xloc>
+      <xloc>2848</xloc>
       <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1870,7 +1890,7 @@
           <primary>Y</primary>
         </property>
         <property>
-          <name>parent</name>
+          <name>transName</name>
           <value>transformation</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1891,7 +1911,7 @@
           <primary>Y</primary>
         </property>
         <property>
-          <name>stepname</name>
+          <name>stepName</name>
           <value>name</value>
           <type>String</type>
           <primary>Y</primary>
@@ -1910,8 +1930,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1849</xloc>
-      <yloc>240</yloc>
+      <xloc>2848</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1941,8 +1961,240 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1635</xloc>
-      <yloc>240</yloc>
+      <xloc>2624</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select step, field</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>transformation</name>
+        <rename />
+      </field>
+      <field>
+        <name>name</name>
+        <rename />
+      </field>
+      <field>
+        <name>field_name</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2144</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort step, field</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>transformation</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>field_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2400</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort field, column</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>field_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>schema_1</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>table_1</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>column_name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2400</xloc>
+      <yloc>368</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select field, column</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>name</name>
+        <rename />
+      </field>
+      <field>
+        <name>field_name</name>
+        <rename />
+      </field>
+      <field>
+        <name>database</name>
+        <rename />
+      </field>
+      <field>
+        <name>schema_1</name>
+        <rename />
+      </field>
+      <field>
+        <name>table_1</name>
+        <rename />
+      </field>
+      <field>
+        <name>column_name</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2144</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
