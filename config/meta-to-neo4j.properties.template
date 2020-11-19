@@ -1,4 +1,6 @@
 do.aws=N
+do.aws.dms=Y
+do.aws.rds=Y
 do.etl=Y
 do.gcp=N
 do.git=Y
@@ -8,8 +10,6 @@ do.pentaho.mondrian.schema=Y
 do.rdbms=Y
 
 # AWS properties 
-do.aws.dms=Y
-do.aws.rds=Y
 aws.dms.json.dir=
 
 # git properties
