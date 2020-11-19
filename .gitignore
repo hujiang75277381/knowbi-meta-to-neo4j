@@ -1,2 +1,7 @@
 .kettle/
 git/tmp-data/
+metastore/
+
+config/meta-to-neo4j.properties
+!metastore/Neo4j/Neo4j Connection/lineage-graph.xml
+
