@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_read_db_queries</name>
+    <name>tr_load_transformation_hops</name>
     <description />
     <extended_description />
     <trans_version />
@@ -427,44 +427,50 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/07/22 15:04:30.152</created_date>
+    <created_date>2020/10/01 10:46:49.938</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/07/22 15:04:30.152</modified_date>
+    <modified_date>2020/10/01 10:46:49.938</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>TODO: add (select and) unique sort</note>
+      <xloc>271</xloc>
+      <yloc>92</yloc>
+      <width>414</width>
+      <heigth>42</heigth>
+      <fontname>Cantarell</fontname>
+      <fontsize>11</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <order>
     <hop>
-      <from>Connection Info</from>
-      <to>query LU</to>
+      <from>read hops</from>
+      <to>remove .ktr 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DB Queries</from>
-      <to>query LU</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>query LU</from>
-      <to>create db nodes</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>query LU</from>
-      <to>Block this step until steps finish</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Block this step until steps finish</from>
-      <to>create db relationships</to>
+      <from>remove .ktr 2</from>
+      <to>hop</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Block this step until steps finish</name>
-    <type>BlockUntilStepsFinish</type>
+    <name>hop</name>
+    <type>Neo4JOutput</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -473,12 +479,65 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <steps>
-      <step>
-        <name>create db nodes</name>
-        <CopyNr>0</CopyNr>
-      </step>
-    </steps>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>N</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>Y</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Step</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>from</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>transName</name>
+          <value>transformation</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels>
+        <label />
+        <value>Step</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>to</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+        <property>
+          <name>transName</name>
+          <value>transformation</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </to>
+    <relationship />
+    <relationship_value>WRITES_TO</relationship_value>
+    <relprops>
+      <relprop>
+        <name />
+        <value>enabled</value>
+        <type>Boolean</type>
+      </relprop>
+    </relprops>
     <attributes />
     <cluster_schema />
     <remotesteps>
@@ -488,14 +547,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>752</xloc>
-      <yloc>528</yloc>
+      <xloc>481</xloc>
+      <yloc>199</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Connection Info</name>
-    <type>CsvInput</type>
+    <name>read hops</name>
+    <type>getXMLData</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -504,121 +563,32 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <filename>${ENVIRONMENT_HOME}/rdbms/connection/connection-info.csv</filename>
-    <filename_field />
+    <include>N</include>
+    <include_field />
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <namespaceaware>N</namespaceaware>
+    <ignorecomments>N</ignorecomments>
+    <readurl>N</readurl>
+    <validating>N</validating>
+    <usetoken>N</usetoken>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
     <rownum_field />
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>Y</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <encoding />
+    <encoding>UTF-8</encoding>
+    <file>
+      <name>${etl.dir}</name>
+      <filemask>.*.ktr</filemask>
+      <exclude_filemask />
+      <file_required>N</file_required>
+      <include_subfolders>Y</include_subfolders>
+    </file>
     <fields>
       <field>
-        <name>connection_name</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>7</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>database_type</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>url</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>40</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>host</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>9</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>port</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>database name</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>7</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>username</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>8</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>password</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>8</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>driver</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>21</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>version</name>
+        <name>from</name>
+        <xpath>from</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
         <type>String</type>
         <format />
         <currency />
@@ -627,8 +597,53 @@
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>to</name>
+        <xpath>to</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>enabled</name>
+        <xpath>enabled</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
       </field>
     </fields>
+    <limit>0</limit>
+    <loopxpath>/transformation/order/hop</loopxpath>
+    <IsInFields>N</IsInFields>
+    <IsAFile>N</IsAFile>
+    <XmlField />
+    <prunePath />
+    <shortFileFieldName>V_FILENAME</shortFileFieldName>
+    <pathFieldName />
+    <hiddenFieldName />
+    <lastModificationTimeFieldName />
+    <uriNameFieldName />
+    <rootUriNameFieldName />
+    <extensionFieldName />
+    <sizeFieldName />
     <attributes />
     <cluster_schema />
     <remotesteps>
@@ -638,14 +653,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>160</xloc>
-      <yloc>320</yloc>
+      <xloc>157</xloc>
+      <yloc>199</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>DB Queries</name>
-    <type>CsvInput</type>
+    <name>remove .ktr 2</name>
+    <type>ReplaceString</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -654,41 +669,18 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <filename>${ENVIRONMENT_HOME}/rdbms/queries/database-queries.csv</filename>
-    <filename_field />
-    <rownum_field />
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>Y</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <encoding />
     <fields>
       <field>
-        <name>database</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>query</name>
-        <type>String</type>
-        <format />
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>333</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <in_stream_name>V_FILENAME</in_stream_name>
+        <out_stream_name>transformation</out_stream_name>
+        <use_regex>no</use_regex>
+        <replace_string>.ktr</replace_string>
+        <replace_by_string />
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
       </field>
     </fields>
     <attributes />
@@ -700,225 +692,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>create db nodes</name>
-    <type>TransExecutor</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id />
-    <trans_name />
-    <filename>${ENVIRONMENT_HOME}/rdbms/tr_insert_db_nodes.ktr</filename>
-    <directory_path />
-    <group_size>1</group_size>
-    <group_field />
-    <group_time />
-    <parameters>
-      <variablemapping>
-        <variable>DB_DRIVER</variable>
-        <field>driver</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_PASSWORD</variable>
-        <field>password</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_URL</variable>
-        <field>url</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_USERNAME</variable>
-        <field>username</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>PRM_QUERY</variable>
-        <field>query</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_VERSION</variable>
-        <field>version</field>
-        <input />
-      </variablemapping>
-      <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    <execution_result_target_step />
-    <execution_time_field>ExecutionTime</execution_time_field>
-    <execution_result_field>ExecutionResult</execution_result_field>
-    <execution_errors_field>ExecutionNrErrors</execution_errors_field>
-    <execution_lines_read_field>ExecutionLinesRead</execution_lines_read_field>
-    <execution_lines_written_field>ExecutionLinesWritten</execution_lines_written_field>
-    <execution_lines_input_field>ExecutionLinesInput</execution_lines_input_field>
-    <execution_lines_output_field>ExecutionLinesOutput</execution_lines_output_field>
-    <execution_lines_rejected_field>ExecutionLinesRejected</execution_lines_rejected_field>
-    <execution_lines_updated_field>ExecutionLinesUpdated</execution_lines_updated_field>
-    <execution_lines_deleted_field>ExecutionLinesDeleted</execution_lines_deleted_field>
-    <execution_files_retrieved_field>ExecutionFilesRetrieved</execution_files_retrieved_field>
-    <execution_exit_status_field>ExecutionExitStatus</execution_exit_status_field>
-    <execution_log_text_field>ExecutionLogText</execution_log_text_field>
-    <execution_log_channelid_field>ExecutionLogChannelId</execution_log_channelid_field>
-    <result_rows_target_step />
-    <result_files_target_step />
-    <result_files_file_name_field>FileName</result_files_file_name_field>
-    <executors_output_step />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1008</xloc>
-      <yloc>320</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>create db relationships</name>
-    <type>TransExecutor</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id />
-    <trans_name />
-    <filename>${ENVIRONMENT_HOME}/rdbms/tr_insert_db_relationships.ktr</filename>
-    <directory_path />
-    <group_size>1</group_size>
-    <group_field />
-    <group_time />
-    <parameters>
-      <variablemapping>
-        <variable>DB_DRIVER</variable>
-        <field>driver</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_PASSWORD</variable>
-        <field>password</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_TYPE</variable>
-        <field>database_type</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_URL</variable>
-        <field>url</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_USERNAME</variable>
-        <field>username</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>PRM_QUERY</variable>
-        <field>query</field>
-        <input />
-      </variablemapping>
-      <variablemapping>
-        <variable>DB_VERSION</variable>
-        <field>version</field>
-        <input />
-      </variablemapping>
-      <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    <execution_result_target_step />
-    <execution_time_field>ExecutionTime</execution_time_field>
-    <execution_result_field>ExecutionResult</execution_result_field>
-    <execution_errors_field>ExecutionNrErrors</execution_errors_field>
-    <execution_lines_read_field>ExecutionLinesRead</execution_lines_read_field>
-    <execution_lines_written_field>ExecutionLinesWritten</execution_lines_written_field>
-    <execution_lines_input_field>ExecutionLinesInput</execution_lines_input_field>
-    <execution_lines_output_field>ExecutionLinesOutput</execution_lines_output_field>
-    <execution_lines_rejected_field>ExecutionLinesRejected</execution_lines_rejected_field>
-    <execution_lines_updated_field>ExecutionLinesUpdated</execution_lines_updated_field>
-    <execution_lines_deleted_field>ExecutionLinesDeleted</execution_lines_deleted_field>
-    <execution_files_retrieved_field>ExecutionFilesRetrieved</execution_files_retrieved_field>
-    <execution_exit_status_field>ExecutionExitStatus</execution_exit_status_field>
-    <execution_log_text_field>ExecutionLogText</execution_log_text_field>
-    <execution_log_channelid_field>ExecutionLogChannelId</execution_log_channelid_field>
-    <result_rows_target_step />
-    <result_files_target_step />
-    <result_files_file_name_field>FileName</result_files_file_name_field>
-    <executors_output_step />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1008</xloc>
-      <yloc>528</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>query LU</name>
-    <type>StreamLookup</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <from>DB Queries</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>database_type</name>
-        <field>database</field>
-      </key>
-      <value>
-        <name>query</name>
-        <rename>query</rename>
-        <default />
-        <type>None</type>
-      </value>
-    </lookup>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
-      <yloc>320</yloc>
+      <xloc>319</xloc>
+      <yloc>199</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

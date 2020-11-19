@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>jb_load_rds</name>
-  <description/>
-  <extended_description/>
-  <job_version/>
+  <name>jb_load_dms</name>
+  <description />
+  <extended_description />
+  <job_version />
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2019/12/11 17:16:32.696</created_date>
+  <created_date>2019/12/19 15:54:37.172</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2019/12/11 17:16:32.696</modified_date>
+  <modified_date>2019/12/19 15:54:37.172</modified_date>
   <parameters>
     <parameter>
-      <name>PRM_RDS_JSON</name>
-      <default_value/>
-      <description/>
+      <name>PRM_JSON_FOLDER</name>
+      <default_value />
+      <description />
     </parameter>
   </parameters>
   <slaveservers>
     </slaveservers>
   <job-log-table>
-    <connection/>
-    <schema/>
-    <table/>
-    <size_limit_lines/>
-    <interval/>
-    <timeout_days/>
+    <connection />
+    <schema />
+    <table />
+    <size_limit_lines />
+    <interval />
+    <timeout_days />
     <field>
       <id>ID_JOB</id>
       <enabled>Y</enabled>
@@ -133,10 +133,10 @@
     </field>
   </job-log-table>
   <jobentry-log-table>
-    <connection/>
-    <schema/>
-    <table/>
-    <timeout_days/>
+    <connection />
+    <schema />
+    <table />
+    <timeout_days />
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -224,10 +224,10 @@
     </field>
   </jobentry-log-table>
   <channel-log-table>
-    <connection/>
-    <schema/>
-    <table/>
-    <timeout_days/>
+    <connection />
+    <schema />
+    <table />
+    <timeout_days />
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -290,13 +290,13 @@
     </field>
   </channel-log-table>
   <pass_batchid>N</pass_batchid>
-  <shared_objects_file/>
+  <shared_objects_file />
   <entries>
     <entry>
       <name>Start</name>
-      <description/>
+      <description />
       <type>SPECIAL</type>
-      <attributes/>
+      <attributes />
       <start>Y</start>
       <dummy>N</dummy>
       <repeat>N</repeat>
@@ -312,30 +312,30 @@
       <nr>0</nr>
       <xloc>200</xloc>
       <yloc>100</yloc>
-      <attributes_kjc/>
+      <attributes_kjc />
     </entry>
     <entry>
-      <name>Insert RDS Nodes</name>
-      <description/>
+      <name>Insert DMS Nodes</name>
+      <description />
       <type>TRANS</type>
-      <attributes/>
+      <attributes />
       <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_rds_nodes.ktr</filename>
-      <transname/>
+      <trans_object_id />
+      <filename>${ENVIRONMENT_HOME}/aws/dms/tr_insert_dmstask_nodes.ktr</filename>
+      <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>N</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
+      <logfile />
+      <logext />
       <add_date>N</add_date>
       <add_time>N</add_time>
       <loglevel>Basic</loglevel>
       <cluster>N</cluster>
-      <slave_server_name/>
+      <slave_server_name />
       <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
@@ -345,40 +345,40 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_RDS_JSON</name>
-          <stream_name/>
-          <value>${PRM_RDS_JSON}</value>
+          <name>PRM_JSON_FOLDER</name>
+          <stream_name />
+          <value>${PRM_JSON_FOLDER}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>400</xloc>
+      <xloc>464</xloc>
       <yloc>100</yloc>
-      <attributes_kjc/>
+      <attributes_kjc />
     </entry>
     <entry>
-      <name>Insert RDS Relations</name>
-      <description/>
+      <name>Insert DMS Relations</name>
+      <description />
       <type>TRANS</type>
-      <attributes/>
+      <attributes />
       <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/tr_insert_rds_relations.ktr</filename>
-      <transname/>
+      <trans_object_id />
+      <filename>${ENVIRONMENT_HOME}/aws/dms/tr_insert_dmstask_relations.ktr</filename>
+      <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>N</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
+      <logfile />
+      <logext />
       <add_date>N</add_date>
       <add_time>N</add_time>
       <loglevel>Basic</loglevel>
       <cluster>N</cluster>
-      <slave_server_name/>
+      <slave_server_name />
       <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
@@ -388,35 +388,35 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>PRM_RDS_JSON</name>
-          <stream_name/>
-          <value>${PRM_RDS_JSON}</value>
+          <name>PRM_JSON_FOLDER</name>
+          <stream_name />
+          <value>${PRM_JSON_FOLDER}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>600</xloc>
-      <yloc>100</yloc>
-      <attributes_kjc/>
+      <xloc>728</xloc>
+      <yloc>96</yloc>
+      <attributes_kjc />
     </entry>
     <entry>
       <name>Success</name>
-      <description/>
+      <description />
       <type>SUCCESS</type>
-      <attributes/>
+      <attributes />
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>800</xloc>
-      <yloc>100</yloc>
-      <attributes_kjc/>
+      <xloc>992</xloc>
+      <yloc>96</yloc>
+      <attributes_kjc />
     </entry>
   </entries>
   <hops>
     <hop>
       <from>Start</from>
-      <to>Insert RDS Nodes</to>
+      <to>Insert DMS Nodes</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -424,8 +424,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Insert RDS Nodes</from>
-      <to>Insert RDS Relations</to>
+      <from>Insert DMS Relations</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -433,8 +433,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Insert RDS Relations</from>
-      <to>Success</to>
+      <from>Insert DMS Nodes</from>
+      <to>Insert DMS Relations</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

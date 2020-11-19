@@ -9,16 +9,6 @@
     <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
-      <parameter>
-        <name>PRM_ETL_DIR</name>
-        <default_value />
-        <description />
-      </parameter>
-      <parameter>
-        <name>PRM_OUT_DIR</name>
-        <default_value />
-        <description />
-      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -474,7 +464,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <filename>${PRM_OUT_DIR}/gp-commit-details.csv</filename>
+    <filename>${git.tmp.dir}/gp-commit-details.csv</filename>
     <filename_field />
     <rownum_field />
     <include_filename>N</include_filename>
@@ -486,7 +476,6 @@
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>Y</newline_possible>
-    <format />
     <encoding />
     <fields>
       <field>

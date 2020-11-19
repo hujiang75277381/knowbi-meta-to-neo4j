@@ -11,22 +11,7 @@
   <modified_user>-</modified_user>
   <modified_date>2019/09/06 11:53:01.821</modified_date>
   <parameters>
-    <parameter>
-      <name>PRM_CONNECTION_NAME</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_ETL_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_KETTLE_PROPERTIES_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-  </parameters>
+    </parameters>
   <slaveservers>
     </slaveservers>
   <job-log-table>
@@ -331,7 +316,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_transformation_nodes.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_transformation_nodes.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -369,7 +354,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_job_nodes.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_job_nodes.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -407,7 +392,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_transformation_relations.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_transformation_relations.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -445,7 +430,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_job_relations.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_job_relations.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -510,7 +495,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_parameters.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_parameters.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -548,7 +533,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_connection_relationships.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_connection_relationships.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -586,7 +571,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_transformation_fields.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_transformation_fields.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -637,7 +622,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_steptypes.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_steptypes.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -675,7 +660,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_connection_nodes.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_connection_nodes.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -713,7 +698,7 @@
       <attributes />
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Entry.Current.Directory}/tr_load_transformation_hops.ktr</filename>
+      <filename>${ENVIRONMENT_HOME}/kettle/tr_load_transformation_hops.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>

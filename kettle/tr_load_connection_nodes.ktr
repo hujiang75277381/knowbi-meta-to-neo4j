@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>tr_load_job_nodes</name>
+    <name>tr_load_connection_nodes</name>
     <description />
     <extended_description />
     <trans_version />
@@ -428,9 +428,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/09/06 11:43:02.622</created_date>
+    <created_date>2019/09/11 11:30:53.542</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/09/06 11:43:02.622</modified_date>
+    <modified_date>2019/09/11 11:30:53.542</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -438,39 +438,130 @@
   </notepads>
   <order>
     <hop>
-      <from>select</from>
-      <to>entry types</to>
+      <from>read trans conn</from>
+      <to>select trans conn</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>read jobs</from>
-      <to>select</to>
+      <from>read job conn</from>
+      <to>select job conn</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>select</from>
-      <to>If field value is null</to>
+      <from>select trans conn</from>
+      <to>Filter rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>If field value is null</from>
-      <to>entries</to>
+      <from>select job conn</from>
+      <to>Filter rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>select</from>
-      <to>remove PRM_ETL_DIR from job_path</to>
+      <from>Filter rows</from>
+      <to>Sort rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>remove PRM_ETL_DIR from job_path</from>
-      <to>jobs</to>
+      <from>Sort rows</from>
+      <to>Calculator</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Calculator</from>
+      <to>Connection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Calculator</from>
+      <to>Database</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Calculator</from>
+      <to>Port</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Calculator</from>
+      <to>Host</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>If field value is null</name>
-    <type>IfNull</type>
+    <name>Calculator</name>
+    <type>Calculator</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>dec_server</field_name>
+      <calc_type>SUBSTITUTE_VARIABLE</calc_type>
+      <field_a>server</field_a>
+      <field_b />
+      <field_c />
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask />
+      <decimal_symbol />
+      <grouping_symbol />
+      <currency_symbol />
+    </calculation>
+    <calculation>
+      <field_name>dec_database</field_name>
+      <calc_type>SUBSTITUTE_VARIABLE</calc_type>
+      <field_a>database</field_a>
+      <field_b />
+      <field_c />
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask />
+      <decimal_symbol />
+      <grouping_symbol />
+      <currency_symbol />
+    </calculation>
+    <calculation>
+      <field_name>dec_port</field_name>
+      <calc_type>SUBSTITUTE_VARIABLE</calc_type>
+      <field_a>port</field_a>
+      <field_b />
+      <field_c />
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask />
+      <decimal_symbol />
+      <grouping_symbol />
+      <currency_symbol />
+    </calculation>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>856</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Connection</name>
+    <type>Neo4JOutput</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -479,31 +570,332 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <replaceAllByValue />
-    <replaceAllMask />
-    <selectFields>Y</selectFields>
-    <selectValuesType>N</selectValuesType>
-    <setEmptyStringAll>N</setEmptyStringAll>
-    <valuetypes>
-      </valuetypes>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Connection</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>name</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels />
+      <properties />
+    </to>
+    <relationship />
+    <relationship_value />
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1054</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Database</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Database</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>database</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels />
+      <properties />
+    </to>
+    <relationship />
+    <relationship_value />
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1056</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Sort rows</send_true_to>
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <leftvalue>server</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue />
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>AND</operator>
+            <leftvalue>name</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue />
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>460</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Host</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Server</value>
+      </labels>
+      <properties>
+        <property>
+          <name>name</name>
+          <value>dec_server</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels />
+      <properties />
+    </to>
+    <relationship />
+    <relationship_value />
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1056</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Port</name>
+    <type>Neo4JOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>lineage-graph</connection>
+    <batch_size>1000</batch_size>
+    <key />
+    <create_indexes>Y</create_indexes>
+    <use_create>N</use_create>
+    <only_create_relationships>N</only_create_relationships>
+    <returning_graph>N</returning_graph>
+    <return_graph_field>graph</return_graph_field>
+    <from>
+      <read_only_from_node>N</read_only_from_node>
+      <labels>
+        <label />
+        <value>Port</value>
+      </labels>
+      <properties>
+        <property>
+          <name>number</name>
+          <value>dec_port</value>
+          <type>String</type>
+          <primary>Y</primary>
+        </property>
+      </properties>
+    </from>
+    <to>
+      <read_only_to_node>N</read_only_to_node>
+      <labels />
+      <properties />
+    </to>
+    <relationship />
+    <relationship_value />
+    <relprops />
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1056</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory />
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>Y</unique_rows>
     <fields>
       <field>
-        <name>filename</name>
-        <value>-</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
+        <name>name</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
       </field>
       <field>
-        <name>transname</name>
-        <value>-</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
+        <name>server</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
       </field>
       <field>
-        <name>entry_jobname</name>
-        <value>-</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
+        <name>type</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>access</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>database</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>port</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
       </field>
     </fields>
     <attributes />
@@ -515,223 +907,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>entries</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>JobEntry</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>name</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>jobName</name>
-          <value>job</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>pluginId</name>
-          <value>type</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>filename</name>
-          <value>filename</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>entry_transname</name>
-          <value>transname</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>entry_jobname</name>
-          <value>entry_jobname</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
-    </to>
-    <relationship />
-    <relationship_value />
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>entry types</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>EntryType</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>type</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
-    </to>
-    <relationship />
-    <relationship_value />
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>jobs</name>
-    <type>Neo4JOutput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>lineage-graph</connection>
-    <batch_size>1000</batch_size>
-    <key />
-    <create_indexes>Y</create_indexes>
-    <use_create>N</use_create>
-    <only_create_relationships>N</only_create_relationships>
-    <returning_graph>N</returning_graph>
-    <return_graph_field>graph</return_graph_field>
-    <from>
-      <read_only_from_node>N</read_only_from_node>
-      <labels>
-        <label />
-        <value>Job</value>
-      </labels>
-      <properties>
-        <property>
-          <name>name</name>
-          <value>job</value>
-          <type>String</type>
-          <primary>Y</primary>
-        </property>
-        <property>
-          <name>filename</name>
-          <value>job_filename</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-        <property>
-          <name>path</name>
-          <value>job_path</value>
-          <type>String</type>
-          <primary>N</primary>
-        </property>
-      </properties>
-    </from>
-    <to>
-      <read_only_to_node>N</read_only_to_node>
-      <labels />
-      <properties />
-    </to>
-    <relationship />
-    <relationship_value />
-    <relprops />
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
+      <xloc>658</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>read jobs</name>
+    <name>read job conn</name>
     <type>getXMLData</type>
     <description />
     <distribute>Y</distribute>
@@ -763,21 +945,6 @@
     </file>
     <fields>
       <field>
-        <name>Jobname</name>
-        <xpath>../../name</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
         <name>name</name>
         <xpath>name</xpath>
         <element_type>node</element_type>
@@ -793,8 +960,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>description</name>
-        <xpath>description</xpath>
+        <name>server</name>
+        <xpath>server</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -823,8 +990,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>start</name>
-        <xpath>start</xpath>
+        <name>access</name>
+        <xpath>access</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -838,8 +1005,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>dummy</name>
-        <xpath>dummy</xpath>
+        <name>database</name>
+        <xpath>database</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -853,8 +1020,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>repeat</name>
-        <xpath>repeat</xpath>
+        <name>port</name>
+        <xpath>port</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -868,113 +1035,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>schedulerType</name>
-        <xpath>schedulerType</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>intervalSeconds</name>
-        <xpath>intervalSeconds</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>intervalMinutes</name>
-        <xpath>intervalMinutes</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>hour</name>
-        <xpath>hour</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>minutes</name>
-        <xpath>minutes</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>weekDay</name>
-        <xpath>weekDay</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>DayOfMonth</name>
-        <xpath>DayOfMonth</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>parallel</name>
-        <xpath>parallel</xpath>
+        <name>username</name>
+        <xpath>username</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -988,8 +1050,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>draw</name>
-        <xpath>draw</xpath>
+        <name>password</name>
+        <xpath>password</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1003,53 +1065,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>nr</name>
-        <xpath>nr</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>xloc</name>
-        <xpath>xloc</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>yloc</name>
-        <xpath>yloc</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>specification_method</name>
-        <xpath>specification_method</xpath>
+        <name>servername</name>
+        <xpath>servername</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1063,8 +1080,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>trans_object_id</name>
-        <xpath>trans_object_id</xpath>
+        <name>data_tablespace</name>
+        <xpath>data_tablespace</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1078,8 +1095,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>filename</name>
-        <xpath>filename</xpath>
+        <name>index_tablespace</name>
+        <xpath>index_tablespace</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1093,8 +1110,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>transname</name>
-        <xpath>transname</xpath>
+        <name>code</name>
+        <xpath>attributes/attribute/code</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1108,8 +1125,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>entry_jobname</name>
-        <xpath>entry_jobname</xpath>
+        <name>attribute</name>
+        <xpath>attributes/attribute/attribute</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1123,383 +1140,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>arg_from_previous</name>
-        <xpath>arg_from_previous</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>params_from_previous</name>
-        <xpath>params_from_previous</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>exec_per_row</name>
-        <xpath>exec_per_row</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>clear_rows</name>
-        <xpath>clear_rows</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>clear_files</name>
-        <xpath>clear_files</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>set_logfile</name>
-        <xpath>set_logfile</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>logfile</name>
-        <xpath>logfile</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>logext</name>
-        <xpath>logext</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>add_date</name>
-        <xpath>add_date</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>add_time</name>
-        <xpath>add_time</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>loglevel</name>
-        <xpath>loglevel</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>cluster</name>
-        <xpath>cluster</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>slave_server_name</name>
-        <xpath>slave_server_name</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>set_append_logfile</name>
-        <xpath>set_append_logfile</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>wait_until_finished</name>
-        <xpath>wait_until_finished</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>follow_abort_remote</name>
-        <xpath>follow_abort_remote</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>create_parent_folder</name>
-        <xpath>create_parent_folder</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>logging_remote_work</name>
-        <xpath>logging_remote_work</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>run_configuration</name>
-        <xpath>run_configuration</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>pass_all_parameters</name>
-        <xpath>parameters/pass_all_parameters</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>name</name>
-        <xpath>parameters/parameter/name</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>stream_name</name>
-        <xpath>parameters/parameter/stream_name</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>value</name>
-        <xpath>parameters/parameter/value</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>connection</name>
-        <xpath>connection</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>tablename</name>
-        <xpath>tablename</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>schemaname</name>
-        <xpath>schemaname</xpath>
+        <name>attributes</name>
+        <xpath>attributes</xpath>
         <element_type>node</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
@@ -1514,13 +1156,13 @@
       </field>
     </fields>
     <limit>0</limit>
-    <loopxpath>/job/entries/entry</loopxpath>
+    <loopxpath>/job/connection</loopxpath>
     <IsInFields>N</IsInFields>
     <IsAFile>N</IsAFile>
     <XmlField />
     <prunePath />
-    <shortFileFieldName>job_filename</shortFileFieldName>
-    <pathFieldName>job_path</pathFieldName>
+    <shortFileFieldName>job_name</shortFileFieldName>
+    <pathFieldName />
     <hiddenFieldName />
     <lastModificationTimeFieldName />
     <uriNameFieldName />
@@ -1536,14 +1178,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
-      <yloc>64</yloc>
+      <xloc>64</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>remove PRM_ETL_DIR from job_path</name>
-    <type>ScriptValueMod</type>
+    <name>read trans conn</name>
+    <type>getXMLData</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -1552,27 +1194,252 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>//Script here
-
-var job_path = replace(job_path,getVariable('PRM_ETL_DIR', ''),'');</jsScript_script>
-      </jsScript>
-    </jsScripts>
+    <include>N</include>
+    <include_field />
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <namespaceaware>N</namespaceaware>
+    <ignorecomments>N</ignorecomments>
+    <readurl>N</readurl>
+    <validating>N</validating>
+    <usetoken>N</usetoken>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <rownum_field />
+    <encoding>UTF-8</encoding>
+    <file>
+      <name>${etl.dir}</name>
+      <filemask>.*.ktr</filemask>
+      <exclude_filemask />
+      <file_required>N</file_required>
+      <include_subfolders>Y</include_subfolders>
+    </file>
     <fields>
       <field>
-        <name>job_path</name>
-        <rename>job_path</rename>
+        <name>name</name>
+        <xpath>name</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
         <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
         <length>-1</length>
         <precision>-1</precision>
-        <replace>Y</replace>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>server</name>
+        <xpath>server</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>type</name>
+        <xpath>type</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>access</name>
+        <xpath>access</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>database</name>
+        <xpath>database</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>port</name>
+        <xpath>port</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>username</name>
+        <xpath>username</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>password</name>
+        <xpath>password</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>servername</name>
+        <xpath>servername</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>data_tablespace</name>
+        <xpath>data_tablespace</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>index_tablespace</name>
+        <xpath>index_tablespace</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>code</name>
+        <xpath>attributes/attribute/code</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>attribute</name>
+        <xpath>attributes/attribute/attribute</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>attributes</name>
+        <xpath>attributes</xpath>
+        <element_type>node</element_type>
+        <result_type>valueof</result_type>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
       </field>
     </fields>
+    <limit>0</limit>
+    <loopxpath>/transformation/connection</loopxpath>
+    <IsInFields>N</IsInFields>
+    <IsAFile>N</IsAFile>
+    <XmlField />
+    <prunePath />
+    <shortFileFieldName>transformation_name</shortFileFieldName>
+    <pathFieldName />
+    <hiddenFieldName />
+    <lastModificationTimeFieldName />
+    <uriNameFieldName />
+    <rootUriNameFieldName />
+    <extensionFieldName />
+    <sizeFieldName />
     <attributes />
     <cluster_schema />
     <remotesteps>
@@ -1582,16 +1449,16 @@ var job_path = replace(job_path,getVariable('PRM_ETL_DIR', ''),'');</jsScript_sc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
+      <xloc>64</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>select</name>
+    <name>select job conn</name>
     <type>SelectValues</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1600,161 +1467,22 @@ var job_path = replace(job_path,getVariable('PRM_ETL_DIR', ''),'');</jsScript_sc
     </partitioning>
     <fields>
       <field>
-        <name>Jobname</name>
-        <rename>job</rename>
-      </field>
-      <field>
         <name>name</name>
       </field>
       <field>
-        <name>description</name>
+        <name>server</name>
       </field>
       <field>
         <name>type</name>
       </field>
       <field>
-        <name>start</name>
+        <name>access</name>
       </field>
       <field>
-        <name>dummy</name>
+        <name>database</name>
       </field>
       <field>
-        <name>repeat</name>
-      </field>
-      <field>
-        <name>schedulerType</name>
-      </field>
-      <field>
-        <name>intervalSeconds</name>
-      </field>
-      <field>
-        <name>intervalMinutes</name>
-      </field>
-      <field>
-        <name>hour</name>
-      </field>
-      <field>
-        <name>minutes</name>
-      </field>
-      <field>
-        <name>weekDay</name>
-      </field>
-      <field>
-        <name>DayOfMonth</name>
-      </field>
-      <field>
-        <name>parallel</name>
-      </field>
-      <field>
-        <name>draw</name>
-      </field>
-      <field>
-        <name>nr</name>
-      </field>
-      <field>
-        <name>xloc</name>
-      </field>
-      <field>
-        <name>yloc</name>
-      </field>
-      <field>
-        <name>specification_method</name>
-      </field>
-      <field>
-        <name>trans_object_id</name>
-      </field>
-      <field>
-        <name>filename</name>
-      </field>
-      <field>
-        <name>transname</name>
-      </field>
-      <field>
-        <name>entry_jobname</name>
-      </field>
-      <field>
-        <name>arg_from_previous</name>
-      </field>
-      <field>
-        <name>params_from_previous</name>
-      </field>
-      <field>
-        <name>exec_per_row</name>
-      </field>
-      <field>
-        <name>clear_rows</name>
-      </field>
-      <field>
-        <name>clear_files</name>
-      </field>
-      <field>
-        <name>set_logfile</name>
-      </field>
-      <field>
-        <name>logfile</name>
-      </field>
-      <field>
-        <name>logext</name>
-      </field>
-      <field>
-        <name>add_date</name>
-      </field>
-      <field>
-        <name>add_time</name>
-      </field>
-      <field>
-        <name>loglevel</name>
-      </field>
-      <field>
-        <name>cluster</name>
-      </field>
-      <field>
-        <name>slave_server_name</name>
-      </field>
-      <field>
-        <name>set_append_logfile</name>
-      </field>
-      <field>
-        <name>wait_until_finished</name>
-      </field>
-      <field>
-        <name>follow_abort_remote</name>
-      </field>
-      <field>
-        <name>create_parent_folder</name>
-      </field>
-      <field>
-        <name>logging_remote_work</name>
-      </field>
-      <field>
-        <name>run_configuration</name>
-      </field>
-      <field>
-        <name>pass_all_parameters</name>
-      </field>
-      <field>
-        <name>name_1</name>
-      </field>
-      <field>
-        <name>stream_name</name>
-      </field>
-      <field>
-        <name>value</name>
-      </field>
-      <field>
-        <name>connection</name>
-      </field>
-      <field>
-        <name>tablename</name>
-      </field>
-      <field>
-        <name>schemaname</name>
-      </field>
-      <field>
-        <name>job_filename</name>
-      </field>
-      <field>
-        <name>job_path</name>
+        <name>port</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1767,7 +1495,53 @@ var job_path = replace(job_path,getVariable('PRM_ETL_DIR', ''),'');</jsScript_sc
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
+      <xloc>262</xloc>
+      <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select trans conn</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>name</name>
+      </field>
+      <field>
+        <name>server</name>
+      </field>
+      <field>
+        <name>type</name>
+      </field>
+      <field>
+        <name>access</name>
+      </field>
+      <field>
+        <name>database</name>
+      </field>
+      <field>
+        <name>port</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>262</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>

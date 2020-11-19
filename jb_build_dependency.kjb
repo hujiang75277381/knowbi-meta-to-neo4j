@@ -11,82 +11,7 @@
   <modified_user>-</modified_user>
   <modified_date>2019/04/06 10:40:52.651</modified_date>
   <parameters>
-    <parameter>
-      <name>PRM_ANALYZER_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_AWS</name>
-      <default_value>Y</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_CLEAN_NEO4J_DATA</name>
-      <default_value>Y</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_COLUMNS</name>
-      <default_value>Y</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_DATABASE</name>
-      <default_value>Y</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_DMS_JSON_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_ETL</name>
-      <default_value>Y</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_ETL_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_GIT</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_KETTLE_PROPERTIES_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_MONDRIAN_PROPERTIES_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_REPORT</name>
-      <default_value>Y</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_REPORT_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_SCHEMA</name>
-      <default_value>Y</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>PRM_SCHEMA_DIR</name>
-      <default_value />
-      <description />
-    </parameter>
-  </parameters>
+    </parameters>
   <slaveservers>
     </slaveservers>
   <job-log-table>
@@ -381,7 +306,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>64</xloc>
-      <yloc>112</yloc>
+      <yloc>96</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -392,39 +317,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>944</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>change to write container</name>
-      <description />
-      <type>SHELL</type>
-      <attributes />
-      <filename />
-      <work_directory />
-      <arg_from_previous>N</arg_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile />
-      <set_append_logfile>N</set_append_logfile>
-      <logext />
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <insertScript>Y</insertScript>
-      <script>PRIVATE_IP=$(/snap/bin/aws ec2 describe-instances --filter Name=tag:Name,Values=*neo4j* Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[PrivateIpAddress]' --output text)
-curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/stop
-#if [[ $LOCAL_IP = *$PRIVATE_IP* ]]; then sudo rm -Rf /home/ubuntu/neo4j/data/databases ; fi
-curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-write/start
-sleep 20
-
-</script>
-      <loglevel>Basic</loglevel>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>112</yloc>
+      <xloc>480</xloc>
+      <yloc>1216</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -452,18 +346,18 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>944</yloc>
+      <xloc>256</xloc>
+      <yloc>1216</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Parse database?</name>
+      <name>database?</name>
       <description />
       <type>SIMPLE_EVAL</type>
       <attributes />
       <valuetype>variable</valuetype>
       <fieldname />
-      <variablename>${PRM_DATABASE}</variablename>
+      <variablename>${do.rdbms}</variablename>
       <fieldtype>string</fieldtype>
       <mask />
       <comparevalue>Y</comparevalue>
@@ -476,60 +370,18 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>237</yloc>
+      <xloc>256</xloc>
+      <yloc>416</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Load rdbms</name>
-      <description />
-      <type>JOB</type>
-      <attributes />
-      <specification_method>filename</specification_method>
-      <job_object_id />
-      <filename>${Internal.Entry.Current.Directory}\rdbms\jb_loop_rdbms.kjb</filename>
-      <jobname />
-      <directory />
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name />
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_ACTIVE_KETTLE_PROPERTIES_DIR</name>
-          <stream_name />
-          <value>${PRM_KETTLE_PROPERTIES_DIR}</value>
-        </parameter>
-      </parameters>
-      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>237</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Parse AWS?</name>
+      <name>AWS?</name>
       <description />
       <type>SIMPLE_EVAL</type>
       <attributes />
       <valuetype>variable</valuetype>
       <fieldname>${PRM_ETL}</fieldname>
-      <variablename>${PRM_AWS}</variablename>
+      <variablename>${do.aws}</variablename>
       <fieldtype>string</fieldtype>
       <mask />
       <comparevalue>Y</comparevalue>
@@ -539,177 +391,11 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <successnumbercondition>equal</successnumbercondition>
       <successbooleancondition>false</successbooleancondition>
       <successwhenvarset>N</successwhenvarset>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>362</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Parse Schema?</name>
-      <description />
-      <type>SIMPLE_EVAL</type>
-      <attributes />
-      <valuetype>variable</valuetype>
-      <fieldname>${PRM_SCHEMA}</fieldname>
-      <variablename>${PRM_SCHEMA}</variablename>
-      <fieldtype>string</fieldtype>
-      <mask />
-      <comparevalue>Y</comparevalue>
-      <minvalue />
-      <maxvalue />
-      <successcondition>equal</successcondition>
-      <successnumbercondition>equal</successnumbercondition>
-      <successbooleancondition>false</successbooleancondition>
-      <successwhenvarset>N</successwhenvarset>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>688</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Load Mondrian</name>
-      <description />
-      <type>JOB</type>
-      <attributes />
-      <specification_method>filename</specification_method>
-      <job_object_id />
-      <filename>${Internal.Entry.Current.Directory}\mondrian\jb_load_mondrian.kjb</filename>
-      <jobname />
-      <directory />
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name />
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_FOLDER</name>
-          <stream_name />
-          <value>${PRM_SCHEMA_DIR}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_MONDRIAN_PROPERTIES</name>
-          <stream_name />
-          <value>${PRM_MONDRIAN_PROPERTIES_DIR}</value>
-        </parameter>
-      </parameters>
-      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>688</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Parse Reports?</name>
-      <description />
-      <type>SIMPLE_EVAL</type>
-      <attributes />
-      <valuetype>variable</valuetype>
-      <fieldname>${PRM_SCHEMA}</fieldname>
-      <variablename>${PRM_REPORT}</variablename>
-      <fieldtype>string</fieldtype>
-      <mask />
-      <comparevalue>Y</comparevalue>
-      <minvalue />
-      <maxvalue />
-      <successcondition>equal</successcondition>
-      <successnumbercondition>equal</successnumbercondition>
-      <successbooleancondition>false</successbooleancondition>
-      <successwhenvarset>N</successwhenvarset>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>800</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Load Analyzer</name>
-      <description />
-      <type>JOB</type>
-      <attributes />
-      <specification_method>filename</specification_method>
-      <job_object_id />
-      <filename>${Internal.Entry.Current.Directory}\analyzer_reports\jb_load_analyzer.kjb</filename>
-      <jobname />
-      <directory />
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name />
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_REPORT_FOLDER</name>
-          <stream_name />
-          <value>${PRM_REPORT_DIR}</value>
-        </parameter>
-      </parameters>
-      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>800</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Copy connection</name>
-      <description />
-      <type>COPY_FILES</type>
-      <attributes />
-      <copy_empty_folders>Y</copy_empty_folders>
-      <arg_from_previous>N</arg_from_previous>
-      <overwrite_files>Y</overwrite_files>
-      <include_subfolders>N</include_subfolders>
-      <remove_source_files>N</remove_source_files>
-      <add_result_filesname>N</add_result_filesname>
-      <destination_is_a_file>N</destination_is_a_file>
-      <create_destination_folder>Y</create_destination_folder>
-      <fields>
-        <field>
-          <source_filefolder>EMPTY_SOURCE_URL-0-${Internal.Entry.Current.Directory}/connection/</source_filefolder>
-          <source_configuration_name>LOCAL-SOURCE-FILE-0</source_configuration_name>
-          <destination_filefolder>EMPTY_DEST_URL-0-${user.home}/.pentaho/metastore/Neo4j/Neo4j Connection/</destination_filefolder>
-          <destination_configuration_name>LOCAL-DEST-FILE-0</destination_configuration_name>
-          <wildcard>.*.xml</wildcard>
-        </field>
-      </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>256</xloc>
-      <yloc>112</yloc>
+      <yloc>544</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -721,8 +407,8 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1464</xloc>
-      <yloc>487</yloc>
+      <xloc>992</xloc>
+      <yloc>416</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -732,7 +418,7 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <attributes />
       <valuetype>variable</valuetype>
       <fieldname />
-      <variablename>${PRM_CLEAN_NEO4J_DATA}</variablename>
+      <variablename>${do.clean.neo4j.data}</variablename>
       <fieldtype>string</fieldtype>
       <mask />
       <comparevalue>Y</comparevalue>
@@ -745,33 +431,18 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>112</yloc>
+      <xloc>256</xloc>
+      <yloc>288</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Clean Neo4j</name>
-      <description />
-      <type>NEO4J_CYPHER_SCRIPT</type>
-      <attributes />
-      <connection>lineage-graph</connection>
-      <script>match(n) detach delete n</script>
-      <replace_variables>N</replace_variables>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>112</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Parse ETL?</name>
+      <name>ETL?</name>
       <description />
       <type>SIMPLE_EVAL</type>
       <attributes />
       <valuetype>variable</valuetype>
       <fieldname>${PRM_ETL}</fieldname>
-      <variablename>${PRM_ETL}</variablename>
+      <variablename>${do.etl}</variablename>
       <fieldtype>string</fieldtype>
       <mask />
       <comparevalue>Y</comparevalue>
@@ -784,18 +455,18 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>487</yloc>
+      <xloc>256</xloc>
+      <yloc>672</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Load rds</name>
+      <name>Load AWS</name>
       <description />
       <type>JOB</type>
       <attributes />
       <specification_method>filename</specification_method>
       <job_object_id />
-      <filename>${Internal.Entry.Current.Directory}\aws\jb_load_rds.kjb</filename>
+      <filename>${ENVIRONMENT_HOME}/aws/jb_load_aws.kjb</filename>
       <jobname />
       <directory />
       <arg_from_previous>N</arg_from_previous>
@@ -816,60 +487,13 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_RDS_JSON</name>
-          <stream_name />
-          <value>${Internal.Entry.Current.Directory}/aws/</value>
-        </parameter>
       </parameters>
       <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>362</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Load dms</name>
-      <description />
-      <type>JOB</type>
-      <attributes />
-      <specification_method>filename</specification_method>
-      <job_object_id />
-      <filename>${Internal.Entry.Current.Directory}\aws\jb_load_dms.kjb</filename>
-      <jobname />
-      <directory />
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name />
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_JSON_FOLDER</name>
-          <stream_name />
-          <value>${PRM_DMS_JSON_DIR}</value>
-        </parameter>
-      </parameters>
-      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1064</xloc>
-      <yloc>362</yloc>
+      <xloc>480</xloc>
+      <yloc>544</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -879,7 +503,7 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <attributes />
       <specification_method>filename</specification_method>
       <job_object_id />
-      <filename>/Users/yannickmols/Projects/know.bi/knowbi-meta-to-neo4j/kettle/jb_load_kettle_etl.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}/kettle/jb_load_kettle_etl.kjb</filename>
       <jobname />
       <directory />
       <arg_from_previous>N</arg_from_previous>
@@ -900,65 +524,13 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_ETL_DIR</name>
-          <stream_name />
-          <value>${PRM_ETL_DIR}</value>
-        </parameter>
       </parameters>
       <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>487</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Load prpt</name>
-      <description />
-      <type>JOB</type>
-      <attributes />
-      <specification_method>filename</specification_method>
-      <job_object_id />
-      <filename>${Internal.Entry.Current.Directory}\prpt_reports\jb_load_prpt.kjb</filename>
-      <jobname />
-      <directory />
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name />
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_MONDRIAN_PROPERTIES</name>
-          <stream_name />
-          <value>${PRM_MONDRIAN_PROPERTIES_DIR}</value>
-        </parameter>
-        <parameter>
-          <name>PRM_REPORT_FOLDER</name>
-          <stream_name />
-          <value>${PRM_REPORT_DIR}</value>
-        </parameter>
-      </parameters>
-      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1056</xloc>
-      <yloc>800</yloc>
+      <xloc>480</xloc>
+      <yloc>672</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -968,7 +540,7 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <attributes />
       <specification_method>filename</specification_method>
       <job_object_id />
-      <filename>/Users/yannickmols/Projects/know.bi/knowbi-meta-to-neo4j/git/jb_write_git_logs.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}/git/jb_write_git_logs.kjb</filename>
       <jobname />
       <directory />
       <arg_from_previous>N</arg_from_previous>
@@ -989,28 +561,23 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>PRM_ETL_DIR</name>
-          <stream_name />
-          <value>${PRM_ETL_DIR}</value>
-        </parameter>
       </parameters>
       <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
-      <yloc>592</yloc>
+      <xloc>480</xloc>
+      <yloc>800</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Parse git?</name>
+      <name>git?</name>
       <description />
       <type>SIMPLE_EVAL</type>
       <attributes />
       <valuetype>variable</valuetype>
       <fieldname>${PRM_ETL}</fieldname>
-      <variablename>${PRM_GIT}</variablename>
+      <variablename>${do.git}</variablename>
       <fieldtype>string</fieldtype>
       <mask />
       <comparevalue>Y</comparevalue>
@@ -1023,8 +590,182 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>656</xloc>
-      <yloc>592</yloc>
+      <xloc>256</xloc>
+      <yloc>800</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>Load Databases</name>
+      <description />
+      <type>TRANS</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <trans_object_id />
+      <filename>${ENVIRONMENT_HOME}/rdbms/tr_read_db_queries.ktr</filename>
+      <transname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>480</xloc>
+      <yloc>416</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>Pentaho?</name>
+      <description />
+      <type>SIMPLE_EVAL</type>
+      <attributes />
+      <valuetype>variable</valuetype>
+      <fieldname />
+      <variablename>${do.pentaho}</variablename>
+      <fieldtype>string</fieldtype>
+      <mask />
+      <comparevalue>Y</comparevalue>
+      <minvalue />
+      <maxvalue />
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>256</xloc>
+      <yloc>928</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>Load Pentaho</name>
+      <description />
+      <type>JOB</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <job_object_id />
+      <filename>${ENVIRONMENT_HOME}/pentaho/jb_load_pentaho.kjb</filename>
+      <jobname />
+      <directory />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name />
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>480</xloc>
+      <yloc>928</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>Clean Neo4j data</name>
+      <description />
+      <type>JOB</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <job_object_id />
+      <filename>${ENVIRONMENT_HOME}/utils/neo4j/remove-everything/remove all in database.kjb</filename>
+      <jobname />
+      <directory />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name />
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>480</xloc>
+      <yloc>288</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>Set Env Vars</name>
+      <description />
+      <type>TRANS</type>
+      <attributes />
+      <specification_method>filename</specification_method>
+      <trans_object_id />
+      <filename>${ENVIRONMENT_HOME}/utils/tr_env_set_vars.ktr</filename>
+      <transname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>256</xloc>
+      <yloc>96</yloc>
       <attributes_kjc />
     </entry>
   </entries>
@@ -1039,89 +780,8 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Parse database?</from>
-      <to>Load rdbms</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Parse Schema?</from>
-      <to>Load Mondrian</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load Mondrian</from>
-      <to>Parse Reports?</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Parse Reports?</from>
-      <to>Load Analyzer</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Parse Reports?</from>
-      <to>change to read container</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Parse Schema?</from>
-      <to>Parse Reports?</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>START</from>
-      <to>Copy connection</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Copy connection</from>
-      <to>change to write container</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>change to write container</from>
-      <to>Clean Neo4j?</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Clean Neo4j?</from>
-      <to>Parse database?</to>
+      <to>database?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1129,26 +789,8 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Clean Neo4j?</from>
-      <to>Clean Neo4j</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Clean Neo4j</from>
-      <to>Parse database?</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Parse database?</from>
-      <to>Parse AWS?</to>
+      <from>database?</from>
+      <to>AWS?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1156,8 +798,8 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Parse AWS?</from>
-      <to>Load rds</to>
+      <from>AWS?</from>
+      <to>Load AWS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1165,17 +807,8 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load rds</from>
-      <to>Load dms</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Parse AWS?</from>
-      <to>Parse ETL?</to>
+      <from>AWS?</from>
+      <to>ETL?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1183,16 +816,7 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load dms</from>
-      <to>Parse ETL?</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Parse ETL?</from>
+      <from>ETL?</from>
       <to>Load kettle ETL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -1201,79 +825,7 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load Analyzer</from>
-      <to>Load prpt</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load prpt</from>
-      <to>change to read container</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load rdbms</from>
-      <to>Parse AWS?</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Clean Neo4j</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load rdbms</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load dms</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Load kettle ETL</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load Mondrian</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load prpt</from>
       <to>Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -1291,8 +843,8 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Parse ETL?</from>
-      <to>Parse git?</to>
+      <from>ETL?</from>
+      <to>git?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1300,7 +852,7 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Parse git?</from>
+      <from>git?</from>
       <to>Load git logs</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -1309,8 +861,143 @@ curl -s -XPOST http://$PRIVATE_IP:4243/containers/neo4j-dependencies-read/start
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Parse git?</from>
-      <to>Parse Schema?</to>
+      <from>database?</from>
+      <to>Load Databases</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Databases</from>
+      <to>AWS?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Databases</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>git?</from>
+      <to>Pentaho?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Pentaho?</from>
+      <to>Load Pentaho</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Pentaho</from>
+      <to>change to read container</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Pentaho?</from>
+      <to>change to read container</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Pentaho</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load AWS</from>
+      <to>ETL?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load AWS</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Clean Neo4j?</from>
+      <to>Clean Neo4j data</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Clean Neo4j data</from>
+      <to>database?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Clean Neo4j data</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set Env Vars</from>
+      <to>Clean Neo4j?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Set Env Vars</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Set Env Vars</from>
+      <to>Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

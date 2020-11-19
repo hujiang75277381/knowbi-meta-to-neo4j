@@ -9,11 +9,6 @@
     <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
-      <parameter>
-        <name>PRM_ETL_DIR</name>
-        <default_value />
-        <description />
-      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -593,7 +588,7 @@
     <rownum_field />
     <encoding>UTF-8</encoding>
     <file>
-      <name>${PRM_ETL_DIR}</name>
+      <name>${etl.dir}</name>
       <filemask>.*.kjb</filemask>
       <exclude_filemask />
       <file_required>N</file_required>
@@ -699,7 +694,7 @@
     <rownum_field />
     <encoding>UTF-8</encoding>
     <file>
-      <name>${PRM_ETL_DIR}</name>
+      <name>${etl.dir}</name>
       <filemask>.*.ktr</filemask>
       <exclude_filemask />
       <file_required>N</file_required>

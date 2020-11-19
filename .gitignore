@@ -1,7 +1,11 @@
-.kettle/
-git/tmp-data/
-metastore/
-
+*.json
+*.csv
+.type.xml
 config/meta-to-neo4j.properties
-!metastore/Neo4j/Neo4j Connection/lineage-graph.xml
+
+.kettle/
+.idea/
+git/tmp-data/
+
+
 
