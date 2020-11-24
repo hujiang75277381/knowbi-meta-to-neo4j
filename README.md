@@ -18,7 +18,7 @@ Currently supported are:
 
 The checks are built in Kettle. You'll need 
 - Java 8 
-- Kettle/PDI download 8.2 [here](https://sourceforge.net/projects/pentaho/files/Pentaho%208.2/client-tools/pdi-ce-8.2.0.0-342.zip/download).
+- Kettle/PDI: download 8.2 Remix [here](https://s3.amazonaws.com/kettle-neo4j/kettle-neo4j-remix-8.2.0.7-719-REMIX.zip) or the original 8.2. Kettle/PDI client [here](https://sourceforge.net/projects/pentaho/files/Pentaho%208.2/client-tools/pdi-ce-8.2.0.0-342.zip/download).
 - clone this repository to a location on your local system.
 
 ```sh
